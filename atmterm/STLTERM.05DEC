@@ -1,0 +1,1243 @@
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     1
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            14419 Chantilly Crossin    Chantilly      VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID CH1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 642398XXXXXX3335          DW                     300.00      .00 12/04 17:22:39 1256074974  020201   314812                         
+                                                                  12/04 18:28:32 1845101737  CH1              00314812   N           
+ 549261XXXXXX2752          DBI         .00 *                  .00 12/04 17:41:56 1000032201  020201   314815              PE-NOT AVAI
+                                                                  12/04 18:47:50 1845101737  CH1              00314815   N           
+                                                                  ISS ID: CRS                                                        
+ 549261XXXXXX2752          DBI         .00 *                  .00 12/04 17:42:17 1000032201  020201   314816              PE-NOT AVAI
+                                                                  12/04 18:48:10 1845101737  CH1              00314816   N           
+                                                                  ISS ID: CRS                                                        
+ 549261XXXXXX2752          DBI         .00 *                  .00 12/04 17:42:42 1000032201  020201   314817              PE-NOT AVAI
+                                                                  12/04 18:48:36 1845101737  CH1              00314817   N           
+                                                                  ISS ID: CRS                                                        
+ 549261XXXXXX2752          DBI         .00 *                  .00 12/04 17:43:02 1000032201  020201   314818              PE-NOT AVAI
+                                                                  12/04 18:48:56 1845101737  CH1              00314818   N           
+                                                                  ISS ID: CRS                                                        
+ 477351XXXXXX2454          DBI         .00**                  .00 12/04 17:48:27 1271081528  020201   314822                         
+                                                                  12/04 18:54:20 1845101737  CH1              00314822   P           
+ 477351XXXXXX2454          SWT                    100.00      .00 12/04 17:50:17 1271081528  020201   314826                         
+                                                                  12/04 18:56:11 1845101737  CH1              00314826   P           
+ 477351XXXXXX2454          DDT      100.00                    .00 12/04 17:50:17 1271081528  020201   314826                         
+                                                                  12/04 18:56:11 1845101737  CH1              00314826   P           
+ 559433XXXXXX6621          DW                     100.00      .00 12/04 18:00:08 1519930975  020201   314827                         
+                                                                  12/04 19:06:02 1845101737  CH1              00314827   N           
+ 400022XXXXXX4796          DW                     180.00      .00 12/04 18:03:47 1256074974  020201   314828                         
+                                                                  12/04 19:09:41 1845101737  CH1              00314828   N           
+ 472776XXXXXX9826          DW                     603.00     3.00*12/04 18:09:01 1840435738  020201   314829                         
+                                                                  12/04 19:14:49 1845101737  CH1              00314829   N           
+                                                                  ISS ID: SNE                                                        
+ 472776XXXXXX9826          DW                     403.00*    3.00*12/04 18:09:53 1840435738  020201   314830               U-DOLLARLM
+                                                                  12/04 19:15:45 1845101737  CH1              00314830   N           
+                                                                  ISS ID: SNE                                                        
+ 402018XXXXXX9264          DBI         .00**                  .00 12/04 19:23:02 1000007980  020201   314836                         
+                                                                  12/04 20:28:56 1845101737  CH1              00314836   N           
+                                                                  ISS ID: PLS                                                        
+ 505396XXXXXX3200          DW                     400.00      .00 12/04 19:33:39 1322079719  020201   314840                         
+ 1                                                                12/04 20:39:34 1845101737  CH1              00314840   N           
+ 546540XXXXXX9723          SW                      23.00     3.00*12/05 08:42:35 1061000104  020201   314855                         
+                                                                  12/05 09:48:37 1845101737  CH1              00314855   N           
+                                                                  ISS ID: SNE                                                        
+ 400022XXXXXX0323          DW                      80.00      .00 12/05 09:59:01 1256074974  020201   314874                         
+                                                                  12/05 11:05:08 1845101737  CH1              00314874   N           
+ 449512XXXXXX2690          DD       102.78                    .00 12/05 10:00:41 1840255154  020201   314875                         
+                                                                  12/05 11:06:47 1845101737  CH1              00314875   P           
+ 420477XXXXXX0605          DW                     203.00     3.00*12/05 10:14:44 1322173055  020201   314878                         
+                                                                  12/05 11:20:46 1845101737  CH1              00314878   N           
+ 447976XXXXXX2541          DW                     500.00      .00 12/05 10:20:00 1000043203  020201   314879                         
+                                                                  12/05 11:26:06 1845101737  CH1              00314879   P           
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     2
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            14419 Chantilly Crossin    Chantilly      VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID CH1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 478975XXXXXX3244          DW                     400.00      .00 12/05 10:38:04 1840149626  020201   314885                         
+                                                                  12/05 11:44:11 1845101737  CH1              00314885   N           
+ 402944XXXXXX9845          DW                     103.00     3.00*12/05 10:51:58 1000030164  020201   314889                         
+                                                                  12/05 11:58:03 1845101737  CH1              00314889   N           
+                                                                  ISS ID: PLS                                                        
+ 546528XXXXXX7531          DW                     363.00     3.00*12/05 10:59:11 1000007265  020201   314890                         
+                                                                  12/05 12:05:11 1845101737  CH1              00314890   N           
+                                                                  ISS ID: MAP                                                        
+ 546528XXXXXX6110          DW                     363.00     3.00*12/05 11:00:28 1000007265  020201   314891                         
+                                                                  12/05 12:06:33 1845101737  CH1              00314891   N           
+                                                                  ISS ID: MAP                                                        
+ 581583XXXXXX2726          DW                     300.00      .00 12/05 11:44:41 1845101805  020201   314907                         
+                                                                  12/05 12:50:49 1845101737  CH1              00314907   P           
+ 400022XXXXXX0474          DW                     100.00      .00 12/05 11:54:42 1256074974  020201   314909                         
+                                                                  12/05 13:00:49 1845101737  CH1              00314909   N           
+ 400022XXXXXX9154          DW                     100.00      .00 12/05 11:55:27 1256074974  020201   314910                         
+                                                                  12/05 13:01:35 1845101737  CH1              00314910   N           
+ 499108XXXXXX7382          DW                     200.00      .00 12/05 12:10:17 1840438023  020201   314911                         
+                                                                  12/05 13:16:25 1845101737  CH1              00314911   N           
+ 512928XXXXXX8175          SW                     100.00      .00 12/05 12:19:20 1840078072  020201   314912                         
+                                                                  12/05 13:25:28 1845101737  CH1              00314912   N           
+ 544448XXXXXX7085          DW                      20.00      .00 12/05 12:33:18 1845101410  020201   314915                         
+                                                                  12/05 13:39:26 1845101737  CH1              00314915   P           
+ 526224XXXXXX7757          DW                      63.00     3.00*12/05 12:40:04 1000007980  020201   314918                         
+                                                                  12/05 13:46:11 1845101737  CH1              00314918   N           
+                                                                  ISS ID: MAP                                                        
+ 401105XXXXXX2362          DW                     500.00      .00 12/05 13:24:12 1256078446  020201   314925                         
+                                                                  12/05 14:30:21 1845101737  CH1              00314925   N           
+                                                                  ISS ID: MAN                                                        
+ 400022XXXXXX2998          DW                      60.00      .00 12/05 15:04:58 1256074974  020201   314941                         
+                                                                  12/05 16:11:09 1845101737  CH1              00314941   N           
+ 478975XXXXXX9298          DW                     100.00      .00 12/05 15:16:42 1840149626  020201   314943                         
+                                                                  12/05 16:22:52 1845101737  CH1              00314943   N           
+ 482852XXXXXX7062          DW                      63.00     3.00*12/05 15:22:45 1322200753  020201   314944                         
+                                                                  12/05 16:28:53 1845101737  CH1              00314944   N           
+                                                                  ISS ID: PLS                                                        
+ 472776XXXXXX9826          DW                     403.00*    3.00*12/05 16:06:15 1840435738  020201   314947              C5-NSF CRE 
+                                                                  12/05 17:12:24 1845101737  CH1              00314947   N           
+                                                                  ISS ID: SNE                                                        
+ 472776XXXXXX9826          DW                     403.00*    3.00*12/05 16:06:43 1840435738  020201   314948              C5-NSF CRE 
+                                                                  12/05 17:12:49 1845101737  CH1              00314948   N           
+                                                                  ISS ID: SNE                                                        
+ 472776XXXXXX9826          DW                     383.00*    3.00*12/05 16:07:33 1840435738  020201   314949               U-DOLLARLM
+                                                                  12/05 17:13:37 1845101737  CH1              00314949   N           
+                                                                  ISS ID: SNE                                                        
+ 472776XXXXXX9826          DW                     403.00*    3.00*12/05 16:09:29 1840435738  020201   314950              C5-NSF CRE 
+                                                                  12/05 17:15:39 1845101737  CH1              00314950   N           
+                                                                  ISS ID: SNE                                                        
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     3
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            14419 Chantilly Crossin    Chantilly      VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID CH1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 472776XXXXXX9826          DW                     303.00*    3.00*12/05 16:09:56 1840435738  020201   314951               U-DOLLARLM
+                                                                  12/05 17:16:06 1845101737  CH1              00314951   N           
+                                                                  ISS ID: SNE                                                        
+ 472776XXXXXX9826          DW                     303.00*    3.00*12/05 16:10:17 1840435738  020201   314952               U-DOLLARLM
+                                                                  12/05 17:16:27 1845101737  CH1              00314952   N           
+                                                                  ISS ID: SNE                                                        
+0     TERMINAL TOTALS               202.78      5,324.00      .00      5,121.22 CR       24.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY            202.78      5,324.00      .00      5,121.22 CR       24.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     4
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            15000 CONFERENCE CENTER    CHANTILLY      VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID CH2                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 401105XXXXXX1579          DW                     100.00      .00 12/05 08:18:29 1256078446  020201   325466                         
+                                                                  12/05 09:24:34 1845101737  CH2              00325466   N           
+                                                                  ISS ID: MAN                                                        
+0     TERMINAL TOTALS                  .00        100.00      .00        100.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00        100.00      .00        100.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     5
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID DD1-1                                                                                               
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 642398XXXXXX1775          SW                      20.00      .00 12/04 17:13:36 1256074974  020201   339320                         
+                                                                  12/04 18:19:29 1845101737  DD1-1            00339320   N           
+0     TERMINAL TOTALS                  .00         20.00      .00         20.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00         20.00      .00         20.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     6
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            13870 AIR AND SPACE MUS    HERNDON        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID DD2                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 443057XXXXXX1711          DW                     503.00     3.00*12/04 21:59:15 1043000096  020201   409209                         
+                                                                  12/04 23:05:10 1845101737  DD2              00409209   N           
+                                                                  ISS ID: SNE                                                        
+ 443057XXXXXX1711          DW                      83.00     3.00*12/05 12:49:42 1043000096  020201   409211                         
+                                                                  12/05 13:55:49 1845101737  DD2              00409211   N           
+                                                                  ISS ID: SNE                                                        
+0     TERMINAL TOTALS                  .00        586.00      .00        586.00 CR        6.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00        586.00      .00        586.00 CR        6.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     7
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            220 SPRING STREET          HERNDON        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID ENTII                                                                                               
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX5047          DW                     600.00      .00 12/05 12:49:41 1256074974  020201   279496                         
+                                                                  12/05 13:55:49 1845101737  ENTII            00279496   N           
+0     TERMINAL TOTALS                  .00        600.00      .00        600.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00        600.00      .00        600.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     8
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            3443 HISTORIC SULLY WAY    HERNDON        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID GLOU                                                                                                
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 439878XXXXXX2858          DW                      63.00     3.00*12/05 10:26:47 1056001066  020201   192820                         
+                                                                  12/05 11:32:51 1845101737  GLOU             00192820   P           
+                                                                  ISS ID: STR                                                        
+0     TERMINAL TOTALS                  .00         63.00      .00         63.00 CR        3.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00         63.00      .00         63.00 CR        3.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE     9
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            7500 Webb Dr               Gainesville    VaUSAINSTITUTION_NAME                   
+                       ACTUAL ID GV1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 440830XXXXXX6310          SW                      60.00      .00 12/04 17:26:13 1254075441  020201   385684                         
+                                                                  12/04 18:32:06 1845101737  GV1              00385684   N           
+ 400022XXXXXX3988          DW                     120.00      .00 12/04 20:14:51 1256074974  020201   385689                         
+                                                                  12/04 21:20:47 1845101737  GV1              00385689   N           
+ 408691XXXXXX8393          DW                      63.00     3.00*12/05 08:07:04 1840252995  020201   385704                         
+                                                                  12/05 09:13:04 1845101737  GV1              00385704   N           
+                                                                  ISS ID: MAN                                                        
+ 642403XXXXXX9378          SW                     500.00      .00 12/05 08:16:03 1845101698  020201   385707                         
+                                                                  12/05 09:22:08 1845101737  GV1              00385707   P           
+ 409283XXXXXX0676          DW                     160.00      .00 12/05 08:55:27 1840016869  020201   385710                         
+                                                                  12/05 10:01:32 1845101737  GV1              00385710   N           
+ 443113XXXXXX1037          DW                     400.00      .00 12/05 08:58:05 1322079719  020201   385711                         
+                                                                  12/05 10:04:10 1845101737  GV1              00385711   P           
+ 401105XXXXXX2399          DW                     100.00      .00 12/05 09:10:34 1256078446  020201   385715                         
+                                                                  12/05 10:16:40 1845101737  GV1              00385715   N           
+                                                                  ISS ID: MAN                                                        
+ 642398XXXXXX7262          SW                     200.00      .00 12/05 09:42:45 1256074974  020201   385719                         
+                                                                  12/05 10:48:51 1845101737  GV1              00385719   N           
+ 400022XXXXXX4384          DW                     100.00      .00 12/05 10:38:44 1256074974  020201   385726                         
+                                                                  12/05 11:44:51 1845101737  GV1              00385726   N           
+ 470406XXXXXX1697          DW                      60.00      .00 12/05 10:41:34 1256075342  020201   385727                         
+                                                                  12/05 11:47:41 1845101737  GV1              00385727   N           
+ 505396XXXXXX9827          DW                     140.00      .00 12/05 10:48:08 1322079719  020201   385733                         
+ 1                                                                12/05 11:54:15 1845101737  GV1              00385733   N           
+ 551149XXXXXX7678          DW                     500.00      .00 12/05 11:10:40 1845101847  020201   385734                         
+                                                                  12/05 12:16:47 1845101737  GV1              00385734   P           
+ 400022XXXXXX1589          DW                     200.00      .00 12/05 11:50:48 1256074974  020201   385744                         
+                                                                  12/05 12:56:56 1845101737  GV1              00385744   N           
+ 449379XXXXXX5585          DBI         .00**                  .00 12/05 12:02:25 1000008507  020201   385747                         
+                                                                  12/05 13:08:33 1845101737  GV1              00385747   N           
+                                                                  ISS ID: PLS                                                        
+ 421065XXXXXX8425          DW                     203.00*    3.00*12/05 12:57:33 1263078918  020201   385756               I-INV PIN 
+                                                                  12/05 14:03:39 1845101737  GV1              00385756   P           
+                                                                  ISS ID: MAN                                                        
+ 421065XXXXXX8425          DW                     203.00*    3.00*12/05 12:57:48 1263078918  020201   385757               I-INV PIN 
+                                                                  12/05 14:03:54 1845101737  GV1              00385757   P           
+                                                                  ISS ID: MAN                                                        
+ 400022XXXXXX2141          DW                     200.00      .00 12/05 13:08:26 1256074974  020201   385760                         
+                                                                  12/05 14:14:34 1845101737  GV1              00385760   N           
+ 442319XXXXXX6926          DD     2,770.50                    .00 12/05 14:23:20 1840258119  020201   385768                         
+                                                                  12/05 15:29:30 1845101737  GV1              00385768   N           
+ 443113XXXXXX7030          DW                     400.00*     .00 12/05 14:37:35 1322079719  020201   385770              C5-NSF CRE 
+                                                                  12/05 15:43:45 1845101737  GV1              00385770   P           
+ 443113XXXXXX7030          DBI         .00**                  .00 12/05 14:37:54 1322079719  020201   385771                         
+                                                                  12/05 15:44:04 1845101737  GV1              00385771   P           
+ 443113XXXXXX7030          DW                     380.00      .00 12/05 14:38:17 1322079719  020201   385772                         
+                                                                  12/05 15:44:27 1845101737  GV1              00385772   P           
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    10
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            7500 Webb Dr               Gainesville    VaUSAINSTITUTION_NAME                   
+                       ACTUAL ID GV1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 479248XXXXXX2793          DW                     183.00     3.00*12/05 14:43:56 1255077671  020201   385775                         
+                                                                  12/05 15:50:05 1845101737  GV1              00385775   N           
+                                                                  ISS ID: SNE                                                        
+ 642398XXXXXX5897          DW                      80.00      .00 12/05 16:43:08 1256074974  020201   385789                         
+                                                                  12/05 17:49:20 1845101737  GV1              00385789   N           
+0     TERMINAL TOTALS             2,770.50      3,446.00      .00        675.50 CR        6.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY          2,770.50      3,446.00      .00        675.50 CR        6.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    11
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID HERNDON1                                                                                            
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX7123          DW                     200.00      .00 12/04 17:06:26 1256074974  020201   012989                         
+                                                                  12/04 18:12:19 1845101737  HERNDON1         00012989   N           
+ 474769XXXXXX4265          DBI         .00**                  .00 12/04 17:17:02 1845101805  020201   012990                         
+                                                                  12/04 18:22:55 1845101737  HERNDON1         00012990   P           
+ 405344XXXXXX4109          DBI         .00**                  .00 12/04 17:17:23 1845101805  020201   012991                         
+                                                                  12/04 18:23:16 1845101737  HERNDON1         00012991   P           
+ 545534XXXXXX4333          DW                     203.00     3.00*12/04 17:50:37 1322200753  020201   012997                         
+                                                                  12/04 18:56:29 1845101737  HERNDON1         00012997   N           
+                                                                  ISS ID: MAP                                                        
+ 401105XXXXXX8230          DW                     300.00      .00 12/04 17:59:00 1256078446  020201   013004                         
+                                                                  12/04 19:04:53 1845101737  HERNDON1         00013004   N           
+                                                                  ISS ID: MAN                                                        
+ 477351XXXXXX2818          DW                      20.00      .00 12/04 18:42:34 1271081528  020201   013011                         
+                                                                  12/04 19:48:29 1845101737  HERNDON1         00013011   P           
+ 470406XXXXXX7837          SW                     300.00      .00 12/04 19:44:59 1256075342  020201   013015                         
+                                                                  12/04 20:50:54 1845101737  HERNDON1         00013015   N           
+ 478975XXXXXX0997          DBI         .00**                  .00 12/04 20:30:08 1840149626  020201   013019                         
+                                                                  12/04 21:36:03 1845101737  HERNDON1         00013019   N           
+ 478975XXXXXX0997          DW                     800.00      .00 12/04 20:31:07 1840149626  020201   013020                         
+                                                                  12/04 21:37:02 1845101737  HERNDON1         00013020   N           
+ 449507XXXXXX3666          DW                     100.00      .00 12/05 06:12:04 1264281432  020201   013024                         
+                                                                  12/05 07:18:07 1845101737  HERNDON1         00013024   N           
+ 543805XXXXXX2332          DW                     203.00     3.00*12/05 08:07:34 1000007265  020201   013035                         
+                                                                  12/05 09:13:37 1845101737  HERNDON1         00013035   N           
+                                                                  ISS ID: MAP                                                        
+ 642398XXXXXX1674          SW                     200.00      .00 12/05 09:03:24 1256074974  020201   013045                         
+                                                                  12/05 10:09:30 1845101737  HERNDON1         00013045   N           
+ 429420XXXXXX1898          DD       120.00                    .00 12/05 09:51:41 1997560022  020201   013056                         
+                                                                  12/05 10:57:47 1845101737  HERNDON1         00013056   P           
+ 413186XXXXXX9903          DW                     360.00      .00 12/05 10:43:43 1845101504  020201   013083                         
+                                                                  12/05 11:49:49 1845101737  HERNDON1         00013083   P           
+ 379566XXXXX1002           CW                     503.00*    3.00*12/05 10:57:33 1990004129  020201   013090              Q5-NOT AVAI
+                                                                  12/05 12:03:39 1845101737  HERNDON1         00013090   N           
+                                                                  ISS ID: SNE                                                        
+ 379566XXXXX1002           CW                     503.00*    3.00*12/05 10:58:12 1990004129  020201   013091              Q5-NOT AVAI
+                                                                  12/05 12:04:17 1845101737  HERNDON1         00013091   N           
+                                                                  ISS ID: SNE                                                        
+ 440094XXXXXX5591          SW                     300.00      .00 12/05 11:16:07 1840439996  020201   013097                         
+                                                                  12/05 12:22:14 1845101737  HERNDON1         00013097   N           
+ 379566XXXXX1002           CW                     503.00     3.00*12/05 11:28:20 1990004129  020201   013107                         
+                                                                  12/05 12:34:26 1845101737  HERNDON1         00013107   N           
+                                                                  ISS ID: SNE                                                        
+ 474478XXXXXX0713          DW                     403.00     3.00*12/05 11:46:54 1322200753  020201   013112                         
+                                                                  12/05 12:53:00 1845101737  HERNDON1         00013112   N           
+                                                                  ISS ID: CRS                                                        
+ 405344XXXXXX6131          DW                     100.00      .00 12/05 12:53:44 1845101805  020201   013120                         
+                                                                  12/05 13:59:52 1845101737  HERNDON1         00013120   P           
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    12
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID HERNDON1                                                                                            
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 581346XXXXXX6972          DW                     200.00      .00 12/05 13:28:30 1321379164  020201   013126                         
+ 5                                                                12/05 14:34:39 1845101737  HERNDON1         00013126   P           
+ 404569XXXXXX8659          DW                      20.00      .00 12/05 14:21:28 1840438023  020201   013135                         
+                                                                  12/05 15:27:38 1845101737  HERNDON1         00013135   N           
+0     TERMINAL TOTALS               120.00      4,212.00      .00      4,092.00 CR       12.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY            120.00      4,212.00      .00      4,092.00 CR       12.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    13
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            525 Trimble Plaza          Leesburg       VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID LB1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 405076XXXXXX7682          DW                      60.00      .00 12/04 17:23:14 1845101520  020201   373084                         
+                                                                  12/04 18:29:06 1845101737  LB1              00373084   P           
+ 478975XXXXXX7425          DW                      60.00      .00 12/04 18:03:00 1840149626  020201   373090                         
+                                                                  12/04 19:08:54 1845101737  LB1              00373090   N           
+ 549261XXXXXX7181          CW                      80.00      .00 12/04 19:09:52 1000032201  020201   373095                         
+                                                                  12/04 20:15:46 1845101737  LB1              00373095   N           
+                                                                  ISS ID: CRS                                                        
+ 543805XXXXXX2378          DW                     303.00     3.00*12/04 19:53:07 1000007265  020201   373101                         
+                                                                  12/04 20:58:57 1845101737  LB1              00373101   N           
+                                                                  ISS ID: MAP                                                        
+ 443057XXXXXX4911          DW                     203.00     3.00*12/04 20:56:41 1043000096  020201   373107                         
+                                                                  12/04 22:02:32 1845101737  LB1              00373107   N           
+                                                                  ISS ID: SNE                                                        
+ 474478XXXXXX2254          DW                      23.00     3.00*12/04 22:48:11 1322200753  020201   373109                         
+                                                                  12/04 23:54:04 1845101737  LB1              00373109   N           
+                                                                  ISS ID: CRS                                                        
+ 543805XXXXXX5301          DW                     103.00     3.00*12/04 23:09:51 1000007265  020201   373110                         
+                                                                  12/05 00:15:41 1845101737  LB1              00373110   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX4974          DW                     200.00*     .00 12/05 04:38:28 1256074974  020201   373111               I-INV PIN 
+                                                                  12/05 05:44:30 1845101737  LB1              00373111   N           
+ 400022XXXXXX4974          DW                     200.00      .00 12/05 04:39:04 1256074974  020201   373113                         
+                                                                  12/05 05:45:06 1845101737  LB1              00373113   N           
+ 478975XXXXXX1210          DW                   1,000.00      .00 12/05 07:57:40 1840149626  020201   373118                         
+                                                                  12/05 09:03:44 1845101737  LB1              00373118   N           
+ 449210XXXXXX1214          DW                     503.00     3.00*12/05 08:49:43 1000030164  020201   373126                         
+                                                                  12/05 09:55:45 1845101737  LB1              00373126   N           
+                                                                  ISS ID: PLS                                                        
+ 445208XXXXXX6112          DW                     203.00     3.00*12/05 08:52:05 1322172496  020201   373128                         
+                                                                  12/05 09:58:05 1845101737  LB1              00373128   N           
+                                                                  ISS ID: MAN                                                        
+ 404569XXXXXX5159          DW                     100.00      .00 12/05 09:03:22 1840438023  020201   373130                         
+                                                                  12/05 10:09:27 1845101737  LB1              00373130   N           
+ 546528XXXXXX4850          DW                      63.00     3.00*12/05 09:11:43 1000007265  020201   373131                         
+                                                                  12/05 10:17:44 1845101737  LB1              00373131   N           
+                                                                  ISS ID: MAP                                                        
+ 425828XXXXXX6570          DW                     103.00     3.00*12/05 10:23:44 1022000046  020201   373148                         
+                                                                  12/05 11:29:47 1845101737  LB1              00373148   N           
+                                                                  ISS ID: SNE                                                        
+ 473703XXXXXX6719          DW                     303.00     3.00*12/05 11:03:57 1322200753  020201   373157                         
+                                                                  12/05 12:09:57 1845101737  LB1              00373157   N           
+                                                                  ISS ID: PLS                                                        
+ 451440XXXXXX8655          DW                     723.00     3.00*12/05 11:13:46 1000007980  020201   373159                         
+                                                                  12/05 12:19:50 1845101737  LB1              00373159   N           
+                                                                  ISS ID: PLS                                                        
+ 400022XXXXXX3158          DW                     300.00      .00 12/05 11:14:59 1256074974  020201   373160                         
+                                                                  12/05 12:21:06 1845101737  LB1              00373160   N           
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    14
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            525 Trimble Plaza          Leesburg       VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID LB1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 425425XXXXXX9920          DW                     100.00      .00 12/05 11:16:16 1845101559  020201   373161                         
+                                                                  12/05 12:22:23 1845101737  LB1              00373161   P           
+ 425826XXXXXX5347          DW                     203.00     3.00*12/05 11:24:38 1022000046  020201   373165                         
+                                                                  12/05 12:30:38 1845101737  LB1              00373165   N           
+                                                                  ISS ID: SNE                                                        
+ 489114XXXXXX1464          CW                     500.00      .00 12/05 11:49:59 1000030106  020201   373166                         
+                                                                  12/05 12:56:07 1845101737  LB1              00373166   N           
+                                                                  ISS ID: VNT TRACE: 288794 290991 533917288794 6011                 
+ 536013XXXXXX2355          SW                     103.00*    3.00*12/05 11:52:41 1000030164  020201   373167               I-INV PIN 
+                                                                  12/05 12:58:38 1845101737  LB1              00373167   N           
+                                                                  ISS ID: MAP                                                        
+ 536013XXXXXX2355          SW                     103.00*    3.00*12/05 11:53:34 1000030164  020201   373168              Q1-REJECT  
+                                                                  12/05 12:59:35 1845101737  LB1              00373168   N           
+                                                                  ISS ID: MAP                                                        
+ 544342XXXXXX9105          DW                     400.00      .00 12/05 13:01:36 1311079474  020201   373188                         
+                                                                  12/05 14:07:44 1845101737  LB1              00373188   N           
+ 454969XXXXXX9905          DD     2,174.83                    .00 12/05 13:41:56 1840144511  020201   373195                         
+                                                                  12/05 14:48:06 1845101737  LB1              00373195   N           
+ 454969XXXXXX9905          DBI         .00**                  .00 12/05 13:43:09 1840144511  020201   373196                         
+                                                                  12/05 14:49:19 1845101737  LB1              00373196   N           
+ 478975XXXXXX2822          DW                      60.00      .00 12/05 15:11:00 1840149626  020201   373204                         
+                                                                  12/05 16:17:10 1845101737  LB1              00373204   N           
+ 583230XXXXXXXXX7550       SW                     100.00      .00 12/05 15:30:46 1845102367  020201   373206                         
+                                                                  12/05 16:36:57 1845101737  LB1              00373206   P           
+ 405344XXXXXX5992          DBI         .00**                  .00 12/05 15:31:41 1845101805  020201   373207                         
+                                                                  12/05 16:37:51 1845101737  LB1              00373207   P           
+ 405344XXXXXX5992          DW                      60.00      .00 12/05 15:32:02 1845101805  020201   373208                         
+                                                                  12/05 16:38:13 1845101737  LB1              00373208   P           
+ 400022XXXXXX5169          DW                      40.00      .00 12/05 16:20:15 1256074974  020201   373212                         
+                                                                  12/05 17:26:27 1845101737  LB1              00373212   N           
+0     TERMINAL TOTALS             2,174.83      5,793.00      .00      3,618.17 CR       33.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY          2,174.83      5,793.00      .00      3,618.17 CR       33.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    15
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          HERNDON        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID LF7A                                                                                                
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 475636XXXXXX1180          DW                     100.00      .00 12/05 08:26:08 1255074988  020201   164943                         
+                                                                  12/05 09:32:13 1845101737  LF7A             00164943   N           
+0     TERMINAL TOTALS                  .00        100.00      .00        100.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00        100.00      .00        100.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    16
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID LX1-1                                                                                               
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX4405          DW                      20.00      .00 12/04 17:43:29 1256074974  020201   284269                         
+                                                                  12/04 18:49:22 1845101737  LX1-1            00284269   N           
+0     TERMINAL TOTALS                  .00         20.00      .00         20.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00         20.00      .00         20.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    17
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID LX1-2                                                                                               
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX8551          DW                     280.00      .00 12/04 17:01:50 1256074974  020201   295928                         
+                                                                  12/04 18:07:43 1845101737  LX1-2            00295928   N           
+ 510982XXXXXX1107          DW                     103.00     3.00*12/04 17:37:31 1000007265  020201   295929                         
+                                                                  12/04 18:43:23 1845101737  LX1-2            00295929   N           
+                                                                  ISS ID: MAP                                                        
+ 449561XXXXXX5824          DW                     303.00     3.00*12/04 18:25:24 1000008507  020201   295934                         
+                                                                  12/04 19:31:16 1845101737  LX1-2            00295934   N           
+                                                                  ISS ID: PLS                                                        
+ 447976XXXXXX4383          DD         5.62                    .00 12/04 19:36:16 1000043203  020201   295935                         
+                                                                  12/04 20:42:11 1845101737  LX1-2            00295935   P           
+ 447976XXXXXX4383          DW                      60.00      .00 12/04 19:36:47 1000043203  020201   295936                         
+                                                                  12/04 20:42:42 1845101737  LX1-2            00295936   P           
+ 474479XXXXXX4194          DW                     203.00     3.00*12/04 20:51:23 1322200753  020201   295937                         
+                                                                  12/04 21:57:16 1845101737  LX1-2            00295937   N           
+                                                                  ISS ID: CRS                                                        
+ 400022XXXXXX2572          DW                      20.00      .00 12/05 03:29:18 1256074974  020201   295939                         
+                                                                  12/05 04:35:19 1845101737  LX1-2            00295939   N           
+ 546528XXXXXX7971          DW                      43.00     3.00*12/05 09:44:33 1000007265  020201   295940                         
+                                                                  12/05 10:50:37 1845101737  LX1-2            00295940   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX6046          DW                      20.00      .00 12/05 11:53:26 1256074974  020201   295942                         
+                                                                  12/05 12:59:33 1845101737  LX1-2            00295942   N           
+ 403103XXXXXX3269          DW                     103.00     3.00*12/05 15:26:22 1255077008  020201   295943                         
+                                                                  12/05 16:32:31 1845101737  LX1-2            00295943   N           
+                                                                  ISS ID: MAN                                                        
+0     TERMINAL TOTALS                 5.62      1,135.00      .00      1,129.38 CR       15.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY              5.62      1,135.00      .00      1,129.38 CR       15.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    18
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            9730 Liberia Ave           Manassas       VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID MAN                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 510982XXXXXX2083          DW                      63.00*    3.00*12/04 17:12:42 1000007265  020201   359325               I-INV PIN 
+                                                                  12/04 18:18:31 1845101737  MAN              00359325   N           
+                                                                  ISS ID: MAP                                                        
+ 510982XXXXXX2083          DW                      83.00     3.00*12/04 17:12:58 1000007265  020201   359326                         
+                                                                  12/04 18:18:49 1845101737  MAN              00359326   N           
+                                                                  ISS ID: MAP                                                        
+ 589841XXXX8008            DW                      40.00      .00 12/04 17:28:38 1256078446  020201   359327                         
+                                                                  12/04 18:34:31 1845101737  MAN              00359327   N           
+                                                                  ISS ID: MAN                                                        
+ 400022XXXXXX1151          DW                      40.00      .00 12/04 17:35:17 1256074974  020201   359331                         
+                                                                  12/04 18:41:10 1845101737  MAN              00359331   N           
+ 546227XXXXXX4057          DW                     300.00      .00 12/04 19:09:56 1314088860  020201   359344                         
+                                                                  12/04 20:15:51 1845101737  MAN              00359344   N           
+ 400022XXXXXX9650          SW                     200.00      .00 12/04 19:28:34 1256074974  020201   359353                         
+                                                                  12/04 20:34:29 1845101737  MAN              00359353   N           
+ 400022XXXXXX9650          DW                     320.00      .00 12/04 19:29:19 1256074974  020201   359354                         
+                                                                  12/04 20:35:13 1845101737  MAN              00359354   N           
+ 400022XXXXXX7472          DW                      40.00      .00 12/04 19:33:29 1256074974  020201   359357                         
+                                                                  12/04 20:39:24 1845101737  MAN              00359357   N           
+ 443047XXXXXX5132          DW                     223.00     3.00*12/04 19:37:58 1031000053  020201   359361                         
+                                                                  12/04 20:43:44 1845101737  MAN              00359361   N           
+                                                                  ISS ID: SNE                                                        
+ 400022XXXXXX2787          DW                     120.00      .00 12/04 19:42:07 1256074974  020201   359363                         
+                                                                  12/04 20:48:02 1845101737  MAN              00359363   N           
+ 400023XXXXXX0158          DW                      80.00      .00 12/04 23:29:03 1256074974  020201   359369                         
+                                                                  12/05 00:35:01 1845101737  MAN              00359369   N           
+ 400022XXXXXX3355          DW                     500.00      .00 12/05 06:33:47 1256074974  020201   359373                         
+                                                                  12/05 07:39:51 1845101737  MAN              00359373   N           
+ 400022XXXXXX1552          DW                     600.00      .00 12/05 06:54:14 1256074974  020201   359378                         
+                                                                  12/05 08:00:17 1845101737  MAN              00359378   N           
+ 405344XXXXXX1378          SW                      60.00      .00 12/05 07:41:42 1845101805  020201   359381                         
+                                                                  12/05 08:47:46 1845101737  MAN              00359381   P           
+ 464929XXXXXX2374          DW                      40.00      .00 12/05 08:06:38 1840258847  020201   359384                         
+                                                                  12/05 09:12:43 1845101737  MAN              00359384   P           
+                                                                  ISS ID: MAN                                                        
+ 412188XXXXXX5115          DD       725.00                    .00 12/05 08:24:56 1519941935  020201   359390                         
+                                                                  12/05 09:31:01 1845101737  MAN              00359390   N           
+ 642398XXXXXX3426          SW                      20.00      .00 12/05 08:32:51 1256074974  020201   359391                         
+                                                                  12/05 09:38:56 1845101737  MAN              00359391   N           
+ 478975XXXXXX1437          DW                     240.00      .00 12/05 08:51:35 1840149626  020201   359397                         
+                                                                  12/05 09:57:40 1845101737  MAN              00359397   N           
+ 516260XXXXXX0269          DW                     200.00      .00 12/05 08:53:36 1840078140  020201   359399                         
+                                                                  12/05 09:59:41 1845101737  MAN              00359399   N           
+ 581602XXXXXXXXX4023       SW                     500.00      .00 12/05 09:28:28 1845101562  020201   359408                         
+ 6                                                                12/05 10:34:34 1845101737  MAN              00359408   N           
+ 546213XXXXXX7254          SD        99.00                    .00 12/05 09:46:42 1322282001  020201   359412                         
+                                                                  12/05 10:52:48 1845101737  MAN              00359412   N           
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    19
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            9730 Liberia Ave           Manassas       VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID MAN                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX9651          DW                     300.00      .00 12/05 10:03:05 1256074974  020201   359418                         
+                                                                  12/05 11:09:12 1845101737  MAN              00359418   N           
+ 449514XXXXXX2765          SW                     100.00      .00 12/05 10:18:24 1000030164  020201   359420                         
+                                                                  12/05 11:24:31 1845101737  MAN              00359420   N           
+                                                                  ISS ID: PLS                                                        
+ 581281XXXXXX1018          SW                     200.00      .00 12/05 10:44:48 1254075441  020201   359425                         
+                                                                  12/05 11:50:55 1845101737  MAN              00359425   N           
+ 478975XXXXXX3131          DW                     400.00      .00 12/05 10:52:05 1840149626  020201   359429                         
+                                                                  12/05 11:58:12 1845101737  MAN              00359429   N           
+ 482857XXXXXX7068          DW                     303.00     3.00*12/05 11:08:28 1322200753  020201   359436                         
+                                                                  12/05 12:14:31 1845101737  MAN              00359436   N           
+                                                                  ISS ID: PLS                                                        
+ 510982XXXXXX4311          DW                     603.00     3.00*12/05 11:17:25 1000007265  020201   359438                         
+                                                                  12/05 12:23:30 1845101737  MAN              00359438   N           
+                                                                  ISS ID: MAP                                                        
+ 477351XXXXXX8653          SD     1,500.00                    .00 12/05 11:20:15 1271081528  020201   359439                         
+                                                                  12/05 12:26:23 1845101737  MAN              00359439   P           
+ 440830XXXXXX1762          DBI         .00**                  .00 12/05 11:24:14 1254075441  020201   359441                         
+                                                                  12/05 12:30:22 1845101737  MAN              00359441   N           
+ 400022XXXXXX1671          DW                     100.00      .00 12/05 12:33:52 1256074974  020201   359452                         
+                                                                  12/05 13:40:00 1845101737  MAN              00359452   N           
+ 402020XXXXXX9910          DBI         .00**                  .00 12/05 12:35:07 1255076753  020201   359453                         
+                                                                  12/05 13:41:16 1845101737  MAN              00359453   N           
+ 402020XXXXXX9910          DW                      40.00      .00 12/05 12:35:32 1255076753  020201   359454                         
+                                                                  12/05 13:41:41 1845101737  MAN              00359454   N           
+ 429420XXXXXX1049          DW                     280.00      .00 12/05 12:52:50 1997560022  020201   359455                         
+                                                                  12/05 13:58:58 1845101737  MAN              00359455   P           
+ 400022XXXXXX1744          DW                     140.00      .00 12/05 13:06:37 1256074974  020201   359456                         
+                                                                  12/05 14:12:45 1845101737  MAN              00359456   N           
+ 642398XXXXXX8878          DW                      60.00      .00 12/05 13:53:48 1256074974  020201   359462                         
+                                                                  12/05 14:59:57 1845101737  MAN              00359462   N           
+ 505396XXXXXX8848          SD        62.33                    .00 12/05 13:58:36 1322079719  020201   359463                         
+ 1                                                                12/05 15:04:46 1845101737  MAN              00359463   N           
+ 505396XXXXXX8848          SW                      40.00      .00 12/05 13:59:25 1322079719  020201   359464                         
+ 1                                                                12/05 15:05:34 1845101737  MAN              00359464   N           
+ 400022XXXXXX1141          SW                     100.00      .00 12/05 14:28:34 1256074974  020201   359467                         
+                                                                  12/05 15:34:44 1845101737  MAN              00359467   N           
+ 448209XXXXXX6592          DW                      40.00      .00 12/05 14:36:19 1254074345  020201   359468                         
+                                                                  12/05 15:42:29 1845101737  MAN              00359468   N           
+ 401105XXXXXX4452          DW                     100.00      .00 12/05 14:46:03 1256078446  020201   359469                         
+                                                                  12/05 15:52:14 1845101737  MAN              00359469   N           
+                                                                  ISS ID: MAN                                                        
+ 430629XXXXXX0920          DD       200.00                    .00 12/05 15:04:56 1236084298  020201   359472                         
+                                                                  12/05 16:11:06 1845101737  MAN              00359472   P           
+ 642247XXXXXX0826          DW                     503.00     3.00*12/05 15:25:34 1256078598  020201   359479                         
+                                                                  12/05 16:31:41 1845101737  MAN              00359479   N           
+                                                                  ISS ID: MAN                                                        
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    20
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            9730 Liberia Ave           Manassas       VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID MAN                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 413186XXXXXX1205          DW                      40.00      .00 12/05 15:54:53 1845101504  020201   359481                         
+                                                                  12/05 17:01:04 1845101737  MAN              00359481   P           
+ 443047XXXXXX8875          DW                      43.00     3.00*12/05 15:57:28 1031000053  020201   359482                         
+                                                                  12/05 17:03:35 1845101737  MAN              00359482   N           
+                                                                  ISS ID: SNE                                                        
+0     TERMINAL TOTALS             2,586.33      6,998.00      .00      4,411.67 CR       18.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY          2,586.33      6,998.00      .00      4,411.67 CR       18.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    21
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            5850 UNIVERSITY RESEARC    COLLEGE PARK   MDUSAINSTITUTION_NAME                   
+                       ACTUAL ID MS2                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 551149XXXXXX9195          DW                      40.00      .00 12/04 17:21:26 1845101847  020201   399274                         
+                                                                  12/04 18:27:19 1845101737  MS2              00399274   P           
+ 642398XXXXXX2589          DBI         .00**                  .00 12/04 19:13:20 1256074974  020201   399278                         
+                                                                  12/04 20:19:14 1845101737  MS2              00399278   N           
+ 642398XXXXXX2589          DW                     100.00      .00 12/04 19:13:55 1256074974  020201   399279                         
+                                                                  12/04 20:19:50 1845101737  MS2              00399279   N           
+0     TERMINAL TOTALS                  .00        140.00      .00        140.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00        140.00      .00        140.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    22
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring St.             Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID ND2                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 421091XXXXXX2570          SW                      40.00      .00 12/04 17:00:17 1845101957  020201   308957                         
+                                                                  12/04 18:06:10 1845101737  ND2              00308957   P           
+0     TERMINAL TOTALS                  .00         40.00      .00         40.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00         40.00      .00         40.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    23
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          HERNDON        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID NEHQS                                                                                               
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 551149XXXXXX7510          DW                     100.00      .00 12/04 17:29:18 1845101847  020201   189693                         
+                                                                  12/04 18:35:11 1845101737  NEHQS            00189693   P           
+ 440094XXXXXX5930          DW                     120.00      .00 12/04 22:33:13 1840439996  020201   189702                         
+                                                                  12/04 23:39:10 1845101737  NEHQS            00189702   N           
+ 546528XXXXXX4950          DW                      83.00     3.00*12/05 11:11:50 1000007265  020201   189706                         
+                                                                  12/05 12:17:54 1845101737  NEHQS            00189706   N           
+                                                                  ISS ID: MAP                                                        
+ 443051XXXXXX3271          SW                      23.00     3.00*12/05 14:10:41 1031207607  020201   189709                         
+                                                                  12/05 15:16:47 1845101737  NEHQS            00189709   N           
+                                                                  ISS ID: SNE                                                        
+ 400022XXXXXX4496          SW                      40.00      .00 12/05 15:34:26 1256074974  020201   189710                         
+                                                                  12/05 16:40:36 1845101737  NEHQS            00189710   N           
+ 546528XXXXXX0407          DBI         .00**                  .00 12/05 15:36:11 1000007265  020201   189711                         
+                                                                  12/05 16:42:22 1845101737  NEHQS            00189711   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX5587          DBI         .00**                  .00 12/05 15:36:42 1256074974  020201   189712                         
+                                                                  12/05 16:42:53 1845101737  NEHQS            00189712   N           
+ 400022XXXXXX5587          DW                      20.00      .00 12/05 15:37:07 1256074974  020201   189713                         
+                                                                  12/05 16:43:18 1845101737  NEHQS            00189713   N           
+ 543805XXXXXX2436          DW                      63.00     3.00*12/05 16:16:21 1000007265  020201   189715                         
+                                                                  12/05 17:22:28 1845101737  NEHQS            00189715   N           
+                                                                  ISS ID: MAP                                                        
+0     TERMINAL TOTALS                  .00        449.00      .00        449.00 CR        9.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00        449.00      .00        449.00 CR        9.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    24
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID NEWDOM                                                                                              
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 642398XXXXXX6014          DW                     140.00      .00 12/04 18:03:26 1256074974  020201   101626                         
+                                                                  12/04 19:09:20 1845101737  NEWDOM           00101626   N           
+ 536013XXXXXX5344          SW                      43.00     3.00*12/04 18:38:40 1000030164  020201   101629                         
+                                                                  12/04 19:44:30 1845101737  NEWDOM           00101629   N           
+                                                                  ISS ID: MAP                                                        
+0     TERMINAL TOTALS                  .00        183.00      .00        183.00 CR        3.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00        183.00      .00        183.00 CR        3.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    25
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID NHB4                                                                                                
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 510982XXXXXX9909          DW                      63.00     3.00*12/04 17:02:04 1000007265  020201   052852                         
+                                                                  12/04 18:07:54 1845101737  NHB4             00052852   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX0750          DW                      20.00      .00 12/04 17:43:56 1256074974  020201   052859                         
+                                                                  12/04 18:49:49 1845101737  NHB4             00052859   N           
+ 551149XXXXXX0464          DW                     100.00      .00 12/04 18:09:35 1845101847  020201   052861                         
+                                                                  12/04 19:15:29 1845101737  NHB4             00052861   P           
+ 546528XXXXXX8104          DW                      23.00     3.00*12/04 20:36:38 1000007265  020201   052864                         
+                                                                  12/04 21:42:29 1845101737  NHB4             00052864   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX5853          DW                      20.00      .00 12/04 21:03:45 1256074974  020201   052865                         
+                                                                  12/04 22:09:41 1845101737  NHB4             00052865   N           
+ 510982XXXXXX6176          DW                      23.00     3.00*12/05 07:25:25 1000007265  020201   052870                         
+                                                                  12/05 08:31:27 1845101737  NHB4             00052870   N           
+                                                                  ISS ID: MAP                                                        
+ 510982XXXXXX5150          DBI         .00**                  .00 12/05 11:55:37 1000007265  020201   052872                         
+                                                                  12/05 13:01:44 1845101737  NHB4             00052872   N           
+                                                                  ISS ID: MAP                                                        
+ 510982XXXXXX5150          DW                      83.00     3.00*12/05 11:56:05 1000007265  020201   052873                         
+                                                                  12/05 13:02:10 1845101737  NHB4             00052873   N           
+                                                                  ISS ID: MAP                                                        
+ 551149XXXXXX3700          DW                     100.00      .00 12/05 13:11:20 1845101847  020201   052876                         
+                                                                  12/05 14:17:29 1845101737  NHB4             00052876   P           
+ 510982XXXXXX7048          DW                      23.00     3.00*12/05 14:28:28 1000007265  020201   052877                         
+                                                                  12/05 15:34:35 1845101737  NHB4             00052877   N           
+                                                                  ISS ID: MAP                                                        
+ 642398XXXXXX7573          DW                     220.00      .00 12/05 15:31:24 1256074974  020201   052878                         
+                                                                  12/05 16:37:34 1845101737  NHB4             00052878   N           
+0     TERMINAL TOTALS                  .00        675.00      .00        675.00 CR       15.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00        675.00      .00        675.00 CR       15.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    26
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID NVA                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 443047XXXXXX2042          DW                     103.00     3.00*12/04 17:03:27 1031000053  020201   114400                         
+                                                                  12/04 18:09:17 1845101737  NVA              00114400   N           
+                                                                  ISS ID: SNE                                                        
+ 510659XXXXXX1506          DBI         .00**                  .00 12/04 19:00:50 1322200753  020201   114401                         
+                                                                  12/04 20:06:44 1845101737  NVA              00114401   N           
+                                                                  ISS ID: MAP                                                        
+ 543805XXXXXX1581          DW                     203.00     3.00*12/05 02:53:39 1000007265  020201   114402                         
+                                                                  12/05 03:59:37 1845101737  NVA              00114402   N           
+                                                                  ISS ID: MAP                                                        
+ 424560XXXXXX4849          DW                      23.00     3.00*12/05 09:15:37 1543432326  020201   114404                         
+                                                                  12/05 10:21:41 1845101737  NVA              00114404   P           
+                                                                  ISS ID: MAN                                                        
+ 424560XXXXXX4849          DBI         .00**                  .00 12/05 09:16:06 1543432326  020201   114405                         
+                                                                  12/05 10:22:11 1845101737  NVA              00114405   P           
+                                                                  ISS ID: MAN                                                        
+ 400022XXXXXX3483          DW                      60.00      .00 12/05 09:19:10 1256074974  020201   114406                         
+                                                                  12/05 10:25:16 1845101737  NVA              00114406   N           
+ 400022XXXXXX0716          DW                      20.00      .00 12/05 12:46:51 1256074974  020201   114408                         
+                                                                  12/05 13:52:59 1845101737  NVA              00114408   N           
+0     TERMINAL TOTALS                  .00        409.00      .00        409.00 CR        9.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00        409.00      .00        409.00 CR        9.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    27
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID OHBNO                                                                                               
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX0425          DW                      20.00      .00 12/05 07:15:33 1256074974  020201   079321                         
+                                                                  12/05 08:21:37 1845101737  OHBNO            00079321   N           
+ 546528XXXXXX4079          DW                      63.00     3.00*12/05 07:33:42 1000007265  020201   079322                         
+                                                                  12/05 08:39:44 1845101737  OHBNO            00079322   N           
+                                                                  ISS ID: MAP                                                        
+0     TERMINAL TOTALS                  .00         83.00      .00         83.00 CR        3.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00         83.00      .00         83.00 CR        3.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    28
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          HERNDON        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID OHBSO                                                                                               
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 575241XXXXXX8700          DW                     303.00     3.00*12/04 17:10:55 1000007980  020201   227389                         
+                                                                  12/04 18:16:45 1845101737  OHBSO            00227389   N           
+                                                                  ISS ID: MAP                                                        
+ 443047XXXXXX4939          DW                      23.00     3.00*12/04 18:01:54 1031000053  020201   227390                         
+                                                                  12/04 19:07:45 1845101737  OHBSO            00227390   N           
+                                                                  ISS ID: SNE                                                        
+ 473703XXXXXX8221          DW                      43.00     3.00*12/04 18:35:23 1322200753  020201   227391                         
+                                                                  12/04 19:41:08 1845101737  OHBSO            00227391   N           
+                                                                  ISS ID: PLS                                                        
+ 546528XXXXXX8384          DW                     123.00     3.00*12/04 19:24:59 1000007265  020201   227393                         
+                                                                  12/04 20:30:52 1845101737  OHBSO            00227393   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX7058          DW                      40.00      .00 12/05 06:12:22 1256074974  020201   227394                         
+                                                                  12/05 07:18:25 1845101737  OHBSO            00227394   N           
+ 427712XXXXXX5210          DBI         .00**                  .00 12/05 09:03:33 1055002338  020201   227395                         
+                                                                  12/05 10:09:39 1845101737  OHBSO            00227395   N           
+                                                                  ISS ID: SNE                                                        
+0     TERMINAL TOTALS                  .00        532.00      .00        532.00 CR       12.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00        532.00      .00        532.00 CR       12.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    29
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID RESTON                                                                                              
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 510774XXXXXX9073          DW                     203.00     3.00*12/05 04:08:50 1000008507  020201   061569                         
+                                                                  12/05 05:14:49 1845101737  RESTON           00061569   N           
+                                                                  ISS ID: MAP                                                        
+0     TERMINAL TOTALS                  .00        203.00      .00        203.00 CR        3.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00        203.00      .00        203.00 CR        3.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    30
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            2545 Centreville Rd Sui    Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID VC1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 416462XXXXXX4942          DW                     100.00      .00 12/04 17:07:39 1255077833  020201   026008                         
+                                                                  12/04 18:13:31 1845101737  VC1              00026008   P           
+ 429420XXXXXX0901          DW                     400.00      .00 12/04 17:12:41 1997560022  020201   026009                         
+                                                                  12/04 18:18:34 1845101737  VC1              00026009   P           
+ 429420XXXXXX2817          DW                     300.00      .00 12/04 17:38:15 1997560022  020201   026010                         
+                                                                  12/04 18:44:08 1845101737  VC1              00026010   P           
+ 447231XXXXXX3739          DW                     100.00      .00 12/04 17:57:38 1519938346  020201   026012                         
+                                                                  12/04 19:03:31 1845101737  VC1              00026012   N           
+ 529971XXXXXX1557          DW                     180.00*     .00 12/04 19:51:56 1322200753  020201   026014               I-INV PIN 
+                                                                  12/04 20:57:51 1845101737  VC1              00026014   N           
+                                                                  ISS ID: CRI                                                        
+ 529971XXXXXX1557          DW                     180.00      .00 12/04 19:52:18 1322200753  020201   026015                         
+                                                                  12/04 20:58:13 1845101737  VC1              00026015   N           
+                                                                  ISS ID: CRI                                                        
+ 429420XXXXXX5693          DD       100.00                    .00 12/04 20:10:52 1997560022  020201   026016                         
+                                                                  12/04 21:16:47 1845101737  VC1              00026016   P           
+ 429420XXXXXX5693          DD       100.00-                   .00 12/04 20:11:31 1848207560  020201   026016 07-ATM ERR              
+                                                                  12/04 21:16:47 1845101737  VC1              00026016   N           
+ 429420XXXXXX5693          DD       100.00                    .00 12/04 20:12:00 1997560022  020201   026017                         
+                                                                  12/04 21:17:56 1845101737  VC1              00026017   P           
+ 429420XXXXXX5693          DD       100.00-                   .00 12/04 20:12:25 1848207560  020201   026017 07-ATM ERR              
+                                                                  12/04 21:17:56 1845101737  VC1              00026017   N           
+ 478975XXXXXX1728          DW                     180.00      .00 12/04 20:55:14 1840149626  020201   026019                         
+                                                                  12/04 22:01:10 1845101737  VC1              00026019   N           
+ 416462XXXXXX4305          DBI         .00**                  .00 12/04 21:09:30 1255077833  020201   026020                         
+                                                                  12/04 22:15:26 1845101737  VC1              00026020   P           
+ 449512XXXXXX7868          DD       180.00                    .00 12/05 05:00:23 1840255154  020201   026022                         
+                                                                  12/05 06:06:26 1845101737  VC1              00026022   P           
+ 449512XXXXXX7868          DD       180.00-                   .00 12/05 05:00:32 1840255154  020201   026022 08-UNCAL RSP            
+                                                                  12/05 06:06:26 1845101737  VC1              00026022   N           
+ 512928XXXXXX2084          SD        16.00                    .00 12/05 05:01:01 1840078072  020201   026023                         
+                                                                  12/05 06:07:04 1845101737  VC1              00026023   N           
+ 512928XXXXXX2084          SD        16.00-                   .00 12/05 05:01:08 1840078072  020201   026023 08-UNCAL RSP            
+                                                                  12/05 06:07:04 1845101737  VC1              00026023   N           
+ 400022XXXXXX5607          DW                     500.00      .00 12/05 07:17:42 1256074974  020201   026024                         
+                                                                  12/05 08:23:46 1845101737  VC1              00026024   N           
+ 419162XXXXXX7773          DW                     140.00      .00 12/05 08:17:21 1842279400  020201   026026                         
+                                                                  12/05 09:23:26 1845101737  VC1              00026026   P           
+ 543805XXXXXX6969          DW                     103.00     3.00*12/05 08:35:57 1000007265  020201   026028                         
+                                                                  12/05 09:42:00 1845101737  VC1              00026028   N           
+                                                                  ISS ID: MAP                                                        
+ 429420XXXXXX6391          DW                     100.00      .00 12/05 08:48:09 1997560022  020201   026030                         
+                                                                  12/05 09:54:14 1845101737  VC1              00026030   P           
+ 511317XXXXXX5535          DW                     303.00     3.00*12/05 08:49:01 1000008507  020201   026031                         
+                                                                  12/05 09:55:04 1845101737  VC1              00026031   N           
+                                                                  ISS ID: CRS                                                        
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    31
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            2545 Centreville Rd Sui    Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID VC1                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 511317XXXXXX5535          DW                     203.00     3.00*12/05 08:49:31 1000008507  020201   026032                         
+                                                                  12/05 09:55:35 1845101737  VC1              00026032   N           
+                                                                  ISS ID: CRS                                                        
+ 546133XXXXXX3311          DW                     400.00      .00 12/05 08:50:48 1840253965  020201   026033                         
+                                                                  12/05 09:56:53 1845101737  VC1              00026033   N           
+ 401171XXXXXX4692          DW                     500.00      .00 12/05 09:00:26 1261071315  020201   026034                         
+                                                                  12/05 10:06:31 1845101737  VC1              00026034   P           
+ 448209XXXXXX4529          DW                      40.00      .00 12/05 09:25:57 1254074345  020201   026036                         
+                                                                  12/05 10:32:03 1845101737  VC1              00026036   N           
+ 413186XXXXXX1185          DW                     200.00      .00 12/05 09:37:37 1845101504  020201   026038                         
+                                                                  12/05 10:43:43 1845101737  VC1              00026038   P           
+ 536224XXXXXX0742          DW                      23.00     3.00*12/05 09:38:44 1000007980  020201   026040                         
+                                                                  12/05 10:44:47 1845101737  VC1              00026040   N           
+                                                                  ISS ID: MAP                                                        
+ 526224XXXXXX4561          DW                     203.00     3.00*12/05 10:04:22 1000007980  020201   026046                         
+                                                                  12/05 11:10:27 1845101737  VC1              00026046   N           
+                                                                  ISS ID: MAP                                                        
+ 473703XXXXXX9120          DW                      63.00     3.00*12/05 10:25:25 1322200753  020201   026048                         
+                                                                  12/05 11:31:29 1845101737  VC1              00026048   N           
+                                                                  ISS ID: PLS                                                        
+ 543805XXXXXX1594          DW                     203.00     3.00*12/05 11:39:35 1000007265  020201   026053                         
+                                                                  12/05 12:45:39 1845101737  VC1              00026053   N           
+                                                                  ISS ID: MAP                                                        
+ 510982XXXXXX1513          SW                      23.00*    3.00*12/05 12:01:00 1000007265  020201   026056               J-INV TRAN
+                                                                  12/05 13:07:05 1845101737  VC1              00026056   N           
+                                                                  ISS ID: MAP                                                        
+ 510982XXXXXX1513          DW                      23.00     3.00*12/05 12:01:34 1000007265  020201   026057                         
+                                                                  12/05 13:07:40 1845101737  VC1              00026057   N           
+                                                                  ISS ID: MAP                                                        
+ 543805XXXXXX4828          DW                     503.00     3.00*12/05 12:42:35 1000007265  020201   026062                         
+                                                                  12/05 13:48:41 1845101737  VC1              00026062   N           
+                                                                  ISS ID: MAP                                                        
+ 546528XXXXXX7215          DW                     263.00     3.00*12/05 15:00:02 1000007265  020201   026071                         
+                                                                  12/05 16:06:09 1845101737  VC1              00026071   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX5393          DD       160.00                    .00 12/05 15:25:41 1256074974  020201   026075                         
+                                                                  12/05 16:31:52 1845101737  VC1              00026075   N           
+0     TERMINAL TOTALS               160.00      5,030.00      .00      4,870.00 CR       30.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY            160.00      5,030.00      .00      4,870.00 CR       30.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    32
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            2545 Centreville Rd Sui    Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID VC2                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 546528XXXXXX7232          DW                     203.00     3.00*12/04 17:02:11 1000007265  020201   047154                         
+                                                                  12/04 18:08:02 1845101737  VC2              00047154   N           
+                                                                  ISS ID: MAP                                                        
+ 400022XXXXXX3123          DW                     140.00      .00 12/04 17:09:55 1256074974  020201   047155                         
+                                                                  12/04 18:15:47 1845101737  VC2              00047155   N           
+ 575241XXXXXX2028          SW                      43.00     3.00*12/04 18:24:03 1000007980  020201   047156                         
+                                                                  12/04 19:29:55 1845101737  VC2              00047156   N           
+                                                                  ISS ID: MAP                                                        
+ 415490XXXXXX5667          DW                      80.00      .00 12/04 20:12:09 1321170839  020201   047158                         
+                                                                  12/04 21:18:04 1845101737  VC2              00047158   P           
+ 443113XXXXXX7237          DW                      20.00      .00 12/04 21:31:00 1322079719  020201   047159                         
+                                                                  12/04 22:36:56 1845101737  VC2              00047159   P           
+ 514973XXXXXX1246          DW                     303.00     3.00*12/05 07:56:21 1000007980  020201   047161                         
+                                                                  12/05 09:02:24 1845101737  VC2              00047161   N           
+                                                                  ISS ID: MAP                                                        
+ 415490XXXXXX5667          DD       100.00                    .00 12/05 07:59:10 1321170839  020201   047163                         
+                                                                  12/05 09:05:14 1845101737  VC2              00047163   P           
+ 423568XXXXXX1892          DW                     300.00      .00 12/05 09:30:01 1322281617  020201   047166                         
+                                                                  12/05 10:36:07 1845101737  VC2              00047166   P           
+ 426451XXXXXX7890          DW                     303.00*    3.00*12/05 11:37:02 1322200753  020201   047172               I-INV PIN 
+                                                                  12/05 12:43:07 1845101737  VC2              00047172   N           
+                                                                  ISS ID: CRS                                                        
+ 426451XXXXXX7890          DW                     303.00*    3.00*12/05 11:37:30 1322200753  020201   047173               I-INV PIN 
+                                                                  12/05 12:43:35 1845101737  VC2              00047173   N           
+                                                                  ISS ID: CRS                                                        
+ 478200XXXXXX2016          DW                     263.00     3.00*12/05 11:38:40 1322200753  020201   047174                         
+                                                                  12/05 12:44:45 1845101737  VC2              00047174   N           
+                                                                  ISS ID: PLS                                                        
+ 478200XXXXXX2016          DW                     143.00*    3.00*12/05 11:39:24 1322200753  020201   047175              C5-NSF CRE 
+                                                                  12/05 12:45:30 1845101737  VC2              00047175   N           
+                                                                  ISS ID: PLS                                                        
+ 478200XXXXXX2016          DW                     143.00*    3.00*12/05 11:39:48 1322200753  020201   047176              C5-NSF CRE 
+                                                                  12/05 12:45:54 1845101737  VC2              00047176   N           
+                                                                  ISS ID: PLS                                                        
+ 478200XXXXXX2016          SW                     143.00     3.00*12/05 11:40:39 1322200753  020201   047177                         
+                                                                  12/05 12:46:45 1845101737  VC2              00047177   N           
+                                                                  ISS ID: PLS                                                        
+ 407238XXXXXX6585          DW                     100.00      .00 12/05 11:42:24 1284084350  020201   047178                         
+                                                                  12/05 12:48:32 1845101737  VC2              00047178   P           
+ 466801XXXXXX5307          DW                      43.00     3.00*12/05 12:03:20 1065503681  020201   047179                         
+                                                                  12/05 13:09:27 1845101737  VC2              00047179   N           
+                                                                  ISS ID: SNE                                                        
+ 473703XXXXXX9354          DW                      83.00     3.00*12/05 12:28:45 1322200753  020201   047180                         
+                                                                  12/05 13:34:44 1845101737  VC2              00047180   N           
+                                                                  ISS ID: PLS                                                        
+ 415307XXXXXX3097          DW                     100.00      .00 12/05 12:38:50 1255077477  020201   047181                         
+                                                                  12/05 13:44:59 1845101737  VC2              00047181   N           
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    33
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            2545 Centreville Rd Sui    Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID VC2                                                                                                 
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 546377XXXXXX3794          DW                     100.00      .00 12/05 12:43:52 1211386597  020201   047182                         
+                                                                  12/05 13:50:01 1845101737  VC2              00047182   N           
+ 429420XXXXXX6031          DW                   1,000.00      .00 12/05 12:56:54 1997560022  020201   047183                         
+                                                                  12/05 14:03:03 1845101737  VC2              00047183   P           
+ 478975XXXXXX5680          DW                     100.00      .00 12/05 13:05:46 1840149626  020201   047184                         
+                                                                  12/05 14:11:55 1845101737  VC2              00047184   N           
+ 448632XXXXXX5155          CW                     203.00     3.00*12/05 14:23:23 1000030106  020201   047187                         
+                                                                  12/05 15:29:24 1845101737  VC2              00047187   N           
+                                                                  ISS ID: VNT TRACE: 290451 290991 533920290451 6011                 
+0     TERMINAL TOTALS               100.00      3,224.00      .00      3,124.00 CR       24.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY            100.00      3,224.00      .00      3,124.00 CR       24.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    34
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            231 Maple Avenue East      VIENNA         VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID VIENNAB                                                                                             
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX4696          DW                      40.00      .00 12/04 18:14:39 1256074974  020201   261009                         
+                                                                  12/04 19:20:33 1845101737  VIENNAB          00261009   N           
+ 401105XXXXXX0497          DW                     200.00      .00 12/04 18:48:39 1256078446  020201   261010                         
+                                                                  12/04 19:54:33 1845101737  VIENNAB          00261010   N           
+                                                                  ISS ID: MAN                                                        
+ 400022XXXXXX3598          SW                     300.00      .00 12/05 07:04:17 1256074974  020201   261024                         
+                                                                  12/05 08:10:21 1845101737  VIENNAB          00261024   N           
+ 401538XXXXXX6205          DW                     300.00      .00 12/05 08:03:16 1255076944  020201   261027                         
+                                                                  12/05 09:09:21 1845101737  VIENNAB          00261027   N           
+ 510982XXXXXX6016          DW                     303.00     3.00*12/05 08:19:31 1000007265  020201   261029                         
+                                                                  12/05 09:25:33 1845101737  VIENNAB          00261029   N           
+                                                                  ISS ID: MAP                                                        
+ 439878XXXXXX9686          DW                      63.00     3.00*12/05 09:13:59 1056001066  020201   261034                         
+                                                                  12/05 10:20:01 1845101737  VIENNAB          00261034   P           
+                                                                  ISS ID: STR                                                        
+ 413186XXXXXX7122          DW                     300.00      .00 12/05 09:35:27 1845101504  020201   261040                         
+                                                                  12/05 10:41:33 1845101737  VIENNAB          00261040   P           
+ 401105XXXXXX5071          SW                     200.00      .00 12/05 09:37:19 1256078446  020201   261042                         
+                                                                  12/05 10:43:25 1845101737  VIENNAB          00261042   N           
+                                                                  ISS ID: MAN                                                        
+ 401105XXXXXX7498          DW                     160.00      .00 12/05 09:46:06 1256078446  020201   261044                         
+                                                                  12/05 10:52:12 1845101737  VIENNAB          00261044   N           
+                                                                  ISS ID: MAN                                                        
+ 425826XXXXXX7582          DW                      63.00     3.00*12/05 09:47:57 1022000046  020201   261045                         
+                                                                  12/05 10:53:59 1845101737  VIENNAB          00261045   N           
+                                                                  ISS ID: SNE                                                        
+ 642398XXXXXX6004          DW                     120.00      .00 12/05 10:15:20 1256074974  020201   261051                         
+                                                                  12/05 11:21:26 1845101737  VIENNAB          00261051   N           
+ 413186XXXXXX0761          DW                     500.00      .00 12/05 10:19:19 1845101504  020201   261055                         
+                                                                  12/05 11:25:25 1845101737  VIENNAB          00261055   P           
+ 642398XXXXXX1874          DW                      60.00      .00 12/05 10:20:22 1256074974  020201   261056                         
+                                                                  12/05 11:26:28 1845101737  VIENNAB          00261056   N           
+ 401105XXXXXX2372          DW                      60.00      .00 12/05 10:27:38 1256078446  020201   261058                         
+                                                                  12/05 11:33:45 1845101737  VIENNAB          00261058   N           
+                                                                  ISS ID: MAN                                                        
+ 430613XXXXXX4188          DW                     200.00      .00 12/05 10:29:43 1256078404  020201   261060                         
+                                                                  12/05 11:35:49 1845101737  VIENNAB          00261060   P           
+ 400022XXXXXX6675          DW                     200.00      .00 12/05 10:45:24 1256074974  020201   261068                         
+                                                                  12/05 11:51:31 1845101737  VIENNAB          00261068   N           
+ 470406XXXXXX6123          DW                     500.00      .00 12/05 11:14:22 1256075342  020201   261077                         
+                                                                  12/05 12:20:30 1845101737  VIENNAB          00261077   N           
+ 400022XXXXXX6228          DW                     120.00      .00 12/05 11:15:11 1256074974  020201   261078                         
+                                                                  12/05 12:21:18 1845101737  VIENNAB          00261078   N           
+ 581602XXXXXXXXX9020       DW                     100.00      .00 12/05 11:50:34 1845101562  020201   261086                         
+ 1                                                                12/05 12:56:42 1845101737  VIENNAB          00261086   N           
+ 403151XXXXXX4589          SW                     300.00      .00 12/05 12:08:53 1845101834  020201   261088                         
+                                                                  12/05 13:15:01 1845101737  VIENNAB          00261088   P           
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    35
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            231 Maple Avenue East      VIENNA         VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID VIENNAB                                                                                             
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 400022XXXXXX1774          DW                      40.00      .00 12/05 12:13:54 1256074974  020201   261089                         
+                                                                  12/05 13:20:02 1845101737  VIENNAB          00261089   N           
+ 400022XXXXXX5600          DW                     100.00      .00 12/05 12:36:36 1256074974  020201   261097                         
+                                                                  12/05 13:42:44 1845101737  VIENNAB          00261097   N           
+ 470406XXXXXX4245          DBI         .00**                  .00 12/05 12:56:10 1256075342  020201   261101                         
+                                                                  12/05 14:02:18 1845101737  VIENNAB          00261101   N           
+ 412068XXXXXX3874          DW                      60.00      .00 12/05 13:49:11 1322077779  020201   261105                         
+                                                                  12/05 14:55:21 1845101737  VIENNAB          00261105   P           
+ 505396XXXXXX9450          DD        86.00                    .00 12/05 14:03:51 1322079719  020201   261109                         
+ 1                                                                12/05 15:10:00 1845101737  VIENNAB          00261109   N           
+ 526224XXXXXX2457          DBI         .00**                  .00 12/05 14:13:04 1000007980  020201   261111                         
+                                                                  12/05 15:19:14 1845101737  VIENNAB          00261111   N           
+                                                                  ISS ID: MAP                                                        
+ 462058XXXXXX1344          DW                     503.00     3.00*12/05 14:23:59 1051404260  020201   261114                         
+                                                                  12/05 15:30:05 1845101737  VIENNAB          00261114   P           
+                                                                  ISS ID: STR                                                        
+ 505396XXXXXX9627          DW                     200.00      .00 12/05 15:27:34 1322079719  020201   261123                         
+ 1                                                                12/05 16:33:45 1845101737  VIENNAB          00261123   N           
+ 529727XXXXXX5193          DW                     100.00      .00 12/05 15:42:45 1999387164  020201   261125                         
+                                                                  12/05 16:48:56 1845101737  VIENNAB          00261125   N           
+0     TERMINAL TOTALS                86.00      5,092.00      .00      5,006.00 CR       12.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY             86.00      5,092.00      .00      5,006.00 CR       12.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    36
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring Street          Herndon        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID WFC1                                                                                                
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 510982XXXXXX0717          DW                      43.00     3.00*12/05 10:41:50 1000007265  020201   090451                         
+                                                                  12/05 11:47:53 1845101737  WFC1             00090451   N           
+                                                                  ISS ID: MAP                                                        
+0     TERMINAL TOTALS                  .00         43.00      .00         43.00 CR        3.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      ACTUAL ID ACTIVITY               .00         43.00      .00         43.00 CR        3.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    37
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201            200 Spring street          HERNDON        VAUSAINSTITUTION_NAME                   
+                       ACTUAL ID WFC2                                                                                                
+0 CARDHOLDER NUMBER       TYPE       DEBIT        CREDIT    FEES  SW DATE TIME/ CARD INST/  SW TERM SEQ/    EXCEPTION/    REJECT     
+ PLASTIC #/ACCOUNT #                                              LOC DATE TIME  TERM INST   LOCAL TERM     LOC SEQ  C2/C1/CA/C3     
+                                                                                                                                     
+ 401105XXXXXX4938          DW                     200.00      .00 12/04 18:18:15 1256078446  020201   232805                         
+                                                                  12/04 19:24:09 1845101737  WFC2             00232805   N           
+                                                                  ISS ID: MAN                                                        
+0     TERMINAL TOTALS                  .00        200.00      .00        200.00 CR                                                   
+0     + TODAYS SUSPENSE                .00           .00      .00           .00                                                      
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00                                                      
+                                  --------      --------    -----     ------------                                                   
+      ACTUAL ID ACTIVITY               .00        200.00      .00        200.00 CR                                                   
+                                  --------      --------    -----     ------------                                                   
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    38
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0 200 SPRING STREET  H TERMINAL  020201                                                                                              
+                       ACTUAL ID (ALL)                                                                                               
+0                                    DEBIT        CREDIT     FEES           NET      MEMO FEES                                       
+                                                                                                                                     
+0     TERMINAL TOTALS             8,206.06     44,700.00      .00     36,493.94 CR      240.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      TERMINAL ACTIVITY           8,206.06     44,700.00      .00     36,493.94 CR      240.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    39
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0                                                                                                                                    
+                                                                                                                                     
+0                                    DEBIT        CREDIT     FEES           NET      MEMO FEES                                       
+                                                                                                                                     
+0     TERMINAL TOTALS             8,206.06     44,700.00      .00     36,493.94 CR      240.00-                                      
+0     + TODAYS SUSPENSE                .00           .00      .00           .00            .00                                       
+      - PREVIOUS SUSPENSE              .00           .00      .00           .00            .00                                       
+                                  --------      --------    -----     ------------     -------                                       
+      INSTITUTION ACTIVITY        8,206.06     44,700.00      .00     36,493.94 CR      240.00-                                      
+                                  --------      --------    -----     ------------     -------                                       
+1CREDIT UNION SERVICES SYSTEM A                    NORTHWEST FEDERAL CREDIT UNION-1845101737      SETDATE 12/05/15         PAGE    40
+  NORTHWEST FEDERAL CREDIT UNION-PRKB12            TERMINAL ACTIVITY                              RUNDATE 12/05/15                   
+  EFBPD010-RP01                                                                                   RUNTIME 19:20:39                   
+0                                                                                                                                    
+0    TERMINAL                                                                                                                        
+ TRANSACTION COUNTS:    TYPE              ACCEPTED            REJECTED        USER-DEFINED             NO BILL             TOTAL     
+                                                                                                                                     
+ 012000-CASH WITHDRAWAL FROM CHECKING          207                  17                                                       224     
+ 312000-BALANCE INQUIRY FROM CHECKING           21                   4                                                        25     
+ 401020-TRANSFER FROM SAVINGS TO CHECKING        1                                                                             1     
+ 011000-CASH WITHDRAWAL FROM SAVINGS            27                   3                                                        30     
+ 210020-DEPOSIT TO CHECKING                     10                   3                                                        13     
+ 013000-CASH ADVANCE                             4                   2                                                         6     
+ 210010-DEPOSIT TO SAVINGS                       3                   1                                                         4     
+                                         ---------           ---------           ---------           ---------         ---------     
+ INSTITUTION COUNT TOTALS                      273                  30                   0                   0               303     
