@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use lib '/home/sphillips/lib/';
 use Test::More;
 
 
