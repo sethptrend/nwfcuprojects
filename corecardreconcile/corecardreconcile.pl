@@ -127,6 +127,6 @@ sub calcmatch {
 	my $score = 1-rand(.1);
 	$score *= 1 - abs( ($ccrec->{Amount} - $glrec->{AMOUNT}) / ($ccrec->{Amount} + $glrec->{AMOUNT}));
 	#print "\nTEST: distance $glrec->{cardlast4} " . substr($ccrec->{Card_Numb}, -4) . " " .  distance($glrec->{cardlast4}, substr($ccrec->{Card_Numb}, -4)) . "\n";
-	$score *= (1 + distance($glrec->{cardlast4}, substr($ccrec->{Card_Numb}, -4))) / 5;
+	$score *= (5 - distance($glrec->{cardlast4}, substr($ccrec->{Card_Numb}, -4))) / 5;
 	return $score;
 }
