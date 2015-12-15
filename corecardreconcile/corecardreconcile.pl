@@ -87,8 +87,34 @@ for my $ccrec (@ccdata){
 		push @ccunmatched, $ccrec;
 }
 
+my $lastdate ='';
+my $dateglcount;
+my $datecccount;
+
 for my $glrec (@glunmatched){
 	my %scores;
+	if($glrec->{POSTDATE} ne $lastdate) {#crossing date threshhold
+		if($lastdate){#this is a footer for the previous date - don't print the first time
+			print "Count of Unmatched transactions in GL for ". cutzeroes($lastdate) . ":\t$dateglcount\n";
+			print "-"x20 . "\n";
+			print "List of Unmatched transactions from CoreCard:\n";
+			 for my $ccrec (@ccunmatched){
+				next unless goofydatematch($lastdate, $ccrec->{Transaction_Date});
+				$datecccount++;
+				print "\tID $ccrec->{ID}\tDATE: $ccrec->{Transaction_Date}\t Card: $ccrec->{Card_Numb}\tAmount: $ccrec->{Amount}\n";
+			}
+			print "Count of Unmatched transactions in CoreCard for " . cutzeroes($lastdate) .":\t$datecccount\n";
+		}
+		#header for the new date
+		$lastdate = $glrec->{POSTDATE};
+		$dateglcount = 0;
+		$datecccount = 0;
+		print '-'x20 . "\n";
+		print "List of Unmatched Transactions in the GL for ".cutzeroes($lastdate).":\n";
+
+
+	}
+	$dateglcount++;
 	for my $ccrec (@ccunmatched){
 		my $score = calcmatch($glrec, $ccrec);
 		$scores{sprintf("%0.3f", $score)} = $ccrec if $score;#0 scores - in this case nonmatching date ignored
@@ -104,6 +130,19 @@ for my $glrec (@glunmatched){
 
 
 }
+#one last footer print
+if($lastdate){#this is a footer for the previous date - don't print the first time
+                        print "Count of Unmatched transactions in GL for " . cutzeroes($lastdate) .":\t$dateglcount\n";
+                        print "-"x20 . "\n";
+                        print "List of Unmatched transactions from CoreCard:\n";
+                         for my $ccrec (@ccunmatched){
+                                next unless goofydatematch($lastdate, $ccrec->{Transaction_Date});
+                                $datecccount++;
+                                print "\tID $ccrec->{ID}\tDATE: $ccrec->{Transaction_Date}\t Card: $ccrec->{Card_Numb}\tAmount: $ccrec->{Amount}\n";
+                        }
+                        print "Count of Unmatched transactions in CoreCard for $lastdate:\t$datecccount\n";
+                }
+
 
 
 
@@ -129,4 +168,11 @@ sub calcmatch {
 	#print "\nTEST: distance $glrec->{cardlast4} " . substr($ccrec->{Card_Numb}, -4) . " " .  distance($glrec->{cardlast4}, substr($ccrec->{Card_Numb}, -4)) . "\n";
 	$score *= (5 - distance($glrec->{cardlast4}, substr($ccrec->{Card_Numb}, -4))) / 5;
 	return $score;
+}
+
+#pretty print for sql server formatted date 0:00
+sub cutzeroes {
+	my $ret = shift;
+	$ret =~ s/ 0:00//;
+	return $ret;
 }
