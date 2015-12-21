@@ -7,4 +7,5 @@ use Test::More;
 use_ok('JSON');
 use_ok('DBI');
 use_ok('Text::Levenshtein');
+use_ok('Data::Dumper');
 done_testing();
