@@ -4,6 +4,10 @@
 #add html so it's readable
 #we want to be able to view by a process date as a report
 #definitely need to sort by timestamp + date
+
+#12/30 thoughs -
+#drop date matching, match whatever matches first
+#list mismatches by post date and process date, complete output section revamp
 use warnings;
 use strict;
 use lib '\\\\Shenandoah\\sphillips$\\My Documents\\sethpgit\\lib'; #thanks windows
@@ -20,9 +24,12 @@ my $ccfilename = 'CoreCardtransactions.csv';
 #my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where Transaction_Date in ('2015-12-11', '2015-12-12', '2015-12-13', '2015-12-14') order by (transaction_date + TRANSACTION_TIME) asc")};
 
 #process date 12/15 vs GL 12/15
-my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where EFFECTIVEDATE >= '2015-12-15' and EFFECTIVEDATE < '2015-12-16' ORDER BY EFFECTIVEDATE ASC")};
-my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate = '20151215' order by (transaction_date + TRANSACTION_TIME) asc")};
+#my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where EFFECTIVEDATE >= '2015-12-14' and EFFECTIVEDATE < '2015-12-16' ORDER BY EFFECTIVEDATE ASC")};
+#my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate = '20151215' order by (transaction_date + TRANSACTION_TIME) asc")};
 
+#get everything and let it fight itself out
+my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] w ORDER BY POSTDATE ASC")};
+my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] order by (ProcessDate +  transaction_date + TRANSACTION_TIME) asc")};
 
 my @glfields;
 my @ccfields;
@@ -47,7 +54,10 @@ for my $glrec (@gldata)
 		next unless $ccrec->{Tran_Code} eq '37';
 		next unless $ccrec->{Amount} == $glrec->{AMOUNT};
 		next unless $ccrec->{Card_Numb} =~ /$cardlast4$/;
-		next unless goofydatematch($glrec->{POSTDATE} ,$ccrec->{Transaction_Date});
+		#prevent many to 1 matches
+		next if $ccrec->{matched};
+		#stop caring about dates matching (if scoring comes back maybe will keep)
+		#next unless goofydatematch($glrec->{POSTDATE} ,$ccrec->{Transaction_Date});
 		$ccrec->{matched}++;
 		$matched++;
 		$flag++;
@@ -70,33 +80,24 @@ for my $ccrec (@ccdata){
 		push @ccunmatched, $ccrec;
 }
 
-my $lastdate ='2015-12-11 00:00:00.000';
+my $lastdate ='';
 my $dateglcount =0;
-my $datecccount;
+my $datecccount =0;
 my $dateglamount=0;
+my $dateccamount = 0;
 
 
-
+#gl unmatched section
+print "<H1>Unmatched GL entries:</H1>\n";
 for my $glrec (@glunmatched){
-	my %scores;
 	if($glrec->{POSTDATE} ne $lastdate) {#crossing date threshhold
 		if($lastdate){
 			#this is a footer for the previous date - dont print the first time
 			print "</table>";
-			print "<p><b>Count of Unmatched transactions in GL for ". cutzeroes($lastdate) . ":\t$dateglcount, Total: $dateglamount</b></p>";
+			print "<p><b>Count for ". cutzeroes($lastdate) . ":\t$dateglcount, Total: $dateglamount</b></p>";
 			$dateglamount=0;
 			
-			print "<h2>List of Unmatched transactions from CoreCard</h2>";
-			print "<table><tr><td>Effective Date<td>Time<td>Card Number<td>Amount</tr>\n";
-			my $ccamttotal  = 0;
-			 for my $ccrec (@ccunmatched){
-				next unless goofydatematch($lastdate, $ccrec->{Transaction_Date});
-				$datecccount++;
-				print "<tr><td>$ccrec->{Transaction_Date}<td>$ccrec->{TRANSACTION_TIME}<td>$ccrec->{Card_Numb}<td>$ccrec->{Amount}</tr>";
-				$ccamttotal += $ccrec->{Amount};
-			}
-			print "</table>";
-			print "<h3>Count of Unmatched transactions in CoreCard for " . cutzeroes($lastdate) .": $datecccount, Total: $ccamttotal</h3>\n";
+			
 		}
 		#header for the new date
 		$lastdate = $glrec->{POSTDATE};
@@ -108,40 +109,43 @@ for my $glrec (@glunmatched){
 		}
 	$dateglcount++;
 	$dateglamount += $glrec->{AMOUNT};
-	for my $ccrec (@ccunmatched){
-		my $score = calcmatch($glrec, $ccrec);
-		$scores{sprintf("%0.3f", $score)} = $ccrec if $score;#0 scores - in this case nonmatching date ignored
-	}
-	my $count =0;
-	print "<tr><td>$glrec->{POSTDATE}<td>$glrec->{COMMENT}<td>$glrec->{AMOUNT}</tr>\n";
-	#print "<tr><td>Suggestions<td colspan=3><table><tr><td>Date<td>Time<td>Card<td>Amount</tr>\n";
-	for my $cckey (reverse sort keys %scores){
-		$count ++;
-		my $ccrec = $scores{$cckey};
-		last if $count==4;#how many guesses we care about
-		#print "<tr><td>$ccrec->{Transaction_Date}<td>$ccrec->{TRANSACTION_TIME}<td>$ccrec->{Card_Numb}<td>$ccrec->{Amount}</tr>\n";
-	}
-	#print "</table></tr>\n";
-
-
+	print "<tr><td>$glrec->{EFFECTIVEDATE}<td>$glrec->{COMMENT}<td>$glrec->{AMOUNT}</tr>\n";
 }
 #one last footer print
-if($lastdate){
-	print "</table>";
-	print "<p><b>Count of Unmatched transactions in GL for ". cutzeroes($lastdate) . ":\t$dateglcount, Total: $dateglamount</b></p>";
-	print "<h2>List of Unmatched transactions from CoreCard</h2>";
-	print "<table><tr><td>Effective Date<td>Time<td>Card Number<td>Amount</tr>\n";
-	my $ccamttotal  = 0;
-	 for my $ccrec (@ccunmatched){
-		next unless goofydatematch($lastdate, $ccrec->{Transaction_Date});
-		$datecccount++;
-		print "<tr><td>$ccrec->{Transaction_Date}<td>$ccrec->{TRANSACTION_TIME}<td>$ccrec->{Card_Numb}<td>$ccrec->{Amount}</tr>";
-		$ccamttotal += $ccrec->{Amount};
-		
+print "</table>";
+print "<p><b>Count of Unmatched transactions in GL for ". cutzeroes($lastdate) . ":\t$dateglcount, Total: $dateglamount</b></p>";
+
+
+#cc unmatched section
+$lastdate = '';
+
+print "<H1>Unmatched CoreCard Entries:</H1>\n";
+for my $ccrec (@ccunmatched){
+	if($ccrec->{ProcessDate} ne $lastdate) {#crossing date threshhold
+		if($lastdate){
+		#footer for prev date
+			print "</table>\n";
+			print "<p><b>Count for " . adddashes($lastdate) . ": $datecccount, Total: $dateccamount</b></p>\n";
+			
+		}
+		$datecccount = 0;
+		$dateccamount = 0;
+		$lastdate = $ccrec->{ProcessDate};
+		print "<h2>" . adddashes($lastdate) . ":</h2>\n";
+		print "<table><tr><td>Effective Date<td>Time<td>Card Number<td>Amount</tr>\n";
 	}
-	print "</table>";
-	print "<h3>Count of Unmatched transactions in CoreCard for " . cutzeroes($lastdate) .": $datecccount, Total: $ccamttotal</h3>\n";
+	$datecccount++;
+	$dateccamount += $ccrec->{Amount};
+	print "<tr><td>$ccrec->{Transaction_Date}<td>$ccrec->{TRANSACTION_TIME}<td>$ccrec->{Card_Numb}<td>$ccrec->{Amount}</tr>";
+	
+	
+
+
 }
+
+print "</table>\n";
+print "<p><b>Count for " . adddashes($lastdate) . ": $datecccount, Total: $dateccamount</b></p>\n";
+			
 
 
 
@@ -178,5 +182,11 @@ sub calcmatch {
 sub cutzeroes {
 	my $ret = shift;
 	$ret =~ s/ 00:00:00\.000//;
+	return $ret;
+}
+
+sub adddashes {
+	my $ret = shift;
+	return 0 unless $ret =~ s/(\d\d\d\d)(\d\d)(\d\d)/$1-$2-$3/;
 	return $ret;
 }
