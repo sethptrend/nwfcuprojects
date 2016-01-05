@@ -8,6 +8,8 @@
 #12/30 thoughs -
 #drop date matching, match whatever matches first
 #list mismatches by post date and process date, complete output section revamp
+
+#1/5 - add a list of matching card numbers amongst the unmatched
 use warnings;
 use strict;
 use lib '\\\\Shenandoah\\sphillips$\\My Documents\\sethpgit\\lib'; #thanks windows
@@ -24,12 +26,12 @@ my $ccfilename = 'CoreCardtransactions.csv';
 #my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where Transaction_Date in ('2015-12-11', '2015-12-12', '2015-12-13', '2015-12-14') order by (transaction_date + TRANSACTION_TIME) asc")};
 
 #process date 12/15 vs GL 12/15
-#my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where EFFECTIVEDATE >= '2015-12-14' and EFFECTIVEDATE < '2015-12-16' ORDER BY EFFECTIVEDATE ASC")};
-#my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate = '20151215' order by (transaction_date + TRANSACTION_TIME) asc")};
+my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where POSTDATE >= '2015-12-31' and POSTDATE < '2016-01-01' ORDER BY EFFECTIVEDATE ASC")};
+my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate in ('20151231') order by (transaction_date + TRANSACTION_TIME) asc")};
 
 #get everything and let it fight itself out
-my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] w ORDER BY POSTDATE ASC")};
-my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] order by (ProcessDate +  transaction_date + TRANSACTION_TIME) asc")};
+#my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] w ORDER BY POSTDATE ASC")};
+#my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] order by (ProcessDate +  transaction_date + TRANSACTION_TIME) asc")};
 
 my @glfields;
 my @ccfields;
@@ -109,7 +111,7 @@ for my $glrec (@glunmatched){
 		}
 	$dateglcount++;
 	$dateglamount += $glrec->{AMOUNT};
-	print "<tr><td>$glrec->{EFFECTIVEDATE}<td>$glrec->{COMMENT}<td>$glrec->{AMOUNT}</tr>\n";
+	print "<tr><td>". cutzeroes($glrec->{EFFECTIVEDATE})."<td>$glrec->{COMMENT}<td>$glrec->{AMOUNT}</tr>\n";
 }
 #one last footer print
 print "</table>";
@@ -147,9 +149,27 @@ print "</table>\n";
 print "<p><b>Count for " . adddashes($lastdate) . ": $datecccount, Total: $dateccamount</b></p>\n";
 			
 
+#make a table for the card number matches amongst the remaining
+print "<table>\n";
+print "<tr><th>GL Comment<th>Amount<th>Date<th>CC Number<th>Amount<th>Date<th>Match</tr>\n";
+
+for my $glrec (@glunmatched){
+	my $match = 0;
+	for my $ccrec (@ccunmatched){
+		next unless $ccrec->{Card_Numb} =~ /$glrec->{cardlast4}$/;
+		$match++;
+		print "<tr><td>$glrec->{COMMENT}<td>$glrec->{AMOUNT}<td>". cutzeroes($glrec->{EFFECTIVEDATE})."<td>$ccrec->{Card_Numb}<td>$ccrec->{Amount}<td>$ccrec->{Transaction_Date} $ccrec->{TRANSACTION_TIME}<td>$match</tr>\n";
+		
+	}
+}
+
+print "</table>\n";
+#end of card matches table
 
 
-
+############################
+#End of HTML (END OF OUTPUT)
+############################
 print "</body></html>\n";
 
 
