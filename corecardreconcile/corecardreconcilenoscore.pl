@@ -26,8 +26,8 @@ my $ccfilename = 'CoreCardtransactions.csv';
 #my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where Transaction_Date in ('2015-12-11', '2015-12-12', '2015-12-13', '2015-12-14') order by (transaction_date + TRANSACTION_TIME) asc")};
 
 #process date 12/15 vs GL 12/15
-my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where POSTDATE >= '2015-12-31' and POSTDATE < '2016-01-01' ORDER BY EFFECTIVEDATE ASC")};
-my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate in ('20151231') order by (transaction_date + TRANSACTION_TIME) asc")};
+my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where POSTDATE >= '2015-12-25' and POSTDATE < '2015-12-29' ORDER BY EFFECTIVEDATE ASC")};
+my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate in ('20151225', '20151226', '20151227', '20151228') order by (processdate + transaction_date + TRANSACTION_TIME) asc")};
 
 #get everything and let it fight itself out
 #my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] w ORDER BY POSTDATE ASC")};
