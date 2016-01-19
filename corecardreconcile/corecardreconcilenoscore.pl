@@ -10,28 +10,21 @@
 #list mismatches by post date and process date, complete output section revamp
 
 #1/5 - add a list of matching card numbers amongst the unmatched
+
+#1/19 - switch over to date as a argv and cedar
 use warnings;
 use strict;
 use lib '\\\\Shenandoah\\sphillips$\\My Documents\\sethpgit\\lib'; #thanks windows
 use Text::Levenshtein qw(distance);
-use Connection::PO;
-my $db = Connection::PO->new();
-#csvs are temporary, replace with sql db reads later when access exists
-my $glfilename = 'GLACCOUNTHISTORY.csv';
-my $ccfilename = 'CoreCardtransactions.csv';
+use Connection::Cedar;
+my $db = Connection::Cedar->new();
 
-#my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where EFFECTIVEDATE >= '2015-12-12' and EFFECTIVEDATE < '2015-12-15' ORDER BY EFFECTIVEDATE ASC")};
-#my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where EFFECTIVEDATE >= '2015-12-11' and EFFECTIVEDATE < '2015-12-15' ORDER BY EFFECTIVEDATE ASC")};
-#my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate = '20151214' order by (transaction_date + TRANSACTION_TIME) asc")};
-#my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where Transaction_Date in ('2015-12-11', '2015-12-12', '2015-12-13', '2015-12-14') order by (transaction_date + TRANSACTION_TIME) asc")};
+my $targetdate = shift // die 'No argument passed';
 
-#process date 12/15 vs GL 12/15
-my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] where POSTDATE >= '2015-12-25' and POSTDATE < '2015-12-29' ORDER BY EFFECTIVEDATE ASC")};
-my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] where processdate in ('20151225', '20151226', '20151227', '20151228') order by (processdate + transaction_date + TRANSACTION_TIME) asc")};
 
-#get everything and let it fight itself out
-#my @gldata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[GLHISTORY] w ORDER BY POSTDATE ASC")};
-#my @ccdata = @{$db->GetCustomRecords("SELECT * FROM [CoreCard].[dbo].[Core_Card_Transactions] order by (ProcessDate +  transaction_date + TRANSACTION_TIME) asc")};
+
+my @gldata = $db->GetGLPostDate($targetdate);
+my @ccdata = $db->GetCCProcessDate($targetdate);
 
 my @glfields;
 my @ccfields;
