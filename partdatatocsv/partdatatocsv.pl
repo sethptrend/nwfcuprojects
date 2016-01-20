@@ -77,7 +77,7 @@ push @{$parts{$rec->{'03'}}}, $rec;
 no warnings "uninitialized";
 
 for my $part (keys %parts) {
-	open my $outfile, ">", "$part\.csv" or die "Couldn't open file to write: $!\n";
+	open my $outfile, ">", "$part". "20151231\.csv" or die "Couldn't open file to write: $!\n";
 	print $outfile "Date,Sequence,Participation,Agreement ID,Action Code,Transaction Amount,Principal,Interest,Service Fee,Running Balance\n";
 for my $partrec (@{$parts{$part}}){
 	#some data reformatting
