@@ -19,12 +19,16 @@ use Text::Levenshtein qw(distance);
 use Connection::Cedar;
 my $db = Connection::Cedar->new();
 
-my $targetdate = shift // die 'No argument passed';
+my @targetdates;
+while(my $targetdate = shift){
+	push @targetdates, $targetdate;
+}
+die 'No argument passed' unless scalar @targetdates;
 
 
 
-my @gldata = $db->GetGLPostDate($targetdate);
-my @ccdata = $db->GetCCProcessDate($targetdate);
+my @gldata = $db->GetGLPostDate(@targetdates);
+my @ccdata = $db->GetCCProcessDate(@targetdates);
 
 my @glfields;
 my @ccfields;

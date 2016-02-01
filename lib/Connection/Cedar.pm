@@ -48,17 +48,22 @@ sub new {
 #my @gldata = $db->GetGLPostDate($targetdate);
 sub GetGLPostDate {
 	my $self = shift;
-	my $date = shift; #expected format is yyyymmdd
+	my @ret;
+	while(my $date = shift){ #expected format is yyyymmdd
 	if($date=~ /(\d\d\d\d)(\d\d)(\d\d)/){
-	return @{$self->GetCustomRecords("SELECT * FROM [ARCU_TEST].[dbo].[glhistory] where POSTDATE = '$1\-$2\-$3' ORDER BY EFFECTIVEDATE ASC")};
-	}
+	push @ret,  @{$self->GetCustomRecords("SELECT * FROM [ARCU_TEST].[dbo].[glhistory] where POSTDATE = '$1\-$2\-$3' ORDER BY EFFECTIVEDATE ASC")};
+	}}
 	
-	return 0;
+	
+	return @ret;
 	
 }
 #my @ccdata = $db->GetCCProcessDate($targetdate);
 sub GetCCProcessDate {
 	my $self = shift;
-	my $date = shift;
-	return @{$self->GetCustomRecords("SELECT * FROM [ARCU_TEST].[dbo].[Core_Card_Transactions] where processdate = '$date' order by (convert(varchar,processdate) + convert(varchar,transaction_date) + TRANSACTION_TIME) asc")};
+	my @ret;
+	while(my $date = shift){
+	push @ret, @{$self->GetCustomRecords("SELECT * FROM [ARCU_TEST].[dbo].[Core_Card_Transactions] where processdate = '$date' order by (convert(varchar,processdate) + convert(varchar,transaction_date) + TRANSACTION_TIME) asc")};
+	}
+	return @ret;
 }
