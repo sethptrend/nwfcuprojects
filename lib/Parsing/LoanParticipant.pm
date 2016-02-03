@@ -185,7 +185,32 @@ sub ParseReportFile {
 
 }
 
-
+#my %parts = $parser->ParseInterestFile(@infile);
+sub ParseInterestFile {
+	my $self = shift;
+	my @lines = @_;
+	my @records;
+	
+	for my $line (@lines){
+		chomp $line;
+		#remove form feed characters
+		$line =~ s/\o{14}//g;
+		#no commas
+		$line =~ s/,//g;
+		next unless $line; #toss any blank line without error
+		#pitch header lines
+		next if $line =~ /NORTHWEST FCU/;
+		my @record = split /\s+/, $line;
+		push @records, \@record;
+	
+	}
+	my %parts;
+	
+	for my $rec(@records){
+		push @{ $parts{$self->{special}->{$rec->[2]} // $rec->[2]} }, $rec; 
+	}
+	return %parts;
+}
 
 
 

@@ -120,6 +120,30 @@ if($reportfile){
 	
 }
 
+if($interestfile){
+	open my $infile, "<", $interestfile or die $!;
+	my @infile = <$infile>;
+	close $infile;
+	my %parts = $parser->ParseInterestFile(@infile);
+
+	for my $part (keys %parts) {
+			my $outfile =  "$part". "$dateappend\.xls";
+			$excelfiles{$outfile} = $excelfiles{$outfile} // Spreadsheet::WriteExcel->new($outfile) or die $!;
+			my $sheet = $excelfiles{$outfile}->add_worksheet('Interest Accrual');
+			my $row = 1;
+			#appropriate header = ?
+			#$sheet->write($row,0, ["Date","Sequence",'Participation','Agreement ID','Action Code','Principal','Interest','Service Fee','Running Balance']);
+			
+					
+			for my $partrec (@{$parts{$part}}){
+				$row++;
+				$sheet->write($row,0, $partrec);
+			}
+	}
+}
+
+
+
 #close the excel spreadsheets - technically going out of scope should call this, but not bad practice
 for my $excelfile (keys %excelfiles){
 	$excelfiles{$excelfile}->close();
