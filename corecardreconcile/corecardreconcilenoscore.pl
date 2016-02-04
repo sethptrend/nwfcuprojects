@@ -21,7 +21,12 @@ my $db = Connection::Cedar->new();
 
 my @targetdates;
 while(my $targetdate = shift){
+	#unroll dashes
+	if($targetdate =~ /^(\d+)-(\d+)$/){
+		push @targetdates, ($1 .. $2);
+	}else{
 	push @targetdates, $targetdate;
+	}
 }
 die 'No argument passed' unless scalar @targetdates;
 
