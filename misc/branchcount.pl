@@ -15,6 +15,7 @@
 
 use warnings;
 use strict;
+use JSON;
 use lib '\\\\Shenandoah\\sphillips$\\My Documents\\sethpgit\\lib'; #thanks windows
 use Connection::Cedar;
 
@@ -31,9 +32,9 @@ $db->DoSQL('truncate table [ARCU_TEST].dbo.primarybranch');
 #  group by branch, parentaccount
 #  order by parentaccount asc
 my $loancountrecs = $db->GetCustomRecords(
-	'SELECT count(*) as c, BRANCH, PARENTACCOUNT ' .
-	'FROM [ARCU_TEST].[dbo].[loantransaction]  where datediff(day, POSTDATE, getdate()) < 181 and not BRANCH=0 ' .
-	'group by branch, parentaccount ' .
+	'SELECT count(*) as c, BRANCH, PARENTACCOUNT, SOURCECODE ' .
+	'FROM [ARCU_TEST].[dbo].[loantransaction]  where datediff(day, POSTDATE, getdate()) < 181 and COMMENTCODE=0 and not BRANCH=0 ' .
+	'group by branch, parentaccount, SOURCECODE ' .
 	'order by parentaccount asc ' 
 	);
 
@@ -44,20 +45,22 @@ my $loancountrecs = $db->GetCustomRecords(
   #group by branch, parentaccount
   #order by parentaccount asc
 my $savingscountrecs = $db->GetCustomRecords(
-	'SELECT count(*) as c, BRANCH, PARENTACCOUNT ' .
-	'FROM [ARCU_TEST].[dbo].[savingstransaction]  where datediff(day, POSTDATE, getdate()) < 181 and not BRANCH=0 ' .
-	'group by branch, parentaccount ' .
+	'SELECT count(*) as c, BRANCH, PARENTACCOUNT, SOURCECODE ' .
+	'FROM [ARCU_TEST].[dbo].[savingstransaction]  where datediff(day, POSTDATE, getdate()) < 181 and COMMENTCODE=0 and not BRANCH=0 ' .
+	'group by branch, parentaccount, SOURCECODE ' .
 	'order by parentaccount asc ' 
 	);
   
 #fuse these things
 my %sums;
-
+my %codesums;
 for my $rec (@$loancountrecs){
 	$sums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} += $rec->{c};
+	$codesums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}}->{$rec->{SOURCECODE} // ''} += $rec->{c};
 }
 for my $rec (@$savingscountrecs){
 	$sums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} += $rec->{c};
+	$codesums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}}->{$rec->{SOURCECODE} // ''} += $rec->{c};
 }
 
 print scalar keys %sums ;
@@ -70,7 +73,7 @@ for my $k (keys %sums){
 	for my $branch (keys %{$sums{$k}}){
 		$best = $sums{$k}->{$branch} and $bestb = $branch if $sums{$k}->{$branch} > $best;
 	}
-	$db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[primarybranch]', $k, $bestb, 'Most frequent transactions in last 6 months');
+	$db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[primarybranch]', $k, $bestb, 'Most frequent transactions in last 6 months','Source codes - ' . encode_json($codesums{$k}->{$bestb}));
 }
 
 
@@ -78,16 +81,19 @@ for my $k (keys %sums){
 #majority of deposit account openings (non branch 0)
 
 my $savingsaccountcountrecs = $db->GetCustomRecords(
-	'SELECT count(*) as c, PARENTACCOUNT, BRANCH ' .
+	'SELECT count(*) as c, PARENTACCOUNT, BRANCH, ID ' .
   'FROM [ARCU_TEST].[dbo].[savings] where not BRANCH=0 ' .
-  'group by branch, PARENTACCOUNT ' .
+  'group by branch, PARENTACCOUNT, ID ' .
   ' order by PARENTACCOUNT asc '
   );
  
- #searchable compiation
+ #searchable compilation
  my %sums2;
+ my %idlist2;
  for my $rec (@$savingsaccountcountrecs){
  	$sums2{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} += $rec->{c};
+ 	$idlist2{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} .= $rec->{ID} . ',';
+ 	
  }
  
  print scalar keys %sums2 ;
@@ -104,6 +110,18 @@ my $savingsaccountcountrecs = $db->GetCustomRecords(
  		
  		$best = $sums2{$k}->{$branch} and $bestb = $branch if $sums2{$k}->{$branch} > $best;
  	}
- 	$db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[primarybranch]', $k, $bestb, 'Most savings accounts') if $bestb;
+ 	$db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[primarybranch]', $k, $bestb, 'Most savings accounts', 'Account IDs - '. $idlist2{$k}->{$bestb}) if $bestb;
 }
- 
+
+
+#criteria 3.5 - ACHs and Online banking transactions, throw into branch 0
+ my $achonlinerecs = $db->GetCustomRecords(
+ 	"SELECT distinct savingstransaction.PARENTACCOUNT ".
+	  " FROM [ARCU_TEST].[dbo].[savingstransaction] " .
+	  " left join [ARCU_TEST].[dbo].[primarybranch] on savingstransaction.PARENTACCOUNT=primarybranch.PARENTACCOUNT " .
+   " where SOURCECODE in ('E', 'H') and primarybranch.PARENTACCOUNT is NULL "
+   );
+   
+ for my $rec (@$achonlinerecs){
+ 	$db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[primarybranch]', $rec->{PARENTACCOUNT}, 1, 'Assigned branch 1 due to ACH or online banking');
+ }
