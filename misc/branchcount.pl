@@ -33,7 +33,7 @@ $db->DoSQL('truncate table [ARCU_TEST].dbo.primarybranch');
 #  order by parentaccount asc
 my $loancountrecs = $db->GetCustomRecords(
 	'SELECT count(*) as c, BRANCH, PARENTACCOUNT, SOURCECODE ' .
-	'FROM [ARCU_TEST].[dbo].[loantransaction]  where datediff(day, POSTDATE, getdate()) < 181 and COMMENTCODE=0 ' .
+	'FROM [ARCU_TEST].[dbo].[loantransaction]  where datediff(day, POSTDATE, getdate()) < 181 and COMMENTCODE=0 and not BRANCH=0 ' .
 	'group by branch, parentaccount, SOURCECODE ' .
 	'order by parentaccount asc ' 
 	);
@@ -46,7 +46,7 @@ my $loancountrecs = $db->GetCustomRecords(
   #order by parentaccount asc
 my $savingscountrecs = $db->GetCustomRecords(
 	'SELECT count(*) as c, BRANCH, PARENTACCOUNT, SOURCECODE ' .
-	'FROM [ARCU_TEST].[dbo].[savingstransaction]  where datediff(day, POSTDATE, getdate()) < 181 and COMMENTCODE=0  ' .
+	'FROM [ARCU_TEST].[dbo].[savingstransaction]  where datediff(day, POSTDATE, getdate()) < 181 and COMMENTCODE=0 and not BRANCH=0 ' .
 	'group by branch, parentaccount, SOURCECODE ' .
 	'order by parentaccount asc ' 
 	);
@@ -55,24 +55,12 @@ my $savingscountrecs = $db->GetCustomRecords(
 my %sums;
 my %codesums;
 for my $rec (@$loancountrecs){
-	if($rec->{BRANCH} eq '0' and $rec->{SOURCECODE} and ($rec->{SOURCECODE} eq 'E' or $rec->{SOURCECODE} eq 'H') ){
-		$sums{$rec->{PARENTACCOUNT}}->{1} += $rec->{c};
-		$codesums{$rec->{PARENTACCOUNT}}->{1}->{'0+'.$rec->{SOURCECODE} } += $rec->{c};
-	}else{
-		next if $rec->{BRANCH} eq '0';
-		$sums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} += $rec->{c};
-		$codesums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}}->{$rec->{SOURCECODE} // ''} += $rec->{c};
-	}
+	$sums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} += $rec->{c};
+	$codesums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}}->{$rec->{SOURCECODE} // ''} += $rec->{c};
 }
 for my $rec (@$savingscountrecs){
-	if($rec->{BRANCH} eq '0' and $rec->{SOURCECODE} and ($rec->{SOURCECODE} eq 'E' or $rec->{SOURCECODE} eq 'H') ){
-		$codesums{$rec->{PARENTACCOUNT}}->{1}->{'0+'.$rec->{SOURCECODE} } += $rec->{c};
-		$sums{$rec->{PARENTACCOUNT}}->{1} += $rec->{c};
-	}else{
-		next if $rec->{BRANCH} eq '0';
-		$sums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} += $rec->{c};
-		$codesums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}}->{$rec->{SOURCECODE} // ''} += $rec->{c};
-	}
+	$sums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}} += $rec->{c};
+	$codesums{$rec->{PARENTACCOUNT}}->{$rec->{BRANCH}}->{$rec->{SOURCECODE} // ''} += $rec->{c};
 }
 
 print scalar keys %sums ;
