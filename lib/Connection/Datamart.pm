@@ -1,5 +1,5 @@
 #Seth Phillips
-#interface to the PO test sql server that uses  windows auth
+#interface to the Datamart sql server db
 #12/15/15
 
 
@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use lib '../';
 
-package Connection::PO;
+package Connection::Datamart;
 use Connection::Connection;
 use Digest::MD5 qw(md5 md5_hex);
 our @ISA = ('Connection::Connection');
@@ -23,7 +23,7 @@ sub new {
         update  => 1,
 #in the base class these are undefined . . . basically base class functions should not work unless inherited
         dbname => "LENDER_LOAN_SERVICE",
-        dbhost => 'Sql-listener\Datamart',
+        dbhost => 'BASS\\DATAMART',
         dbusr => '',
         dbpass => '',
         dbusrro => undef,
