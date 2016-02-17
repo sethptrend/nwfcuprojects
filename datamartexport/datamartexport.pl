@@ -380,6 +380,8 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] nineohone on nineohone.loanGene
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._LEGAL_DESCRIPTION legaldesc on legaldesc.loanGeneral_Id=g.loanGeneral_Id and legaldesc._Type='LongLegal'
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
+       AND gld.LoanProgram not like 'HELOC\%'
+    AND gld.LoanProgram not like 'EL\%'
 EOT
 
 
@@ -390,7 +392,7 @@ my $flag = 0;
 
 #printing nulls as ''
 no warnings 'uninitialized';
-open my $tsv, ">", "$targetdate\.tsv";
+open my $tsv, ">", "MortgageBotUpdate-$targetdate\.csv";
 for my $rec (@$recs){
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
