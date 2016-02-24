@@ -51,7 +51,6 @@ my @fields = ('Loan ID',
 'Borrower 1 Email Address',
 'Borrower 1 Home Phone',
 'Borrower 1 Cell Phone',
-'Borrower 1 Fax',
 'Borrower 1 Credit Score',
 'Borrower 1 Credit Score Date',
 'Borrower 1 Credit Score ID',
@@ -63,7 +62,6 @@ my @fields = ('Loan ID',
 'Borrower 2 Email Address',
 'Borrower 2 Home Phone',
 'Borrower 2 Cell Phone',
-'Borrower 2 Fax',
 'Borrower 2 Credit Score',
 'Borrower 2 Credit Score Date',
 'Borrower 2 Credit Score ID',
@@ -75,7 +73,6 @@ my @fields = ('Loan ID',
 'Borrower 3 Email Address',
 'Borrower 3 Home Phone',
 'Borrower 3 Cell Phone',
-'Borrower 3 Fax',
 'Borrower 3 Credit Score',
 'Borrower 3 Credit Score Date',
 'Borrower 3 Credit Score ID',
@@ -87,12 +84,11 @@ my @fields = ('Loan ID',
 'Borrower 4 Email Address',
 'Borrower 4 Home Phone',
 'Borrower 4 Cell Phone',
-'Borrower 4 Fax',
 'Borrower 4 Credit Score',
 'Borrower 4 Credit Score Date',
 'Borrower 4 Credit Score ID',
 'Borrower 4 DOB',
-'Poperty Street',
+'Property Street',
 'Property City',
 'Property State',
 'Property Zip',
@@ -118,7 +114,7 @@ my @fields = ('Loan ID',
 my $qry = <<"EOT";
 SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
       , 'Coupons' as 'Billing Method'
-	  , 'N' as 'Daily Interest Loan'
+	  , 'No' as 'Daily Interest Loan'
 	   ,ld.ClosingDate AS 'Date of Note'
 	   ,ld.FirstPaymentDate as 'Due Date of Next Payment'
 	   ,ld.FirstPaymentDate as 'Due Date of First Payment'
@@ -127,7 +123,7 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , lockp.BaseRate as 'Interest Rate'
 	  , mt.LoanAmortizationType as 'Interest Type'
 	  , b1._LastName + ', ' + b1._FirstName + ' ' + b1._MiddleName as 'Loan Name'
-	  , '50-Active' as 'Loan Status'
+	  , 'Active' as 'Loan Status'
 	  , mt.MortgageType as 'Loan Type'
 	  , gld.RequestedInterestRatePercent as 'Original Interest Rate'
 	  , phe1._PaymentAmount as 'Original P&I Payment'
@@ -136,11 +132,11 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , mt.LoanAmortizationType as 'Payment Type'
 	  , 'Print Late Notices and Assess Late Charge' as 'Print Late Notices?'
 	  , mt.LoanAmortizationTermMonths as 'Term in Months'
-	  , lld.LienPriorityType as 'Lien Position'
+	  , '1st Mortgage' as 'Lien Position'
 	  , lld.LoanPurposeType as 'Loan Purpose Type'
 	  , ld.LoanMaturityDate as 'Maturity Date'
-	  , InvestorPurchaserType as 'Interest Calc Method'
-	  , '5% of Principal & Interest - 15 day Grace Period' as 'Late Charge Description'
+	  , mt.MortgageType as 'Interest Calc Method'
+	  , '5% of Principal & Interest' as 'Late Charge Description'
 	  , TotalLoanAmount as 'Current Principal Balances'
 	  , TotalLoanAmount as 'Original Loan Amount'
 	  ,titot.tot as 'Current T&I Bal'
@@ -153,10 +149,9 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , b1._EmailAddress as 'Borrower 1 Email Address'
 	  ,b1._HomeTelephoneNumber as 'Borrower 1 Home Phone'
 	  ,b1._CellTelephoneNumber as 'Borrower 1 Cell Phone'
-	  ,b1._FaxTelephoneNumber as 'Borrower 1 Fax'
 	  ,b1.CreditScore as 'Borrower 1 Credit Score'
 	  ,ii.InterviewerApplicationSignedDate as 'Borrower 1 Credit Score Date'
-	  ,CASE WHEN b1.CreditScore = b1.EquifaxCreditScore THEN 'Equifax' WHEN b1.CreditScore = b1.ExperianCreditScore THEN 'Experian' WHEN b1.CreditScore = b1.TransUnionCreditScore THEN 'TransUnion' END AS 'Borrower 1 Credit Score ID'
+	  ,CASE WHEN b1.CreditScore = b1.EquifaxCreditScore THEN 'Equifax Beacon' WHEN b1.CreditScore = b1.ExperianCreditScore THEN 'Experian' WHEN b1.CreditScore = b1.TransUnionCreditScore THEN 'TransUnion Empirica' END AS 'Borrower 1 Credit Score ID'
 	  , b1._BirthDate as 'Borrower 1 DOB'
 	  , b2._LastName as 'Borrower 2 Last Name'
 	  , b2._SSN as 'Borrower 2 SSN'
@@ -170,11 +165,11 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  ,ii.InterviewerApplicationSignedDate as 'Borrower 2 Credit Score Date'
 	  ,CASE 
             WHEN b2.CreditScore = b2.EquifaxCreditScore
-                  THEN 'Equifax'
+                  THEN 'Equifax Beacon'
             WHEN b2.CreditScore = b2.ExperianCreditScore
                   THEN 'Experian'
 		    WHEN b2.CreditScore = b2.TransUnionCreditScore
-					THEN 'TransUnion'
+					THEN 'TransUnion Emprica'
             END AS 'Borrower 2 Credit Score ID'
 	  , b2._BirthDate as 'Borrower 2 DOB'
 	  , b3._LastName as 'Borrower 3 Last Name'
@@ -189,11 +184,11 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  ,ii.InterviewerApplicationSignedDate as 'Borrower 3 Credit Score Date'
 	  ,CASE 
             WHEN b3.CreditScore = b3.EquifaxCreditScore
-                  THEN 'Equifax'
+                  THEN 'Equifax Beacon'
             WHEN b3.CreditScore = b3.ExperianCreditScore
                   THEN 'Experian'
 		    WHEN b3.CreditScore = b3.TransUnionCreditScore
-					THEN 'TransUnion'
+					THEN 'TransUnion Emprica'
             END AS 'Borrower 3 Credit Score ID'
 	  , b3._BirthDate as 'Borrower 3 DOB'
 
@@ -209,14 +204,14 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  ,ii.InterviewerApplicationSignedDate as 'Borrower 4 Credit Score Date'
 	  ,CASE 
             WHEN b4.CreditScore = b4.EquifaxCreditScore
-                  THEN 'Equifax'
+                  THEN 'Equifax Beacon'
             WHEN b4.CreditScore = b4.ExperianCreditScore
                   THEN 'Experian'
 		    WHEN b4.CreditScore = b4.TransUnionCreditScore
-					THEN 'TransUnion'
+					THEN 'TransUnion Empirica'
             END AS 'Borrower 4 Credit Score ID'
 	  , b4._BirthDate as 'Borrower 4 DOB'
-	  , p._StreetAddress as 'Poperty Street'
+	  , p._StreetAddress as 'Property Street'
 	  , p._City as 'Property City'
 	  , p._State as 'Property State'
 	  , p._PostalCode as 'Property Zip'
@@ -234,9 +229,9 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , il.InvestorLoanIdentifier as 'Non-saleable to FNMA'
 	  ,titot.tot as 'Beginning T&I Amount'
 	  ,DATEADD(year, 1, fd._FundedDate) as 'Next T&I Analysis Date'
-	  , 'Y' as 'Pay Interest on Loss Draft?'
-	  , 'Y' as 'Pay Interest on T&I'
-	  , 'Corelogic' as 'Tax Servicer'
+	  , 'Yes' as 'Pay Interest on Loss Draft?'
+	  , 'Yes' as 'Pay Interest on T&I'
+	  , 'Corelogic Real Estate' as 'Tax Servicer'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
@@ -376,7 +371,7 @@ LEFT JOIN LENDER_LOAN_SERVICE.dbo.GLOBAL_VENDOR_AGENT_CONTACT_DETAIL det
 LEFT JOIN (
 		SELECT sum(_TotalAmount) as tot , loanGeneral_Id   FROM [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE]  where  hudType='HUD' and _LineNumber > 999 and _LineNumber < 1100 group by loanGeneral_Id 
 )  titot on titot.loanGeneral_Id=g.loangeneral_id
-LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] nineohone on nineohone.loanGeneral_Id=g.loangeneral_id and hudType='HUD' and _LineNumber=901
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] nineohone on nineohone.loanGeneral_Id=g.loangeneral_id and hudType='HUD' and _LineNumber=1401
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._LEGAL_DESCRIPTION legaldesc on legaldesc.loanGeneral_Id=g.loanGeneral_Id and legaldesc._Type='LongLegal'
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
@@ -394,6 +389,28 @@ my $flag = 0;
 no warnings 'uninitialized';
 open my $tsv, ">", "MortgageBotUpdate-$targetdate\.csv";
 for my $rec (@$recs){
+#place to hack fields before output
+	$rec->{'Payment Type'} =~ s/Rate//;
+	$rec->{'Interest Type'} =~ s/Rate//;
+	$rec->{'Loan Type'} =~ s/VA/VA (GI)/;
+	
+	$rec->{'Borrower 2 Credit Score Date'} = '' unless $rec->{'Borrower 2 Last Name'};
+	$rec->{'Borrower 3 Credit Score Date'} = '' unless $rec->{'Borrower 3 Last Name'};
+	$rec->{'Borrower 4 Credit Score Date'} = '' unless $rec->{'Borrower 4 Last Name'};
+
+	$rec->{'Mailing Name'} =~ s/^\s+|\s+$//g;
+	$rec->{'Mailing Name'} = $rec->{'Borrower Last Name'} . ' ' . $rec->{'Borrower 1 First Name'} unless $rec->{'Mailing Name'};
+############
+	
+	unless($rec->{'Mailing Zip'}){
+	$rec->{'Mailing Address 1'} = $rec->{'Property Street'};
+	$rec->{'Mailing City'} = $rec->{'Property City'};
+	$rec->{'Mailing State'} = $rec->{'Property State'};
+	$rec->{'Mailing Zip'} = $rec->{'Property Zip'};
+	
+	$rec->{'Interest Calc Method'} = 'Fannie Mae' if $rec->{'Interest Calc Method'} =~ /Conventional/;
+	}
+
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
 	$flag++;
