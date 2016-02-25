@@ -387,7 +387,7 @@ my $flag = 0;
 
 #printing nulls as ''
 no warnings 'uninitialized';
-open my $tsv, ">", "MortgageBotUpdate-$targetdate\.csv";
+open my $tsv, ">", "MortgageBotUpdate-$targetdate\.txt";
 for my $rec (@$recs){
 #place to hack fields before output
 	$rec->{'Payment Type'} =~ s/Rate//;
