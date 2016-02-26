@@ -201,6 +201,10 @@ sub ParseInterestFile {
 		#pitch header lines
 		next if $line =~ /NORTHWEST FCU/;
 		my @record = split /\s+/, $line;
+		#trim
+				for my $rec (@record){
+					$rec =~ s/^\s+|\s+$//;
+		}
 		push @records, \@record;
 	
 	}
@@ -212,7 +216,37 @@ sub ParseInterestFile {
 	return %parts;
 }
 
-
-
+#my %parts = $parser->ParseArcuFile(@infile);
+sub ParseArcuFile {
+	my $self = shift;
+	my @lines = @_;
+	my @records;
+	
+	for my $line (@lines){
+		chomp $line;
+		#remove form feed characters
+		$line =~ s/\o{14}//g;
+		#no commas
+		$line =~ s/,//g;
+		next unless $line; #toss any blank line without error
+		#pitch header lines
+		#next if $line =~ /NORTHWEST FCU/;
+		#semi colon seperated
+		my @record = split /;/, $line;
+		#trim
+		for my $rec (@record){
+			$rec =~ s/^\s+|\s+$//;
+		}
+		push @records, \@record;
+	
+	}
+	my %parts;
+	
+	for my $rec(@records){
+		#part # is 3rd in this file [2]
+		push @{ $parts{$self->{special}->{$rec->[2]} // $rec->[2]} }, $rec; 
+	}
+	return %parts;
+}
 
 1;

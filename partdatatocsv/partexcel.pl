@@ -9,11 +9,16 @@ use Parsing::LoanParticipant;
 use Getopt::Long;
 use Spreadsheet::WriteExcel;
 
-my ($datafile, $reportfile, $interestfile, $dateappend);
+my ($datafile, $reportfile, $interestfile, $dateappend, $arcufile);
 
+
+#############################
+### Below are the file options, very important
+#############################
 GetOptions (	"d=s" => \$datafile,
 		"r=s" => \$reportfile,
 		"i=s" => \$interestfile,
+		"c=s" => \$arcufile,        #subject to change?!?
 		"a=s" => \$dateappend);
 
 
@@ -139,10 +144,36 @@ if($interestfile){
 				$row++;
 				$sheet->write($row,0, $partrec);
 			}
+			
 	}
 }
 
+if($arcufile){
+	open my $infile, "<", $arcufile or die $!;
+	my @infile = <$infile>;
+	close $infile;
+	my %parts = $parser->ParseArcuFile(@infile);
 
+	for my $part (keys %parts) {
+			my $outfile =  "$part". "$dateappend\.xls";
+			$excelfiles{$outfile} = $excelfiles{$outfile} // Spreadsheet::WriteExcel->new($outfile) or die $!;
+			my $sheet = $excelfiles{$outfile}->add_worksheet('Transaction Report');
+			my $format = $excelfiles{$outfile}->add_format();
+			$format->set_num_format('$0.00');
+			
+			my $row = 1;
+			#appropriate header = ?
+			$sheet->write($row,0, ["Date","App",'Part #','','','Principal','Interest','Service Fee','Balance','Account #','','Description']);
+			
+					
+			for my $partrec (sort {$a->[8] <=> $b->[8]} @{$parts{$part}}){
+				$row++;
+				$sheet->write($row,0, $partrec);
+				
+			}
+			$sheet->set_column('F:I', 10, $format);
+	}
+}
 
 #close the excel spreadsheets - technically going out of scope should call this, but not bad practice
 for my $excelfile (keys %excelfiles){
