@@ -108,7 +108,13 @@ my @fields = ('Loan ID',
 'Next T&I Analysis Date',
 'Pay Interest on Loss Draft?',
 'Pay Interest on T&I',
-'Tax Servicer');
+'Tax Servicer',
+'Borrower 1 SSN',
+'Borrower 2 SSN',
+'Borrower 3 SSN',
+'Borrower 4 SSN',
+'Property County',
+'Census Tract');
 
 #giant sql query
 my $qry = <<"EOT";
@@ -136,7 +142,7 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , lld.LoanPurposeType as 'Loan Purpose Type'
 	  , ld.LoanMaturityDate as 'Maturity Date'
 	  , mt.MortgageType as 'Interest Calc Method'
-	  , '5% of Principal & Interest' as 'Late Charge Description'
+	  , '5% of Principal & Interest – 15 day Grace Period' as 'Late Charge Description'
 	  , TotalLoanAmount as 'Current Principal Balances'
 	  , TotalLoanAmount as 'Original Loan Amount'
 	  ,titot.tot as 'Current T&I Bal'
@@ -231,7 +237,13 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  ,DATEADD(year, 1, fd._FundedDate) as 'Next T&I Analysis Date'
 	  , 'Yes' as 'Pay Interest on Loss Draft?'
 	  , 'Yes' as 'Pay Interest on T&I'
-	  , 'Corelogic Real Estate' as 'Tax Servicer'
+	  , 'First American Real Estate' as 'Tax Servicer'
+	  	  , b1._SSN as 'Borrower 1 SSN'
+	  	  , b2._SSN as 'Borrower 2 SSN'
+	  	  , b3._SSN as 'Borrower 3 SSN'
+	  , b4._SSN as 'Borrower 4 SSN'
+	  , p._County as 'Property County'
+	    , p.AssessorsParcelIdentifier as 'Census Tract'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
