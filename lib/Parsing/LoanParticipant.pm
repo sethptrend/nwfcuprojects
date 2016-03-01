@@ -202,8 +202,9 @@ sub ParseInterestFile {
 		next if $line =~ /NORTHWEST FCU/;
 		my @record = split /\s+/, $line;
 		#trim
-				for my $rec (@record){
+		for my $rec (@record){
 					$rec =~ s/^\s+|\s+$//;
+					$rec =~ s/-\s+/-/;
 		}
 		push @records, \@record;
 	

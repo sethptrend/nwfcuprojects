@@ -114,7 +114,8 @@ my @fields = ('Loan ID',
 'Borrower 3 SSN',
 'Borrower 4 SSN',
 'Property County',
-'Census Tract');
+'Census Tract',
+'Member #');
 
 #giant sql query
 my $qry = <<"EOT";
@@ -232,7 +233,7 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , mail._City as 'Mailing City'
 	  , mail._State as 'Mailing State'
 	  , mail._PostalCode as 'Mailing Zip'
-	  , il.InvestorLoanIdentifier as 'Non-saleable to FNMA'
+	  , cfns.AttributeValue as 'Non-saleable to FNMA'
 	  ,titot.tot as 'Beginning T&I Amount'
 	  ,DATEADD(year, 1, fd._FundedDate) as 'Next T&I Analysis Date'
 	  , 'Yes' as 'Pay Interest on Loss Draft?'
@@ -244,6 +245,7 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , b4._SSN as 'Borrower 4 SSN'
 	  , p._County as 'Property County'
 	    , p.AssessorsParcelIdentifier as 'Census Tract'
+	    ,cfmember.AttributeValue as 'Member #'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
@@ -385,6 +387,8 @@ LEFT JOIN (
 )  titot on titot.loanGeneral_Id=g.loangeneral_id
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] nineohone on nineohone.loanGeneral_Id=g.loangeneral_id and hudType='HUD' and _LineNumber=1401
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._LEGAL_DESCRIPTION legaldesc on legaldesc.loanGeneral_Id=g.loanGeneral_Id and legaldesc._Type='LongLegal'
+LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfmember on cfmember.loanGeneral_Id=g.loanGeneral_Id and cfmember.AttributeUniqueName='Member Number'
+LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfns on cfns.loanGeneral_Id=g.loanGeneral_Id and cfns.AttributeUniqueName='Non-Saleable?'
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
        AND gld.LoanProgram not like 'HELOC\%'
@@ -421,6 +425,7 @@ for my $rec (@$recs){
 	$rec->{'Mailing Zip'} = $rec->{'Property Zip'};
 	
 	$rec->{'Interest Calc Method'} = 'Fannie Mae' if $rec->{'Interest Calc Method'} =~ /Conventional/;
+	$rec->{'Non-saleable to FNMA'} = $rec->{'Non-saleable to FNMA'} ? 'Y' : 'N';
 	}
 
 	print $tsv join("\t", map {$rec->{$_}} @fields);

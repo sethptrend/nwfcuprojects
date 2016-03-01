@@ -166,7 +166,7 @@ if($arcufile){
 			$sheet->write($row,0, ["Date","App",'Part #','','','Principal','Interest','Service Fee','Balance','Account #','','Description']);
 			
 					
-			for my $partrec (sort {$a->[8] <=> $b->[8]} @{$parts{$part}}){
+			for my $partrec (sort {$a->[8] +0 <=> $b->[8] + 0} @{$parts{$part}}){
 				$row++;
 				$sheet->write($row,0, $partrec);
 				
