@@ -16,16 +16,16 @@ my $db = Connection::Cedar->new();
 
 my (@savingsrecs, @loanrecs);
 
-my $savingsdistinct = $db->GetCustomRecords("SELECT distinct [ACTIONCODE] ,[SOURCECODE] FROM [ARCU_TEST].[dbo].[savingstransaction]");
+my $savingsdistinct = $db->GetCustomRecords("SELECT distinct [ACTIONCODE] ,[SOURCECODE] FROM [ARCU_TEST].[dbo].[loantransaction]");
 
 for my $pair (@$savingsdistinct){
 	my $recs;
-	$recs = $db->GetCustomRecords("SELECT top 3	 * FROM [ARCU_TEST].[dbo].[savingstransaction] WHERE ACTIONCODE='$pair->{ACTIONCODE}' and SOURCECODE='$pair->{SOURCECODE}'") if $pair->{SOURCECODE};
-	$recs = $db->GetCustomRecords("SELECT top 3	 * FROM [ARCU_TEST].[dbo].[savingstransaction] WHERE ACTIONCODE='$pair->{ACTIONCODE}' and SOURCECODE is NULL") unless $pair->{SOURCECODE};	
+	$recs = $db->GetCustomRecords("SELECT top 3	 * FROM [ARCU_TEST].[dbo].[loantransaction] WHERE ACTIONCODE='$pair->{ACTIONCODE}' and SOURCECODE='$pair->{SOURCECODE}' order by postdate desc") if $pair->{SOURCECODE};
+	$recs = $db->GetCustomRecords("SELECT top 3	 * FROM [ARCU_TEST].[dbo].[loantransaction] WHERE ACTIONCODE='$pair->{ACTIONCODE}' and SOURCECODE is NULL order by postdate desc") unless $pair->{SOURCECODE};	
 	push @savingsrecs, @$recs;
 
 }
-open my $fh, ">", "savingsexamples.txt";
+open my $fh, ">", "loanexamples.txt";
 
 print $fh join "\t", sort keys %{$savingsrecs[0]};
 print $fh "\n";
