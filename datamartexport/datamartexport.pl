@@ -109,13 +109,13 @@ my @fields = ('Loan ID',
 'Pay Interest on Loss Draft?',
 'Pay Interest on T&I',
 'Tax Servicer',
-'Borrower 1 SSN',
-'Borrower 2 SSN',
-'Borrower 3 SSN',
-'Borrower 4 SSN',
 'Property County',
-'Census Tract',
-'Member #');
+'Parcel Number',
+'Member #',
+'Bank Code',
+'Investor Code',
+'Group Code',
+'Percentage Sold');
 
 #giant sql query
 my $qry = <<"EOT";
@@ -143,7 +143,7 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , lld.LoanPurposeType as 'Loan Purpose Type'
 	  , ld.LoanMaturityDate as 'Maturity Date'
 	  , mt.MortgageType as 'Interest Calc Method'
-	  , '5% of Principal & Interest – 15 day Grace Period' as 'Late Charge Description'
+	  , '' as 'Late Charge Description'
 	  , TotalLoanAmount as 'Current Principal Balances'
 	  , TotalLoanAmount as 'Original Loan Amount'
 	  ,titot.tot as 'Current T&I Bal'
@@ -244,7 +244,7 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  	  , b3._SSN as 'Borrower 3 SSN'
 	  , b4._SSN as 'Borrower 4 SSN'
 	  , p._County as 'Property County'
-	    , p.AssessorsParcelIdentifier as 'Census Tract'
+	    , p.AssessorsParcelIdentifier as 'Parcel Number'
 	    ,cfmember.AttributeValue as 'Member #'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
@@ -403,7 +403,7 @@ my $flag = 0;
 
 #printing nulls as ''
 no warnings 'uninitialized';
-open my $tsv, ">", "MortgageBotUpdate-$targetdate\.txt";
+open my $tsv, ">", "\\\\d-spokane\\servicing\$\\import\\"."MortgageBotUpdate-$targetdate\.txt";
 for my $rec (@$recs){
 #place to hack fields before output
 	$rec->{'Payment Type'} =~ s/Rate//;
@@ -436,7 +436,7 @@ for my $rec (@$recs){
 close $tsv;
 
 if($flag){
-	open my $key, ">", "keyfile.txt";
+	open my $key, ">", "\\\\d-spokane\\servicing\$\\import\\"."keyfile.txt";
 	print $key join("\n", @fields);
 	close $key;
 }
