@@ -115,7 +115,9 @@ my @fields = ('Loan ID',
 'Bank Code',
 'Investor Code',
 'Group Code',
-'Percentage Sold');
+'Percentage Sold',
+'SSN Code',
+'Association');
 
 #giant sql query
 my $qry = <<"EOT";
@@ -160,6 +162,11 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  ,ii.InterviewerApplicationSignedDate as 'Borrower 1 Credit Score Date'
 	  ,CASE WHEN b1.CreditScore = b1.EquifaxCreditScore THEN 'Equifax Beacon' WHEN b1.CreditScore = b1.ExperianCreditScore THEN 'Experian' WHEN b1.CreditScore = b1.TransUnionCreditScore THEN 'TransUnion Empirica' END AS 'Borrower 1 Credit Score ID'
 	  , b1._BirthDate as 'Borrower 1 DOB'
+	  ,mail._StreetAddress  as 'b1mailing1'
+	  ,mail._StreetAddress2 as 'b1mailing2'
+	  ,mail._City as 'b1mailingcity'
+	  ,mail._State as 'b1mailingstate'
+	  ,mail._PostalCode as 'b1mailingzip'
 	  , b2._LastName as 'Borrower 2 Last Name'
 	  , b2._SSN as 'Borrower 2 SSN'
 	  , b2._FirstName as 'Borrower 2 First Name'
@@ -246,6 +253,7 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , p._County as 'Property County'
 	    , p.AssessorsParcelIdentifier as 'Parcel Number'
 	    ,cfmember.AttributeValue as 'Member #'
+	    
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
@@ -403,7 +411,7 @@ my $flag = 0;
 
 #printing nulls as ''
 no warnings 'uninitialized';
-open my $tsv, ">", "\\\\d-spokane\\servicing\$\\import\\"."MortgageBotUpdate-$targetdate\.txt";
+open my $tsv, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."MortgageBotUpdate-$targetdate\.txt";
 for my $rec (@$recs){
 #place to hack fields before output
 	$rec->{'Payment Type'} =~ s/Rate//;
@@ -419,14 +427,24 @@ for my $rec (@$recs){
 ############
 	
 	unless($rec->{'Mailing Zip'}){
-	$rec->{'Mailing Address 1'} = $rec->{'Property Street'};
-	$rec->{'Mailing City'} = $rec->{'Property City'};
-	$rec->{'Mailing State'} = $rec->{'Property State'};
-	$rec->{'Mailing Zip'} = $rec->{'Property Zip'};
+		if($rec->{'Purpose Code'} =~ /PrimaryResidence/){
+			$rec->{'Mailing Address 1'} = $rec->{'Property Street'};
+			$rec->{'Mailing City'} = $rec->{'Property City'};
+			$rec->{'Mailing State'} = $rec->{'Property State'};
+			$rec->{'Mailing Zip'} = $rec->{'Property Zip'};
+		} else {
+			$rec->{'Mailing Address 1'} = $rec->{'b1mailing1'};
+			$rec->{'Mailing Address 2'} = $rec->{'b1mailing2'};
+			$rec->{'Mailing City'} = $rec->{'b1mailingcity'};
+			$rec->{'Mailing State'} = $rec->{'b1mailingstate'};
+			$rec->{'Mailing Zip'} = $rec->{'b1mailingzip'};
+		}
+	}
 	
 	$rec->{'Interest Calc Method'} = 'Fannie Mae' if $rec->{'Interest Calc Method'} =~ /Conventional/;
 	$rec->{'Non-saleable to FNMA'} = $rec->{'Non-saleable to FNMA'} ? 'Y' : 'N';
-	}
+	$rec->{'SSN Code'} = 'SSN';
+	$rec->{'Association'} = $rec->{'Borrower 2 SSN'} ? 'Joint' : 'Individual';
 
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
@@ -436,7 +454,7 @@ for my $rec (@$recs){
 close $tsv;
 
 if($flag){
-	open my $key, ">", "\\\\d-spokane\\servicing\$\\import\\"."keyfile.txt";
+	open my $key, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."keyfile.txt";
 	print $key join("\n", @fields);
 	close $key;
 }
