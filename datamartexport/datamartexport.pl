@@ -8,6 +8,8 @@ use strict;
 use JSON;
 use lib '\\\\Shenandoah\\sphillips$\\My Documents\\sethpgit\\lib'; #thanks windows
 use Connection::Datamart;
+use DateTime;
+use DateTime::Duration;
 
 
 my $db = Connection::Datamart->new();
@@ -117,11 +119,98 @@ my @fields = ('Loan ID',
 'Group Code',
 'Percentage Sold',
 'SSN Code',
-'Association');
+'Association',
+'Hybrid ARM?',
+'Analysis Notification Days',
+'Reset Notification Days',
+'Interest Rate Change Formula',
+'Rounding Parameter',
+'Payment Selection Option',
+'ARM Index Code',
+'ARM Margin' ,
+'ARM Floor',
+'ARM Years before first change',
+'ARM Months before first change',
+'ARM Months between changes',
+'ARM First rate change cap',
+'ARM Incremental cap',
+'ARM Lifetime cap' ,
+'ARM Index type',
+'ARM First Maximum Rate',
+'ARM First Minimum Rate',
+'ARM Maximum Rate',
+'ARM Minimum Rate',
+'ARM First Rate Change Date',
+'ARM Next Rate Change Date',
+'ARM First Payment Change Date',
+'ARM Next Payment Change Date',
+'ARM Date to reflect first change',
+'ARM Date to reflect next change');
+
+
+#table for ARM information
+my %arm = ('CA55' => {
+			'ARM Index Code' => 'Other',
+			'ARM Margin' => '2.5',	#floor is margin
+			'ARM Years before first change' => '5',
+			'ARM Months before first change' => '60',
+			'ARM Months between changes' => '60',
+			'ARM First rate change cap' => '2',
+			'ARM Incremental cap' => '2',
+			'ARM Lifetime cap' => '5',
+			'ARM Index type' => '5 Year CMT'
+		     },
+	    'JA55' => {
+			'ARM Index Code' => 'Other',
+			'ARM Margin' => '2.5',	#floor is margin
+			'ARM Years before first change' => '5',
+			'ARM Months before first change' => '60',
+			'ARM Months between changes' => '60',
+			'ARM First rate change cap' => '2',
+			'ARM Incremental cap' => '2',
+			'ARM Lifetime cap' => '5',
+			'ARM Index type' => '5 Year CMT'
+		     },
+	   'CA3' => {
+			'ARM Index Code' => 'LIBOR',
+			'ARM Margin' => '1.75',	#floor is margin
+			'ARM Years before first change' => '3',
+			'ARM Months before first change' => '36',
+			'ARM Months between changes' => '12',
+			'ARM First rate change cap' => '2',
+			'ARM Incremental cap' => '2',
+			'ARM Lifetime cap' => '6',
+			'ARM Index type' => '1 Year Libor'
+		     },
+	   'CA5' => {
+			'ARM Index Code' => 'LIBOR',
+			'ARM Margin' => '1.75',	#floor is margin
+			'ARM Years before first change' => '5',
+			'ARM Months before first change' => '60',
+			'ARM Months between changes' => '12',
+			'ARM First rate change cap' => '2',
+			'ARM Incremental cap' => '2',
+			'ARM Lifetime cap' => '5',
+			'ARM Index type' => '1 Year Libor'
+		     },
+	   'JA51' => {
+			'ARM Index Code' => 'LIBOR',
+			'ARM Margin' => '2.75',	#floor is margin
+			'ARM Years before first change' => '5',
+			'ARM Months before first change' => '60',
+			'ARM Months between changes' => '12',
+			'ARM First rate change cap' => '2',
+			'ARM Incremental cap' => '2',
+			'ARM Lifetime cap' => '5',
+			'ARM Index type' => '1 Year Libor'
+		     }
+	);
+
 
 #giant sql query
 my $qry = <<"EOT";
 SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
+	, lockp.ProductCode AS 'ProductCode'
       , 'Coupons' as 'Billing Method'
 	  , 'No' as 'Daily Interest Loan'
 	   ,ld.ClosingDate AS 'Date of Note'
@@ -444,8 +533,46 @@ for my $rec (@$recs){
 	$rec->{'Interest Calc Method'} = 'Fannie Mae' if $rec->{'Interest Calc Method'} =~ /Conventional/;
 	$rec->{'Non-saleable to FNMA'} = $rec->{'Non-saleable to FNMA'} ? 'Y' : 'N';
 	$rec->{'SSN Code'} = 'SSN';
-	$rec->{'Association'} = $rec->{'Borrower 2 SSN'} ? 'Joint' : 'Individual';
-
+	$rec->{'Association'} = $rec->{'Borrower 2 SSN'} ? 'Joint Contractual Liability' : 'Individual Account';
+	
+	#arm loan stuff
+	my $armuse = '';
+	if($rec->{ProductCode} =~ /CA55/) { $armuse = 'CA55'}
+	elsif ($rec->{ProductCode} =~ /JA55/) { $armuse = 'JA55'}
+	elsif ($rec->{ProductCode} =~ /CA3/) { $armuse = 'CA3'}
+	elsif ($rec->{ProductCode} =~ /CA5/) { $armuse = 'CA5'}
+	elsif ($rec->{ProductCode} =~ /JA51/) { $armuse = 'JA51'}
+	
+	if($armuse){
+		$rec->{'Hybrid ARM?'} = 'Y';
+		$rec->{'Analysis Notification Days'} = 75;
+		$rec->{'Reset Notification Days'} = 180;
+		$rec->{'Interest Rate Change Formula'} = 'Standard Interest Rate Calculation';
+		$rec->{'Rounding Parameter'} = 'Nearest 1/8';
+		$rec->{'Payment Selection Option'} = 'Use the Amortized Payment';
+		
+		map {$rec->{$_} = $arm{$armuse}->{$_}} keys %{$arm{$armuse}};
+		
+		$rec->{'ARM Floor'} = $rec->{'ARM Margin'};
+		
+		$rec->{'ARM First Maximum Rate'} = $rec->{'Interest Rate'} + $rec->{'ARM Incremental cap'};
+		$rec->{'ARM First Minimum Rate'} = ($rec->{'Interest Rate'} - $rec->{'ARM Incremental cap'} > $rec->{'ARM Margin'}) ? ($rec->{'Interest Rate'} - $rec->{'ARM Incremental cap'}) : $rec->{'ARM Margin'};
+		$rec->{'ARM Maximum Rate'} = $rec->{'Interest Rate'} + $rec->{'ARM Lifetime cap'};
+		$rec->{'ARM Minimum Rate'} = ($rec->{'Interest Rate'} - $rec->{'ARM Lifetime cap'} > $rec->{'ARM Margin'}) ? ($rec->{'Interest Rate'} - $rec->{'ARM Lifetime cap'}) : $rec->{'ARM Margin'};
+		if($rec->{'Due Date of First Payment'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+		my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+		$date->add( months => ($rec->{'ARM Months before first change'} - 1), end_of_month => 'preserve');
+		$rec->{'ARM First Rate Change Date'} = $date->ymd('-');
+		$rec->{'ARM Next Rate Change Date'} = $rec->{'ARM First Rate Change Date'};
+		$date->add( months => 1, end_of_month => 'preserve');
+		$rec->{'ARM First Payment Change Date'} = $date->ymd('-');
+		$rec->{'ARM Next Payment Change Date'} = $rec->{'ARM First Payment Change Date'};
+		$rec->{'ARM Date to reflect first change'} = $rec->{'ARM First Payment Change Date'};
+		$rec->{'ARM Date to reflect next change'} = $rec->{'ARM First Payment Change Date'};
+		}
+	
+	}
+	
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
 	$flag++;
