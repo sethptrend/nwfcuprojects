@@ -126,15 +126,12 @@ my @fields = ('Loan ID',
 'Interest Rate Change Formula',
 'Rounding Parameter',
 'Payment Selection Option',
-'ARM Index Code',
 'ARM Margin' ,
-'ARM Floor',
 'ARM Years before first change',
 'ARM Months before first change',
 'ARM Months between changes',
 'ARM First rate change cap',
 'ARM Incremental cap',
-'ARM Lifetime cap' ,
 'ARM Index type',
 'ARM First Maximum Rate',
 'ARM First Minimum Rate',
@@ -145,7 +142,20 @@ my @fields = ('Loan ID',
 'ARM First Payment Change Date',
 'ARM Next Payment Change Date',
 'ARM Date to reflect first change',
-'ARM Date to reflect next change');
+'ARM Date to reflect next change',
+'MI Company',
+'Mortgage Insurance',
+'City/Town Tax',
+'Flood Insurance',
+'Homeowners Insurance',
+'Property Taxes (Escrow)',
+'School Tax',
+'Hail/Windstorm Insurance',
+'Borrower 1 Suffix',
+'Borrower 2 Suffix',
+'Borrower 3 Suffix',
+'Borrower 4 Suffix',
+'P&I Change Formula');
 
 
 #table for ARM information
@@ -158,7 +168,7 @@ my %arm = ('CA55' => {
 			'ARM First rate change cap' => '2',
 			'ARM Incremental cap' => '2',
 			'ARM Lifetime cap' => '5',
-			'ARM Index type' => '5 Year CMT'
+			'ARM Index type' => '5 Year T-Bill'
 		     },
 	    'JA55' => {
 			'ARM Index Code' => 'Other',
@@ -169,7 +179,7 @@ my %arm = ('CA55' => {
 			'ARM First rate change cap' => '2',
 			'ARM Incremental cap' => '2',
 			'ARM Lifetime cap' => '5',
-			'ARM Index type' => '5 Year CMT'
+			'ARM Index type' => '5 Year T-Bill'
 		     },
 	   'CA3' => {
 			'ARM Index Code' => 'LIBOR',
@@ -342,6 +352,24 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , p._County as 'Property County'
 	    , p.AssessorsParcelIdentifier as 'Parcel Number'
 	    ,cfmember.AttributeValue as 'Member #'
+	    ,mihud._MonthlyAmount as 'Mortgage Insurance'
+	     		 ,MID.MICompanyName as 'MI Company'
+	     		 ,cttax._MonthlyAmount as 'City/Town Tax'
+	    		 ,cttax._SystemFeeName as 'cttax name'
+	     		 ,fip._MonthlyAmount as 'Flood Insurance'
+	    		 ,fip._SystemFeeName as 'fip name'
+	    		 ,hwi._MonthlyAmount as 'Hail/Windstorm Insurance'
+	    		 ,hwi._SystemFeeName as 'hwi name'
+	    		 ,hoi._MonthlyAmount as 'Homeowners Insurance'
+	    		 ,hoi._SystemFeeName as 'hoi name'
+	    		 ,pte._MonthlyAmount as 'Property Taxes (Escrow)'
+	    		 ,pte._SystemFeeName as 'pte name'
+	    		 ,stax._MonthlyAmount as 'School Tax'
+		 ,stax._SystemFeeName as 'stax name'
+		  ,b1._NameSuffix as 'Borrower 1 Suffix'
+		   ,b2._NameSuffix as 'Borrower 2 Suffix'
+		    ,b3._NameSuffix as 'Borrower 3 Suffix'
+		     ,b4._NameSuffix as 'Borrower 4 Suffix'
 	    
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
@@ -486,6 +514,13 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] nineohone on nineohone.loanGene
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._LEGAL_DESCRIPTION legaldesc on legaldesc.loanGeneral_Id=g.loanGeneral_Id and legaldesc._Type='LongLegal'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfmember on cfmember.loanGeneral_Id=g.loanGeneral_Id and cfmember.AttributeUniqueName='Member Number'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfns on cfns.loanGeneral_Id=g.loanGeneral_Id and cfns.AttributeUniqueName='Non-Saleable?'
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] cttax on cttax.loanGeneral_Id=g.loangeneral_id and cttax.hudType='HUD' and cttax._LineNumber=1001 and cttax._SystemFeeName='City/Town Tax'
+ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] fip on fip.loanGeneral_Id=g.loangeneral_id and fip.hudType='HUD' and fip._LineNumber=1002 and fip._SystemFeeName='Flood Insurance'
+ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] hwi on hwi.loanGeneral_Id=g.loangeneral_id and hwi.hudType='HUD' and hwi._LineNumber=1003 and hwi._SystemFeeName='Hail/Windstorm Insurance'
+ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] hoi on hoi.loanGeneral_Id=g.loangeneral_id and hoi.hudType='HUD' and hoi._LineNumber=1004 and hoi._SystemFeeName='Homeowners Insurance'
+  LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] mihud on mihud.loanGeneral_Id=g.loangeneral_id and mihud.hudType='HUD' and mihud._LineNumber=1005 and mihud._SystemFeeName='Mortgage Insurance'
+  LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] pte on pte.loanGeneral_Id=g.loangeneral_id and pte.hudType='HUD' and pte._LineNumber=1006 and pte._SystemFeeName='Property Taxes'
+  LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] stax on stax.loanGeneral_Id=g.loangeneral_id and stax.hudType='HUD' and stax._LineNumber=1007 and stax._SystemFeeName='School Tax'
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
        AND gld.LoanProgram not like 'HELOC\%'
@@ -513,6 +548,7 @@ for my $rec (@$recs){
 
 	$rec->{'Mailing Name'} =~ s/^\s+|\s+$//g;
 	$rec->{'Mailing Name'} = $rec->{'Borrower Last Name'} . ' ' . $rec->{'Borrower 1 First Name'} unless $rec->{'Mailing Name'};
+	$rec->{'Property County'} =~ s/\W//g;
 ############
 	
 	unless($rec->{'Mailing Zip'}){
@@ -552,6 +588,7 @@ for my $rec (@$recs){
 		$rec->{'Payment Selection Option'} = 'Use the Amortized Payment';
 		
 		map {$rec->{$_} = $arm{$armuse}->{$_}} keys %{$arm{$armuse}};
+		$rec->{'P&I Change Formula'} = 'Standard P&I Calculation';
 		
 		$rec->{'ARM Floor'} = $rec->{'ARM Margin'};
 		
