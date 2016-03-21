@@ -143,19 +143,20 @@ my @fields = ('Loan ID',
 'ARM Next Payment Change Date',
 'ARM Date to reflect first change',
 'ARM Date to reflect next change',
-'MI Company',
-'Mortgage Insurance',
-'City/Town Tax',
-'Flood Insurance',
-'Homeowners Insurance',
-'Property Taxes (Escrow)',
-'School Tax',
-'Hail/Windstorm Insurance',
+#'MI Company',
+#'Mortgage Insurance',
+#'City/Town Tax',
+#'Flood Insurance',
+#'Homeowners Insurance',
+#'Property Taxes (Escrow)',
+#'School Tax',
+#'Hail/Windstorm Insurance',
 'Borrower 1 Suffix',
 'Borrower 2 Suffix',
 'Borrower 3 Suffix',
 'Borrower 4 Suffix',
-'P&I Change Formula');
+'P&I Change Formula',
+'Loan Plan Name');
 
 
 #table for ARM information
@@ -216,7 +217,83 @@ my %arm = ('CA55' => {
 		     }
 	);
 
-
+#This table defines "Loan Plan Name"
+	#MS Loan Plan Name	Mtgbot	Mtgbot	Mtgbot	Mtgbot	Mtgbot	Mtgbot
+	#10 1 30 Yr ARM	CA10	CA10 R				
+	#10 Yr Fixed	C10	C10 R				
+	#15 HI BAL	HB15	HB15 R				
+	#15 Yr VA HI BAL	V15 HB	V15 HB R				
+	#15 Yr Conv HARP	DU15 125					
+	#15 Yr Fixed	C15	C15 R	EL15 80	EL15 80 1	EL15 90	EL15 90 1
+	#15 Yr Jumbo Fixed	J15	J15 R	SJ15	SJ15 R		
+	#15 Yr VA Fixed	V15	V15 R				
+	#20 Yr Fixed	C20	C20 R				
+	#3 1 30 Yr ARM	CA3	CA3 R				
+	#30 HI BAL	HB30	HB30 R				
+	#30 Yr Conv 97	C30 97	CFT				
+	#30 Yr Conv HARP	DU30 125					
+	#30 yr fixed	C30	C30 R				
+	#30 Yr Jumbo Fixed	J30	J30 R	SJ30	SJ30 R		
+	#30 Yr VA Fixed	V30	V30 R				
+	#30 Yr VA HI BAL	V30 HB R	V30 HB				
+	#30YR CONV 100	C30 100					
+	#5 1 30 Yr ARM	CA5	CA5 R				
+	#5 1 Jumbo 30 Yr Arm	JA51					
+	#5 5 ARM	CA55	CA55 R				
+	#5 5 J ARM	JA55	JA55 R				
+	#7 1 30 Yr ARM	CA7	CA7 R			
+my %lpntable = (
+		'CA10' => '10 1 30 Yr ARM',
+		'CA10 R' => '10 1 30 Yr ARM',
+		'C10' => '10 Yr Fixed',
+		'C10 R' => '10 Yr Fixed',
+		'HB15' => '15 HI BAL',
+		'HB15 R' => '15 HI BAL',
+		'V15 HB' => '15 Yr VA HI BAL',
+		'V15 HB R'  => '15 Yr VA HI BAL',
+		'DU15 125' => '15 Yr Conv HARP',
+		'C15' => '15 Yr Fixed',
+		'C15 R' => '15 Yr Fixed',
+		'EL15 80' => '15 Yr Fixed',
+		'EL15 80 1' => '15 Yr Fixed',
+		'EL15 90' => '15 Yr Fixed',
+		'EL15 90 1' => '15 Yr Fixed',
+		'J15' => '15 Yr Jumbo Fixed',
+		'J15 R' => '15 Yr Jumbo Fixed',
+		'SJ15' => '15 Yr Jumbo Fixed',
+		'SJ15 R' => '15 Yr Jumbo Fixed',
+		'V15' => '15 Yr VA Fixed',
+		'V15 R' => '15 Yr VA Fixed',
+		'C20' => '20 Yr Fixed',	
+		'C20 R' => '20 Yr Fixed',
+		'CA3' => '3 1 30 Yr ARM',
+		'CA3 R' => '3 1 30 Yr ARM',
+		'HB30' => '30 HI BAL',
+		'HB30 R' => '30 HI BAL',
+		'C30 97	CFT' => '30 Yr Conv 97',
+		'DU30 125' => '30 Yr Conv HARP',
+		'C30' => '30 yr fixed',	
+		'C30 R' => '30 yr fixed',
+		'J30' => '30 Yr Jumbo Fixed',
+		'J30 R' => '30 Yr Jumbo Fixed',
+		'SJ30' => '30 Yr Jumbo Fixed',
+		'SJ30 R' => '30 Yr Jumbo Fixed',
+		'V30' => '30 Yr VA Fixed',
+		'V30 R' => '30 Yr VA Fixed',
+		'V30 HB' => '30 Yr VA HI BAL',
+		'V30 HB R' => '30 Yr VA HI BAL',
+		'C30 100' => '30YR CONV 100',
+		'CA5' => '5 1 30 Yr ARM',
+		'CA5 R' => '5 1 30 Yr ARM',
+		'JA51' => '5 1 Jumbo 30 Yr Arm',
+		'CA55' => '5 5 ARM',
+		'CA55 R' => '5 5 ARM',
+		'JA55' => '5 5 J ARM',
+		'JA55 R' => '5 5 J ARM',
+		'CA7' => '7 1 30 Yr',
+		'CA7 R' => '7 1 30 Yr',
+		);
+	
 #giant sql query
 my $qry = <<"EOT";
 SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
@@ -570,6 +647,9 @@ for my $rec (@$recs){
 	$rec->{'Non-saleable to FNMA'} = $rec->{'Non-saleable to FNMA'} ? 'Y' : 'N';
 	$rec->{'SSN Code'} = 'SSN';
 	$rec->{'Association'} = $rec->{'Borrower 2 SSN'} ? 'Joint Contractual Liability' : 'Individual Account';
+	
+	$rec->{'Loan Plan Name'} = $lpntable{$rec->{ProductCode}};
+	
 	
 	#arm loan stuff
 	my $armuse = '';
