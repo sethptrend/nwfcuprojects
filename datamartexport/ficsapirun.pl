@@ -1,14 +1,23 @@
-use LWP::UserAgent;
+use LWP::UserAgentWrapper;
+ use MIME::Base64;
 use JSON;
 use warnings;
 use strict;
-my $ua = LWP::UserAgent->new;
+my $ua = LWP::UserAgentWrapper->new;
+
+
+#date to use
+my $targetdate = shift;
+
+#template name to find
+my $template = "New Loan Import phase 1";
+
 
 
 #service addresses 
 my $import_list_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetImportLoanDataDTO";
 my $token_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetAuthToken"; 
-my $import_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/ImportLoanData";
+my $import_service = "http://mortgageservicer.fics/BatchService.svc/REST/ImportLoanData";
 
 
 
@@ -17,8 +26,6 @@ my $import_service = "http://mortgageservicer.fics/MortgageServicerService.svc/R
 
 
 #handle token request
-my $tokenrequest = HTTP::Request->new(POST => $token_service);
-$tokenrequest->header('content-type' => 'application/json');
 # add POST data to HTTP request body
 
 my $token_post = '{
@@ -29,19 +36,10 @@ my $token_post = '{
    }
 }
 ';
-$tokenrequest->content($token_post);
+
 my $token = '';
-my $resp = $ua->request($tokenrequest);
-if ($resp->is_success) {
-    my $message = $resp->decoded_content;
-    my $pointer = decode_json($message);
-    $token = $pointer->{Content};
-    
-}
-else {
-    print "HTTP POST error code: ", $resp->code, "\n";
-    print "HTTP POST error message: ", $resp->message, "\n";
-}
+my $pointer = $ua->getPointerPostJSON($token_service, $token_post);
+$token = $pointer->{Content} if $pointer;
 
 die 'Token did not get a value from server\n' unless $token;
 
@@ -55,20 +53,37 @@ my $import_list_post = '{
 }
 ';
 
-print "$import_list_post\n";
+#print "$import_list_post\n";
 #call the lister
-my $listrequest = HTTP::Request->new(POST => $import_list_service);
-$listrequest->header('content-type' => 'application/json');
-$listrequest->content($token_post);
+$pointer = $ua->getPointerPostJSON($import_list_service, $import_list_post);
 
-$resp = $ua->request($listrequest);
-if ($resp->is_success) {
-    my $message = $resp->decoded_content;
-    my $pointer = decode_json($message);
-    print $message;
-    
+die 'Import list server call failed' unless $pointer;
+
+die 'Import list server call failed' unless $pointer->{ImportConfigurations};
+
+my $confid = 0;
+for my $config (@{$pointer->{ImportConfigurations}}){
+	next unless $config->{ConfigName} eq $template;
+	$confid = $config->{ConfigId};
 }
-else {
-    print "HTTP POST error code: ", $resp->code, "\n";
-    print "HTTP POST error message: ", $resp->message, "\n";
+
+die "Failed to find template: $template in ImportConfigurations" unless $confid;
+
+#print "$confid\n";
+
+my $import_post = '{
+	"SelectedItem": {
+		"ConfigId": '.$confid.',
+		"ConfigImportFile": "MortgageBotUpdate-'.$targetdate.'.txt",
+		"Token": "' .$token .'"
+	}
 }
+';
+print "$import_post\n";
+$pointer = $ua->getPointerPostJSON($import_service, $import_post);
+
+
+open my $pdf, '>',"\\\\d-spokane\\servicing\$\\Misc\\"."MortgageBotUpdate-$targetdate\.pdf";
+binmode $pdf;
+print $pdf decode_base64($pointer->{DocumentCollection}->[0]->{DocumentBase64});
+close $pdf;

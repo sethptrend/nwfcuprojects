@@ -1,75 +1,41 @@
-use LWP::UserAgent;
+
+use LWP::UserAgentWrapper;
 use JSON;
-use warnings;
-use strict;
-my $ua = LWP::UserAgent->new;
+my $ua = LWP::UserAgentWrapper->new;
+ 
+my $server_endpoint = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetImportLoanDataDTO";
+#my $server_endpoint = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetAuthToken"; 
+# set custom HTTP request header fields
 
 
-#service addresses 
-my $import_list_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetImportLoanDataDTO";
-my $token_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetAuthToken"; 
-my $import_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/ImportLoanData";
-
-
-
-
-
-
-
-#handle token request
-my $tokenrequest = HTTP::Request->new(POST => $token_service);
-$tokenrequest->header('content-type' => 'application/json');
+#$req->header('x-auth-token' => 'kfksj48sdfj4jd9d');
+ 
 # add POST data to HTTP request body
-
+my $post_data = '{
+	"Message": {
+		
+		"Token": "B4FE74D49310B484C4AB5E8448E3D573DE81817CE918DC5E05DBCBFC69E3D19AE2A014305F197700AC9D406329A753E601DEAAC66312394C25EFE11C0B56F7A0903A7D6CF0B8F3213AD150A4ABD48865"
+	}
+}';
 my $token_post = '{
   "Message": {
     "U": "ittestapi",
     "P": ";itTestap1",
     "ConnectionName": "FICS Development",
-   }
+    "SystemDate": "2016-03-03T12:21:48"
+  }
 }
-';
-$tokenrequest->content($token_post);
-my $token = '';
-my $resp = $ua->request($tokenrequest);
-if ($resp->is_success) {
-    my $message = $resp->decoded_content;
-    my $pointer = decode_json($message);
-    $token = $pointer->{Content};
-    
-}
-else {
-    print "HTTP POST error code: ", $resp->code, "\n";
-    print "HTTP POST error message: ", $resp->message, "\n";
-}
+'
+;
 
-die 'Token did not get a value from server\n' unless $token;
+my $pointer = $ua->getPointerPostJSON($server_endpoint, $post_data);
 
+print keys %$pointer if $pointer;
+ 
 
-
-#lister post data (just a token as input)
-my $import_list_post = '{
-	"Message": {
-		"Token": "' . $token .'"
-	}
-}
-';
-
-print "$import_list_post\n";
-#call the lister
-my $ua2 = LWP::UserAgent->new;
-my $listrequest = HTTP::Request->new(POST => $import_list_service);
-$listrequest->header('content-type' => 'application/json');
-$listrequest->content($token_post);
-
-$resp = $ua2->request($listrequest);
-if ($resp->is_success) {
-    my $message = $resp->decoded_content;
-    my $pointer = decode_json($message);
-    print $message;
-    
-}
-else {
-    print "HTTP POST error code: ", $resp->code, "\n";
-    print "HTTP POST error message: ", $resp->message, "\n";
-}
+#token response looks like:
+#
+#Received reply:  {"Content":"FA37599E6BCFB768736F940C7DF6043D82ECDDECA4F21B8FA4E
+#08C8E514283D8D2F1A3DAF2558E9B4EBF3063A55866CF77DDEDBEA3DEFFF68D09DE275E2D85C676D
+#2521194222F3803C28F32EB0386D1","ApiCallSuccessful":true,"ApiCallsLeft":"Not Set"
+#}
