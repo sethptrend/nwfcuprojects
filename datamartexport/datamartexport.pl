@@ -156,6 +156,10 @@ my @fields = ('Loan ID',
 'Borrower 3 Suffix',
 'Borrower 4 Suffix',
 'P&I Change Formula',
+'Statements',
+'E-Statements',
+'Service Fee Type',
+'Service Fee Rate',
 'Loan Plan Name');
 
 
@@ -644,9 +648,9 @@ for my $rec (@$recs){
 	}
 	
 	$rec->{'Interest Calc Method'} = 'Fannie Mae' if $rec->{'Interest Calc Method'} =~ /Conventional/;
-	$rec->{'Non-saleable to FNMA'} = $rec->{'Non-saleable to FNMA'} ? 'Y' : 'N';
+	$rec->{'Non-saleable to FNMA'} = $rec->{'Non-saleable to FNMA'} ? 'Y' : '';
 	$rec->{'SSN Code'} = 'SSN';
-	$rec->{'Association'} = $rec->{'Borrower 2 SSN'} ? 'Joint Contractual Liability' : 'Individual Account';
+	$rec->{'Association'} = ($rec->{'Borrower 2 SSN'} or $rec->{'Borrower 3 SSN'} or $rec->{'Borrower 4 SSN'}) ? 'Joint Contractual Liability' : 'Individual Account';
 	
 	$rec->{'Loan Plan Name'} = $lpntable{$rec->{ProductCode}};
 	
@@ -689,6 +693,13 @@ for my $rec (@$recs){
 		}
 	
 	}
+	
+	
+	#4 fields from 3/23/16 JM e-mail, all default values
+	$rec->{'Statements'} =  'N';
+	$rec->{'E-Statements'} = 'Y';
+	$rec->{'Service Fee Type'} = 'Rate';
+	$rec->{'Service Fee Rate'} = '.00000';
 	
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
