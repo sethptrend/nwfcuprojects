@@ -57,12 +57,11 @@ my $import_list_post = '{
 
 print "$import_list_post\n";
 #call the lister
-my $ua2 = LWP::UserAgent->new;
 my $listrequest = HTTP::Request->new(POST => $import_list_service);
 $listrequest->header('content-type' => 'application/json');
 $listrequest->content($token_post);
 
-$resp = $ua2->request($listrequest);
+$resp = $ua->request($listrequest);
 if ($resp->is_success) {
     my $message = $resp->decoded_content;
     my $pointer = decode_json($message);
