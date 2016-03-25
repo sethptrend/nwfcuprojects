@@ -342,11 +342,10 @@ SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
 	  ,ii.InterviewerApplicationSignedDate as 'Borrower 1 Credit Score Date'
 	  ,CASE WHEN b1.CreditScore = b1.EquifaxCreditScore THEN 'Equifax Beacon' WHEN b1.CreditScore = b1.ExperianCreditScore THEN 'Experian' WHEN b1.CreditScore = b1.TransUnionCreditScore THEN 'TransUnion Empirica' END AS 'Borrower 1 Credit Score ID'
 	  , b1._BirthDate as 'Borrower 1 DOB'
-	  ,mail._StreetAddress  as 'b1mailing1'
-	  ,mail._StreetAddress2 as 'b1mailing2'
-	  ,mail._City as 'b1mailingcity'
-	  ,mail._State as 'b1mailingstate'
-	  ,mail._PostalCode as 'b1mailingzip'
+	  ,residence._StreetAddress  as 'b1mailing1'
+	  ,residence._City as 'b1mailingcity'
+	  ,residence._State as 'b1mailingstate'
+	  ,residence._PostalCode as 'b1mailingzip'
 	  , b2._LastName as 'Borrower 2 Last Name'
 	  , b2._SSN as 'Borrower 2 SSN'
 	  , b2._FirstName as 'Borrower 2 First Name'
@@ -483,6 +482,9 @@ LEFT JOIN LENDER_LOAN_SERVICE.dbo.PROPERTY p
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._MAIL_TO mail
       ON g.loanGeneral_Id = mail.loanGeneral_Id
             AND mail.BorrowerID = 'BRW1'
+LEFT JOIN LENDER_LOAN_SERVICE.dbo._RESIDENCE residence
+	ON g.loanGeneral_Id = residence.loanGeneral_Id
+            AND residence.BorrowerID = 'BRW1'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.BORROWER b1
       ON g.loanGeneral_Id = b1.loanGeneral_Id
             AND b1.BorrowerID = 'BRW1'
@@ -639,8 +641,7 @@ for my $rec (@$recs){
 			$rec->{'Mailing State'} = $rec->{'Property State'};
 			$rec->{'Mailing Zip'} = $rec->{'Property Zip'};
 		} else {
-			$rec->{'Mailing Address 1'} = $rec->{'b1mailing1'};
-			$rec->{'Mailing Address 2'} = $rec->{'b1mailing2'};
+			$rec->{'Mailing Address 1'} = $rec->{'b1mailing1'};		
 			$rec->{'Mailing City'} = $rec->{'b1mailingcity'};
 			$rec->{'Mailing State'} = $rec->{'b1mailingstate'};
 			$rec->{'Mailing Zip'} = $rec->{'b1mailingzip'};
