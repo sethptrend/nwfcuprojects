@@ -300,7 +300,7 @@ my %lpntable = (
 	
 #giant sql query
 my $qry = <<"EOT";
-SELECT g.LenderRegistrationIdentifier AS 'Loan ID'
+SELECT  g.LenderRegistrationIdentifier AS 'Loan ID'
 	, lockp.ProductCode AS 'ProductCode'
       , 'Coupons' as 'Billing Method'
 	  , 'No' as 'Daily Interest Loan'
@@ -485,6 +485,7 @@ LEFT JOIN LENDER_LOAN_SERVICE.dbo._MAIL_TO mail
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._RESIDENCE residence
 	ON g.loanGeneral_Id = residence.loanGeneral_Id
             AND residence.BorrowerID = 'BRW1'
+            AND residence.BorrowerResidencyType = 'Current'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.BORROWER b1
       ON g.loanGeneral_Id = b1.loanGeneral_Id
             AND b1.BorrowerID = 'BRW1'

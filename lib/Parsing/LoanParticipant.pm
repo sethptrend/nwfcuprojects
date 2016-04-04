@@ -238,6 +238,12 @@ sub ParseArcuFile {
 		for my $rec (@record){
 			$rec =~ s/^\s+|\s+$//;
 		}
+		my $count =0;
+		for my $rec (@record)
+		{
+			next unless ++$count < 12;
+			$rec =~ s/\s//g;
+		}
 		push @records, \@record;
 	
 	}
