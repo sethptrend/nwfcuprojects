@@ -247,6 +247,7 @@ my %arm = ('CA55' => {
 	#5 5 J ARM	JA55	JA55 R				
 	#7 1 30 Yr ARM	CA7	CA7 R			
 my %lpntable = (
+		'CFT' => '30 Yr Fixed',
 		'CA10' => '10 1 30 Yr ARM',
 		'CA10 R' => '10 1 30 Yr ARM',
 		'C10' => '10 Yr Fixed',
@@ -413,7 +414,7 @@ SELECT  g.LenderRegistrationIdentifier AS 'Loan ID'
 	  , lp.PropertyUsageType as 'Purpose Code'
 	  , legaldesc._textdescription as 'Legal Description'
 	  , PurchasePriceAmount as 'Sales Price'
-	  , b1._FirstName + ' ' + b1._LastName + ' & ' + b2._FirstName + ' ' + b2._LastName as 'Mailing Name'
+	  , b1._FirstName + ' ' + b1._LastName as 'Mailing Name'
 	  , mail._StreetAddress as 'Mailing Address 1'
 	  , mail._StreetAddress2 as 'Mailing Address 2'
 	  , mail._City as 'Mailing City'
@@ -629,10 +630,57 @@ for my $rec (@$recs){
 	$rec->{'Borrower 2 Credit Score Date'} = '' unless $rec->{'Borrower 2 Last Name'};
 	$rec->{'Borrower 3 Credit Score Date'} = '' unless $rec->{'Borrower 3 Last Name'};
 	$rec->{'Borrower 4 Credit Score Date'} = '' unless $rec->{'Borrower 4 Last Name'};
-
+	#if we have a 3 and not a 2, rotate 3 into 2, 4 into 3, scrub 4
+	if($rec->{'Borrower 3 SSN'} and !($rec->{'Borrower 2 SSN'})){
+			#print "Copying stuff for loan $rec->{'Loan ID'}\n";
+			$rec->{'Borrower 2 SSN'} = $rec->{'Borrower 3 SSN'};
+			$rec->{'Borrower 2 First Name'} = $rec->{'Borrower 3 First Name'};
+			$rec->{'Borrower 2 Middle Name'} = $rec->{'Borrower 3 Middle Name'};
+			$rec->{'Borrower 2 Last Name'} = $rec->{'Borrower 3 Last Name'};
+			$rec->{'Borrower 2 Email Address'} = $rec->{'Borrower 3 Email Address'};
+			$rec->{'Borrower 2 Home Phone'} = $rec->{'Borrower 3 Home Phone'};
+			$rec->{'Borrower 2 Cell Phone'} = $rec->{'Borrower 3 Cell Phone'};
+			$rec->{'Borrower 2 Credit Score'} = $rec->{'Borrower 3 Credit Score'};
+			$rec->{'Borrower 2 Credit Score Date'} = $rec->{'Borrower 3 Credit Score Date'};
+			$rec->{'Borrower 2 Credit Score ID'} = $rec->{'Borrower 3 Credit Score ID'};
+			$rec->{'Borrower 2 DOB'} = $rec->{'Borrower 3 DOB'};
+			$rec->{'Borrower 2 Suffix'} = $rec->{'Borrower 3 Suffix'};
+			
+			$rec->{'Borrower 3 SSN'} = $rec->{'Borrower 4 SSN'};
+			$rec->{'Borrower 3 First Name'} = $rec->{'Borrower 4 First Name'};
+			$rec->{'Borrower 3 Middle Name'} = $rec->{'Borrower 4 Middle Name'};
+			$rec->{'Borrower 3 Last Name'} = $rec->{'Borrower 4 Last Name'};
+			$rec->{'Borrower 3 Email Address'} = $rec->{'Borrower 4 Email Address'};
+			$rec->{'Borrower 3 Home Phone'} = $rec->{'Borrower 4 Home Phone'};
+			$rec->{'Borrower 3 Cell Phone'} = $rec->{'Borrower 4 Cell Phone'};
+			$rec->{'Borrower 3 Credit Score'} = $rec->{'Borrower 4 Credit Score'};
+			$rec->{'Borrower 3 Credit Score Date'} = $rec->{'Borrower 4 Credit Score Date'};
+			$rec->{'Borrower 3 Credit Score ID'} = $rec->{'Borrower 4 Credit Score ID'};
+			$rec->{'Borrower 3 DOB'} = $rec->{'Borrower 4 DOB'};
+			$rec->{'Borrower 3 Suffix'} = $rec->{'Borrower 4 Suffix'};
+			
+			$rec->{'Borrower 4 SSN'} = '';
+			$rec->{'Borrower 4 First Name'} = '';
+			$rec->{'Borrower 4 Middle Name'} = '';
+			$rec->{'Borrower 4 Last Name'} = '';
+			$rec->{'Borrower 4 Email Address'} = '';
+			$rec->{'Borrower 4 Home Phone'} = '';
+			$rec->{'Borrower 4 Cell Phone'} = '';
+			$rec->{'Borrower 4 Credit Score'} = '';
+			$rec->{'Borrower 4 Credit Score Date'} = '';
+			$rec->{'Borrower 4 Credit Score ID'} = '';
+			$rec->{'Borrower 4 DOB'} = '';
+			$rec->{'Borrower 4 Suffix'} = '';
+	}
 	$rec->{'Mailing Name'} =~ s/^\s+|\s+$//g;
-	$rec->{'Mailing Name'} = $rec->{'Borrower Last Name'} . ' ' . $rec->{'Borrower 1 First Name'} unless $rec->{'Mailing Name'};
+	$rec->{'Mailing Name'} = $rec->{'Borrower First Name'} . ' ' . $rec->{'Borrower 1 Last Name'} unless $rec->{'Mailing Name'};
+	$rec->{'Mailing Name'} .= ' & ' . $rec->{'Borrower 2 First Name'} . ' ' .  $rec->{'Borrower 2 Last Name'} if $rec->{'Borrower 2 Last Name'};
+	$rec->{'Mailing Name'} .= ' & ' . $rec->{'Borrower 3 First Name'} . ' ' .  $rec->{'Borrower 3 Last Name'} if $rec->{'Borrower 3 Last Name'};
+	$rec->{'Mailing Name'} .= ' & ' . $rec->{'Borrower 4 First Name'} . ' ' .  $rec->{'Borrower 4 Last Name'} if $rec->{'Borrower 4 Last Name'};
+	
+	$rec->{'Property County'} =~ s/([\w\']+)/\u\L$1/g;
 	$rec->{'Property County'} =~ s/\W//g;
+	#$rec->{'Property County'} = ucfirst lc $rec->{'Property County'};
 ############
 	
 	unless($rec->{'Mailing Zip'}){
