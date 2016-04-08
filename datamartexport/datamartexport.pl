@@ -247,6 +247,7 @@ my %arm = ('CA55' => {
 	#5 5 J ARM	JA55	JA55 R				
 	#7 1 30 Yr ARM	CA7	CA7 R			
 my %lpntable = (
+		'HR30' => '30 Yr Fixed HR',
 		'CFT' => '30 Yr Fixed',
 		'CA10' => '10 1 30 Yr ARM',
 		'CA10 R' => '10 1 30 Yr ARM',
