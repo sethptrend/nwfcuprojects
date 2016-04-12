@@ -6,7 +6,7 @@
 use warnings;
 use strict;
 use JSON;
-use lib '\\\\Shenandoah\\sphillips$\\My Documents\\sethpgit\\lib'; #thanks windows
+use lib '\\\\d-spokane\\servicing$\\DMExportTemp\\lib\\';
 use Connection::Datamart;
 use DateTime;
 use DateTime::Duration;
@@ -141,8 +141,10 @@ my @fields = ('Loan ID',
 'ARM Next Rate Change Date',
 'ARM First Payment Change Date',
 'ARM Next Payment Change Date',
-'ARM Date to reflect first change',
-'ARM Date to reflect next change',
+#'ARM Date to reflect first change',
+'# of months cushion disclosure',
+#'ARM Date to reflect next change',
+'',
 #'MI Company',
 #'Mortgage Insurance',
 #'City/Town Tax',
@@ -715,7 +717,8 @@ for my $rec (@$recs){
 	elsif ($rec->{ProductCode} =~ /JA51/) { $armuse = 'JA51'}
 	
 	if($armuse){
-		$rec->{'Hybrid ARM?'} = 'Y';
+		$rec->{'Hybrid ARM?'} = 'Yes';
+		$rec->{'# of months cushion disclosure'} = '2';
 		$rec->{'Analysis Notification Days'} = 75;
 		$rec->{'Reset Notification Days'} = 180;
 		$rec->{'Interest Rate Change Formula'} = 'Standard Interest Rate Calculation';
