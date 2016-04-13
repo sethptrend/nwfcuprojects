@@ -10,14 +10,19 @@ use strict;
 
 use Spreadsheet::ParseExcel;
 use JSON;
+use Digest::MD5 qw(md5 md5_hex md5_base64);
 
-#probably change this to getopt later
-my $filename = shift;
+my @local = localtime(time);
+my $rootdir = '/home/sphillips/fraudfiles/';
+my $directory = '/home/sphillips/fraudfiles/today/';
+my @targets = <$directory\*>;
+my %included;
+my @data;
 
+for my $filename (@targets){
 my $parser = Spreadsheet::ParseExcel->new();
 my $workbook = $parser->Parse($filename);
-my @data;
-die $parser->error() . "\n" unless defined $workbook;
+print $parser->error() . "\nFilename: $filename\nFiler:" . `file $filename` . "\n"  and next unless defined $workbook;
 
 for my $worksheet($workbook->worksheets()) {
 	my ( $row_min, $row_max ) = $worksheet->row_range();
@@ -37,13 +42,19 @@ for my $worksheet($workbook->worksheets()) {
 	                #print "\n";
 	                push @arr, $cell->value();
 	            }
-	          push @data, \@arr;
+		  my $hash = md5(encode_json(\@arr));
+	          $included{$hash} = 1 and push @data, \@arr unless $included{$hash};
 	        }
  }
+}
 #print encode_json(\@data);
 
+#put the stuffs in a new file to be stfp pushed
+my $datestring = ($local[5]+1900) . sprintf("%02d%02d",$local[4]+1, $local[3]);
+`mkdir $rootdir$datestring`;
+open my $outfile, ">", "$rootdir$datestring\/NWFCU_$datestring\.csv";
 
-print "CARD_NUMBER,AUTHORISATION_DATE_TIME,MERCHANT_NAME,AMOUNT,MID,ACQUIRER_ID,LIABILITY,MCC,AUTH_DECISION,ARN,AUTH_CODE\n";
+print $outfile "CARD_NUMBER,AUTHORISATION_DATE_TIME,MERCHANT_NAME,AMOUNT,MID,ACQUIRER_ID,LIABILITY,MCC,AUTH_DECISION,ARN,AUTH_CODE\n";
 
 for my $arr (@data){
 	#data hacks go here
@@ -59,7 +70,9 @@ for my $arr (@data){
 	$arr->[1] = substr $arr->[1],0,1;
 	
 	#rows
-	print "$arr->[0],$arr->[4],$arr->[5],$arr->[3],$arr->[6],$arr->[7],$liability,$arr->[9],$arr->[1],$arr->[10],$arr->[11]\n";
+	print $outfile "$arr->[0],$arr->[4],$arr->[5],$arr->[3],$arr->[6],$arr->[7],$liability,$arr->[9],$arr->[1],$arr->[10],$arr->[11]\n";
 
 
 }
+
+`mv $directory\* $rootdir$datestring\/`;
