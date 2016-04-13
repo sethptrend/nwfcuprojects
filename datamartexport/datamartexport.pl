@@ -626,6 +626,7 @@ no warnings 'uninitialized';
 open my $tsv, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."MortgageBotUpdate-$targetdate\.txt";
 for my $rec (@$recs){
 #place to hack fields before output
+	$rec->{'# of months cushion disclosure'} = '2';
 	$rec->{'Payment Type'} =~ s/Rate//;
 	$rec->{'Interest Type'} =~ s/Rate//;
 	$rec->{'Loan Type'} =~ s/VA/VA (GI)/;
@@ -718,7 +719,7 @@ for my $rec (@$recs){
 	
 	if($armuse){
 		$rec->{'Hybrid ARM?'} = 'Yes';
-		$rec->{'# of months cushion disclosure'} = '2';
+		
 		$rec->{'Analysis Notification Days'} = 75;
 		$rec->{'Reset Notification Days'} = 180;
 		$rec->{'Interest Rate Change Formula'} = 'Standard Interest Rate Calculation';
