@@ -1,8 +1,10 @@
+use lib '\\\\d-spokane\\servicing$\\DMExportTemp\\lib'; #thanks windows
 use LWP::UserAgentWrapper;
  use MIME::Base64;
 use JSON;
 use warnings;
 use strict;
+
 my $ua = LWP::UserAgentWrapper->new;
 
 
@@ -13,6 +15,7 @@ my $targetdate = shift;
 my $template = "New Loan Import phase 1";
 
 
+#test ms.fics = 172.30.28.25
 
 #service addresses 
 my $import_list_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetImportLoanDataDTO";
@@ -87,3 +90,13 @@ open my $pdf, '>',"\\\\d-spokane\\servicing\$\\Misc\\"."MortgageBotUpdate-$targe
 binmode $pdf;
 print $pdf decode_base64($pointer->{DocumentCollection}->[0]->{DocumentBase64});
 close $pdf;
+
+
+#move the import file
+print "Open: \\\\d-spokane\\servicing\$\\Misc\\Import$confid\.log\n";
+open my $impfile, '<' , "\\\\d-spokane\\servicing\$\\Misc\\Import$confid\.log" or die $!;
+my @lines = <$impfile>;
+close $impfile;
+open my $impout, ">", "\\\\d-spokane\\servicing\$\\Misc\\Import$targetdate\.log";
+print $impout @lines;
+close $impout;

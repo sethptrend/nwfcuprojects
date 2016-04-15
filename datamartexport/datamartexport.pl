@@ -631,6 +631,9 @@ for my $rec (@$recs){
 	$rec->{'Interest Type'} =~ s/Rate//;
 	$rec->{'Loan Type'} =~ s/VA/VA (GI)/;
 	
+	$rec->{'Late Charge Description'} = '4% of Principal and Interest - Veterans' if $rec->{'Loan Type'} eq 'VA (GI)';
+	$rec->{'Late Charge Description'} = '5% of Principal & Interest - 15 day Grace Period' unless $rec->{'Loan Type'} eq 'VA (GI)';
+	
 	$rec->{'Borrower 2 Credit Score Date'} = '' unless $rec->{'Borrower 2 Last Name'};
 	$rec->{'Borrower 3 Credit Score Date'} = '' unless $rec->{'Borrower 3 Last Name'};
 	$rec->{'Borrower 4 Credit Score Date'} = '' unless $rec->{'Borrower 4 Last Name'};
@@ -764,7 +767,7 @@ for my $rec (@$recs){
 close $tsv;
 
 if($flag){
-	open my $key, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."keyfile.txt";
+	open my $key, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."keyfile$targetdate\.txt";
 	print $key join("\n", @fields);
 	close $key;
 }
