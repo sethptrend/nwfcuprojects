@@ -184,6 +184,87 @@ sub ParseReportFile {
 	return %parts;
 
 }
+#This is another 2 line one, lines look like
+#Acct #    LoanID  Name                 Type       Open     Close      OrigLoanBal         LoanBal         EstAgrBal     IntRate
+#          NextDue        LastPmt         Maturity                   Remove       Charge-Off          Dlnquent
+#    0055555555  0001  JOHN,SMITH C       0020   03/21/15  --/--/--        19,489.90       16,836.09         15,152.48      7.500%
+#         04/25/16       03/18/16         03/25/21                 --/--/--         --/--/--
+#returns array of hash pointers 
+sub ParseDetailFile {
+	my $self = shift;
+	my @lines = @_;
+	
+	
+	##########################################
+	###   Parsing Section
+	##########################################
+	#probably will move this to a module
+	my @records;
+	my $currentpart;
+	while(my $line = shift @lines){
+		#print "PARSE: $line\n";
+		#first we need to grab participation numbers
+		if($line =~ /^Participant#/){
+		$line = shift @lines;
+		$currentpart = $1 if $line =~ /^(\d+)\s/;	
+		}
+		
+		
+		my %record;
+		chomp $line;
+		#remove form feed characters
+		$line =~ s/\o{14}//g;
+		
+		next unless $line; #toss any blank line without error
+		#we're going to dump all lines that don't conform, just to give an idea
+		#    0055555555  0001  JOHN,SMITH C       0020   03/21/15  --/--/--        19,489.90       16,836.09         15,152.48      7.500%
+		print "$line\n" and next unless $line =~ /^\s+(\d+)\s+(\d+)\s+([\w\.\-\' ,]+)\s+(\d+)\s+(\d\d\/\d\d\/\d\d)\s+(\S{8})\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)%$/;
+		#					
+		$record{PartNumber} = $currentpart;
+		$record{Acct}=$1;
+		$record{LoanID} = $2;
+		$record{Name} = $3;
+		$record{Type} = $4;
+		$record{OpenDate} = $5;
+		$record{CloseDate} = $6;
+		delete $record{CloseDate} if $record{CloseDate} eq '--/--/--';
+		$record{OrigLoanBalance} = $7;
+		$record{LoanBalance} = $8;
+		$record{EstAgrBalance} = $9;
+		$record{Rate} = $10;
+		#subs AFTER assigns
+		$record{Name} =~ s/^\s+|s+$//g;
+		$record{LoanBalance} =~ s/,//g;
+		$record{EstAgrBalance} =~ s/,//g;
+		$record{OrigLoanBalance} =~ s/,//g;
+		#look at (and for) the 2nd line of the record:
+		while($line = shift @lines){
+			 #remove form feed characters
+			$line =~ s/\o{14}//g;
+		      #2nd line should look like:
+		      #         04/25/16       03/18/16         03/25/21                 --/--/--         --/--/--
+		      #          NextDue        LastPmt         Maturity                   Remove       Charge-Off          Dlnquent (doesn't seem to be in the file, there isn't spacing for it)
+			print "BAD 2nd line: $line\n" and next unless $line =~ /(\S{8})\s+(\S{8})\s+(\S{8})\s+(\S{8})\s+(\S{8})/;
+			$record{NextDue} = $1;
+			$record{LastPmt} = $2;
+			delete $record{LastPmt} if $record{LastPmt} eq '--/--/--';
+			$record{Maturity} = $3;
+			$record{Remove} = $4;
+			delete $record{Remove} if $record{Remove} eq '--/--/--';
+			$record{ChargeOff} = $5;
+			delete $record{ChargeOff} if $record{ChargeOff} eq '--/--/--';
+			last;
+		}
+		#print Dumper(%record);
+		push @records, \%record;
+	}
+	
+	
+	
+	#this one isn't seperating
+	return @records;
+
+}
 
 #my %parts = $parser->ParseInterestFile(@infile);
 sub ParseInterestFile {

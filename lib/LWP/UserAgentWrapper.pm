@@ -49,6 +49,7 @@ sub getPointerPostJSON{
 	if ($resp->is_success) {
 	    my $message = $resp->decoded_content;
 	    my $pointer = JSON::decode_json($message);
+	    print $message;
 	    return $pointer;
 	}
 	else {

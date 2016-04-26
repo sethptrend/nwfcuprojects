@@ -3,8 +3,8 @@ use LWP::UserAgentWrapper;
 use JSON;
 my $ua = LWP::UserAgentWrapper->new;
  
-my $server_endpoint = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetImportLoanDataDTO";
-#my $server_endpoint = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetAuthToken"; 
+#my $server_endpoint = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetImportLoanDataDTO";
+my $server_endpoint = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetAuthToken"; 
 # set custom HTTP request header fields
 
 
@@ -19,16 +19,16 @@ my $post_data = '{
 }';
 my $token_post = '{
   "Message": {
-    "U": "ittestapi",
-    "P": ";itTestap1",
-    "ConnectionName": "FICS Development",
-    "SystemDate": "2016-03-03T12:21:48"
+    "U": "itliveapi",
+    "P": " ",
+    "ConnectionName": "NWFCU FICS",
+    
   }
 }
 '
 ;
 
-my $pointer = $ua->getPointerPostJSON($server_endpoint, $post_data);
+my $pointer = $ua->getPointerPostJSON($server_endpoint, $token_post);
 
 print keys %$pointer if $pointer;
  
