@@ -68,9 +68,10 @@ my $import_post = '{
 
 #print "$import_list_post\n";
 #call the lister
-$pointer = $ua->getPointerPostJSON($import_service, $import_post);
+#15 minute timeout because input can be big and take a while to process
+$pointer = $ua->getPointerPostJSON($import_service, $import_post, 900);
 
-print encode_json($pointer);
+#print encode_json($pointer);
 
 die 'Import list server call failed' unless $pointer;
 

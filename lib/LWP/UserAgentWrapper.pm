@@ -36,20 +36,21 @@ sub new {
 }
 
 
-#my $message = ua->getMessagePostJSON($server_endpoint, $post_data);
+#my $message = ua->getMessagePostJSON($server_endpoint, $post_data, [$timeout=180]);
 sub getPointerPostJSON{
 	my $self = shift;
 	my $server = shift;
 	my $post = shift;
-	
+	#new default timeout parameter
+	my $timeout = shift // 180;
 	my $req = HTTP::Request->new(POST => $server);
 	$req->header('content-type' => 'application/json');
 	$req->content($post);
+	$self->{ua}->timeout($timeout);
 	my $resp = $self->{ua}->request($req);
 	if ($resp->is_success) {
 	    my $message = $resp->decoded_content;
 	    my $pointer = JSON::decode_json($message);
-	    print $message;
 	    return $pointer;
 	}
 	else {
