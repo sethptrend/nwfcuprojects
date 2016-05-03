@@ -10,7 +10,7 @@ my $ua = LWP::UserAgentWrapper->new;
 
 #date to use
 my $targetdate = shift;
-
+my $systemdate = "$targetdate" ."T23:11:11";
 #template name to find
 my $template = "New Loan Import phase 1";
 
@@ -78,6 +78,7 @@ my $import_post = '{
 	"SelectedItem": {
 		"ConfigId": '.$confid.',
 		"ConfigImportFile": "MortgageBotUpdate-'.$targetdate.'.txt",
+		"SystemDate": "'. $systemdate .'",
 		"Token": "' .$token .'"
 	}
 }

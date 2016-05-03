@@ -204,9 +204,9 @@ sub ParseDetailFile {
 	while(my $line = shift @lines){
 		#print "PARSE: $line\n";
 		#first we need to grab participation numbers
-		if($line =~ /^Participant#/){
+		if($line =~ /^ Participation#/){
 		$line = shift @lines;
-		$currentpart = $1 if $line =~ /^(\d+)\s/;	
+		$currentpart = $1 if $line =~ /^ (\d+)\s/;	
 		}
 		
 		
@@ -293,7 +293,8 @@ sub ParseInterestFile {
 	my %parts;
 	
 	for my $rec(@records){
-		push @{ $parts{$self->{special}->{$rec->[2]} // $rec->[2]} }, $rec; 
+		#push @{ $parts{$self->{special}->{$rec->[2]} // $rec->[2]} }, $rec; 
+		push @{ $parts{$rec->[2]} } , $rec;
 	}
 	return %parts;
 }
@@ -314,7 +315,9 @@ sub ParseArcuFile {
 		#pitch header lines
 		#next if $line =~ /NORTHWEST FCU/;
 		#semi colon seperated
-		my @record = split /;/, $line;
+		my @record = split(/;/, $line, -1);
+		#pad
+		push (@record, '') while (scalar @record) < 12;
 		#trim
 		for my $rec (@record){
 			$rec =~ s/^\s+|\s+$//;
