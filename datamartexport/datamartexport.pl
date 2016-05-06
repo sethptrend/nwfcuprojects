@@ -165,6 +165,15 @@ my @fields = ('Loan ID',
 'Loan Plan Name');
 
 
+my @ph2fields = (
+'Loan ID'
+,'Borrower 1 Work Phone'
+,'Borrower 2 Work Phone'
+,'Borrower 3 Work Phone'
+,'Borrower 4 Work Phone'
+);
+
+
 #table for ARM information
 my %arm = ('CA55' => {
 			'ARM Index Code' => 'Other',
@@ -454,7 +463,10 @@ SELECT  g.LenderRegistrationIdentifier AS 'Loan ID'
 		   ,b2._NameSuffix as 'Borrower 2 Suffix'
 		    ,b3._NameSuffix as 'Borrower 3 Suffix'
 		     ,b4._NameSuffix as 'Borrower 4 Suffix'
-	    
+	       ,B1WRK._TelephoneNumber as 'Borrower 1 Work Phone'
+	    	,B2WRK._TelephoneNumber as 'Borrower 2 Work Phone'
+	    	,B3WRK._TelephoneNumber as 'Borrower 3 Work Phone'
+		,B4WRK._TelephoneNumber as 'Borrower 4 Work Phone'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
@@ -609,6 +621,11 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] cttax on cttax.loanGeneral_Id=g
   LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] mihud on mihud.loanGeneral_Id=g.loangeneral_id and mihud.hudType='HUD' and mihud._LineNumber=1005 and mihud._SystemFeeName='Mortgage Insurance'
   LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] pte on pte.loanGeneral_Id=g.loangeneral_id and pte.hudType='HUD' and pte._LineNumber=1006 and pte._SystemFeeName='Property Taxes'
   LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] stax on stax.loanGeneral_Id=g.loangeneral_id and stax.hudType='HUD' and stax._LineNumber=1007 and stax._SystemFeeName='School Tax'
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B1WRK on B1WRK.loanGeneral_Id=g.loanGeneral_Id and B1WRK.BorrowerID='BRW1' and B1WRK.CurrentEmploymentMonthsOnJob is not NULL
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B2WRK on B2WRK.loanGeneral_Id=g.loanGeneral_Id and B2WRK.BorrowerID='BRW2' and B2WRK.CurrentEmploymentMonthsOnJob is not NULL
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B3WRK on B3WRK.loanGeneral_Id=g.loanGeneral_Id and B3WRK.BorrowerID='BRW3' and B3WRK.CurrentEmploymentMonthsOnJob is not NULL
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B4WRK on B4WRK.loanGeneral_Id=g.loanGeneral_Id and B4WRK.BorrowerID='BRW4' and B4WRK.CurrentEmploymentMonthsOnJob is not NULL
+
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
        AND gld.LoanProgram not like 'HELOC\%'
