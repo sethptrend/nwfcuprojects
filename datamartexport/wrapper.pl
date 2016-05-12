@@ -15,3 +15,5 @@ $datestring =~ s/(\d\d\d\d)(\d\d)(\d\d)/$1-$2-$3/;
 
 `perl \\\\d-spokane\\servicing\$\\DMExportTemp\\datamartexport\\datamartexport.pl $datestring`;
 `perl \\\\d-spokane\\servicing\$\\DMExportTemp\\datamartexport\\ficsapirun.pl $datestring`;
+`perl \\\\d-spokane\\servicing\$\\DMExportTemp\\datamartexport\\ph2ficsapirun.pl $datestring`;
+#`rename \\\\d-spokane\\servicing\$\\Misc\\Import*.txt \\\\d-spokane\\servicing\$\\Misc\\Import*.$datestring`;

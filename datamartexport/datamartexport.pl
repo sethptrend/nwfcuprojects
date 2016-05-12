@@ -167,10 +167,152 @@ my @fields = ('Loan ID',
 
 my @ph2fields = (
 'Loan ID'
+,'Monthly T&I pmt'
 ,'Borrower 1 Work Phone'
 ,'Borrower 2 Work Phone'
 ,'Borrower 3 Work Phone'
 ,'Borrower 4 Work Phone'
+,'PMI coverage Effective Date'
+,'PMI coverage Percent'
+,'PMI Certification Number'
+,'PMI Cancellation Type'
+,'PMI Automation Type'
+,'PMI Premium Amount'
+,'PMI Premium Percent'
+,'PMI Tax Amount'
+,'PMI Tax Percent'
+,'Flood Community Number'
+,'Flood Certificate Number'
+,'Borrower wk ph type'
+,'Flood Life of Loan Carrier'
+,'Flood Zone'
+,'Flood Zone Deter Date'
+,'VA Loan Number'
+,'Current VA Servicer #'
+,'PT Payee'
+,'PT Payee type'
+,'PT TI Frequency'
+,'PT Account#'
+,'PT Include Cushion'
+,'PT Non-escrow'
+,'PT Total Disbursments'
+,'PT Date 1'
+,'PT Date 2'
+,'PT Date 3'
+,'PT Date 4'
+,'PT Date 5'
+,'PT Date 6'
+,'PT Date 7'
+,'PT Date 8'
+,'PT Date 9'
+,'PT Date 10'
+,'PT Date 11'
+,'PT Date 12'
+,'PT Paid 1'
+,'PT Paid 2'
+,'PT Paid 3'
+,'PT Paid 4'
+,'PT Paid 5'
+,'PT Paid 6'
+,'PT Paid 7'
+,'PT Paid 8'
+,'PT Paid 9'
+,'PT Paid 10'
+,'PT Paid 11'
+,'PT Paid 12'
+,'MI Payee'
+,'MI Payee type'
+,'MI TI Frequency'
+,'MI Account#'
+,'MI Include Cushion'
+,'MI Non-escrow'
+,'MI Total Disbursments'
+,'MI Date 1'
+,'MI Date 2'
+,'MI Date 3'
+,'MI Date 4'
+,'MI Date 5'
+,'MI Date 6'
+,'MI Date 7'
+,'MI Date 8'
+,'MI Date 9'
+,'MI Date 10'
+,'MI Date 11'
+,'MI Date 12'
+,'MI Paid 1'
+,'MI Paid 2'
+,'MI Paid 3'
+,'MI Paid 4'
+,'MI Paid 5'
+,'MI Paid 6'
+,'MI Paid 7'
+,'MI Paid 8'
+,'MI Paid 9'
+,'MI Paid 10'
+,'MI Paid 11'
+,'MI Paid 12'
+,'HOI Payee'
+,'HOI Payee type'
+,'HOI TI Frequency'
+,'HOI Account#'
+,'HOI Include Cushion'
+,'HOI Non-escrow'
+,'HOI Total Disbursments'
+,'HOI Date 1'
+,'HOI Date 2'
+,'HOI Date 3'
+,'HOI Date 4'
+,'HOI Date 5'
+,'HOI Date 6'
+,'HOI Date 7'
+,'HOI Date 8'
+,'HOI Date 9'
+,'HOI Date 10'
+,'HOI Date 11'
+,'HOI Date 12'
+,'HOI Paid 1'
+,'HOI Paid 2'
+,'HOI Paid 3'
+,'HOI Paid 4'
+,'HOI Paid 5'
+,'HOI Paid 6'
+,'HOI Paid 7'
+,'HOI Paid 8'
+,'HOI Paid 9'
+,'HOI Paid 10'
+,'HOI Paid 11'
+,'HOI Paid 12'
+,'SCHOOL Payee'
+,'SCHOOL Payee type'
+,'SCHOOL TI Frequency'
+,'SCHOOL Account#'
+,'SCHOOL Include Cushion'
+,'SCHOOL Non-escrow'
+,'SCHOOL Total Disbursments'
+,'SCHOOL Date 1'
+,'SCHOOL Date 2'
+,'SCHOOL Date 3'
+,'SCHOOL Date 4'
+,'SCHOOL Date 5'
+,'SCHOOL Date 6'
+,'SCHOOL Date 7'
+,'SCHOOL Date 8'
+,'SCHOOL Date 9'
+,'SCHOOL Date 10'
+,'SCHOOL Date 11'
+,'SCHOOL Date 12'
+,'SCHOOL Paid 1'
+,'SCHOOL Paid 2'
+,'SCHOOL Paid 3'
+,'SCHOOL Paid 4'
+,'SCHOOL Paid 5'
+,'SCHOOL Paid 6'
+,'SCHOOL Paid 7'
+,'SCHOOL Paid 8'
+,'SCHOOL Paid 9'
+,'SCHOOL Paid 10'
+,'SCHOOL Paid 11'
+,'SCHOOL Paid 12'
 );
 
 
@@ -310,10 +452,22 @@ my %lpntable = (
 		'CA7' => '7 1 30 Yr',
 		'CA7 R' => '7 1 30 Yr',
 		);
+		
+		
+#pmi automation type table:
+##ARCH, Genworth - Level Monthly, MGIC - Monthly Premiums, Radian - Monthly Premiums & UGRIC
+my %autotype = (
+			'MGIC' => 'MGIC - Monthly Premiums'
+			,'United Guaranty' => 'UGRIC'
+			,'Genworth' => 'Genworth - Level Monthly'
+			,'Radian' => 'Radian - Monthly Premiums'
+
+		);
 	
 #giant sql query
 my $qry = <<"EOT";
-SELECT  g.LenderRegistrationIdentifier AS 'Loan ID'
+SELECT  g.loanGeneral_Id as "LID"
+,g.LenderRegistrationIdentifier AS 'Loan ID'
 	, lockp.ProductCode AS 'ProductCode'
       , 'Coupons' as 'Billing Method'
 	  , 'No' as 'Daily Interest Loan'
@@ -447,6 +601,13 @@ SELECT  g.LenderRegistrationIdentifier AS 'Loan ID'
 	    ,cfmember.AttributeValue as 'Member #'
 	    ,mihud._MonthlyAmount as 'Mortgage Insurance'
 	     		 ,MID.MICompanyName as 'MI Company'
+				 ,MID.MICertificateIdentifier as 'PMI Certification Number'
+				 ,MID.MIProgram_1003 as 'MIProgramID'
+				 ,MID.MIInitialPremiumRatePercent as 'PMI Premium Percent'
+				 ,MID.MIInitialPremiumAmount as 'PMI Premium Amount'
+			,mid.MIRenewalCalculationType as 'MI RENEWAL'
+			,PHEMI.MICoveragePercent1003 as 'PMI coverage Percent'
+			,PHEMI.UWMICompanyName as 'UWMICompanyName'
 	     		 ,cttax._MonthlyAmount as 'City/Town Tax'
 	    		 ,cttax._SystemFeeName as 'cttax name'
 	     		 ,fip._MonthlyAmount as 'Flood Insurance'
@@ -467,6 +628,20 @@ SELECT  g.LenderRegistrationIdentifier AS 'Loan ID'
 	    	,B2WRK._TelephoneNumber as 'Borrower 2 Work Phone'
 	    	,B3WRK._TelephoneNumber as 'Borrower 3 Work Phone'
 		,B4WRK._TelephoneNumber as 'Borrower 4 Work Phone'
+		,flood.NFIPCommunityIdentifier as 'Flood Community Number'
+		,flood.FloodCertificationIdentifier as 'Flood Certificate Number'
+		,flood.NFIPFloodZoneIdentifier as 'Flood Zone'
+		,flood.FloodDeterminationDate as 'Flood Zone Deter Date'
+		,flood.FloodCompanyName as 'Flood Life of Loan Carrier'
+		,ESCROWPT._DueDate as 'Property Tax Due Date'
+				,ESCROWPT._PaymentFrequencyType as 'Property Tax Frequency'
+				,ESCROWHOI._DueDate as 'Homeowners Insurance Due Date'
+				,ESCROWHOI._PaymentFrequencyType as 'HoI Frequency'
+				,ESCROWMI._DueDate as 'Mortgage Insurance Due Date'
+		,ESCROWMI._PaymentFrequencyType as 'MI Frequency'
+		,titot.monthtot as 'Monthly T&I pmt'
+		,ESCROWSCHOOL._PaymentFrequencyType as 'SCHOOL Frequency'
+		,ESCROWSCHOOL._DueDate as 'SCHOOL Due Date'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
@@ -524,6 +699,8 @@ LEFT JOIN LENDER_LOAN_SERVICE.dbo.LOAN_DETAILS ld
       ON g.loanGeneral_Id = ld.loanGeneral_Id
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.FUNDING_DATA fd
       ON g.loanGeneral_Id = fd.loanGeneral_Id
+LEFT JOIN LENDER_LOAN_SERVICE.dbo.FLOOD_DETERMINATION as flood
+	  ON g.loanGeneral_Id = flood.loanGeneral_Id
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.DENIAL_LETTER dl
       ON g.loanGeneral_Id = dl.loanGeneral_Id
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.CLOSING_AGENT cagent
@@ -595,6 +772,9 @@ LEFT JOIN LENDER_LOAN_SERVICE.dbo.PROPOSED_HOUSING_EXPENSE PHE2
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.PROPOSED_HOUSING_EXPENSE PHE3
       ON phe3.loangeneral_id = g.loangeneral_id
             AND PHE3.HOUSINGEXPENSETYPE = 'RealEstateTax'
+LEFT JOIN LENDER_LOAN_SERVICE.dbo.PROPOSED_HOUSING_EXPENSE PHEMI
+      ON PHEMI.loangeneral_id = g.loangeneral_id
+            AND PHEMI.HOUSINGEXPENSETYPE = 'MI'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.MI_DATA MID
       ON mid.loangeneral_id = g.loangeneral_id
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.LOCK_PRICE LOP
@@ -608,7 +788,7 @@ LEFT JOIN LENDER_LOAN_SERVICE.dbo.GLOBAL_VENDOR_AGENT vend
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.GLOBAL_VENDOR_AGENT_CONTACT_DETAIL det
       ON vend.globalVendorAgentId = det.globalVendorAgentId
 LEFT JOIN (
-		SELECT sum(_TotalAmount) as tot , loanGeneral_Id   FROM [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE]  where  hudType='HUD' and _LineNumber > 999 and _LineNumber < 1100 group by loanGeneral_Id 
+			SELECT sum(_TotalAmount) as tot , sum(_MonthlyAmount) as monthtot, loanGeneral_Id   FROM [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE]  where  hudType='HUD' and _LineNumber > 999 and _LineNumber < 1100 group by loanGeneral_Id 
 )  titot on titot.loanGeneral_Id=g.loangeneral_id
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] nineohone on nineohone.loanGeneral_Id=g.loangeneral_id and hudType='HUD' and _LineNumber=1401
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._LEGAL_DESCRIPTION legaldesc on legaldesc.loanGeneral_Id=g.loanGeneral_Id and legaldesc._Type='LongLegal'
@@ -625,6 +805,10 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B1WRK on B1WRK.loanGeneral_Id=g.l
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B2WRK on B2WRK.loanGeneral_Id=g.loanGeneral_Id and B2WRK.BorrowerID='BRW2' and B2WRK.CurrentEmploymentMonthsOnJob is not NULL
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B3WRK on B3WRK.loanGeneral_Id=g.loanGeneral_Id and B3WRK.BorrowerID='BRW3' and B3WRK.CurrentEmploymentMonthsOnJob is not NULL
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B4WRK on B4WRK.loanGeneral_Id=g.loanGeneral_Id and B4WRK.BorrowerID='BRW4' and B4WRK.CurrentEmploymentMonthsOnJob is not NULL
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWPT on ESCROWPT.loanGeneral_Id=g.loanGeneral_Id and ESCROWPT._ItemType like '%PropertyTax' and not (ESCROWPT._ItemType = 'DistrictPropertyTax')
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWSCHOOL on ESCROWSCHOOL.loanGeneral_Id=g.loanGeneral_Id and ESCROWSCHOOL._ItemType='DistrictPropertyTax'
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWHOI on ESCROWHOI.loanGeneral_Id=g.loanGeneral_Id and ESCROWHOI._ItemType='HazardInsurance'
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWMI on ESCROWMI.loanGeneral_Id=g.loanGeneral_Id and ESCROWMI._ItemType='MortgageInsurance'
 
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
@@ -641,6 +825,7 @@ my $flag = 0;
 #printing nulls as ''
 no warnings 'uninitialized';
 open my $tsv, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."MortgageBotUpdate-$targetdate\.txt";
+open my $ph2tsv, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."Ph2MortgageBotUpdate-$targetdate\.txt";
 for my $rec (@$recs){
 #place to hack fields before output
 	$rec->{'# of months cushion disclosure'} = '2';
@@ -776,15 +961,183 @@ for my $rec (@$recs){
 	$rec->{'Service Fee Type'} = 'Rate';
 	$rec->{'Service Fee Rate'} = '.00000';
 	
+	
+######
+#Phase 2 hacks
+#####
+	$rec->{'Flood Life of Loan Carrier'} =  "CBCInnovis Flood" if $rec->{'Flood Life of Loan Carrier'} eq 'CBCInnovis Flood Zone Determination Services';
+	if($rec->{'MI Company'}){
+	#ARCH, Genworth - Level Monthly, MGIC - Monthly Premiums, Radian - Monthly Premiums & UGRIC
+	$rec->{'PMI Automation Type'} = $autotype{$rec->{'MI Company'}};
+		$rec->{'PMI coverage Effective Date'} = $rec->{'Funding Date'};
+		$rec->{'PMI Cancellation Type'} = 'Standard';
+		#$rec->{'ProgramPremiums'} = 'Monthly Premiums' if $rec->{'MIProgramID'} eq '2';
+		#$rec->{'PMI Automation Type'} = $rec->{'UWMICompanyName'} . ' - ' . $rec->{'ProgramPremiums'};
+		
+	
+	}
+	#maybe US default for now
+	$rec->{'Borrower wk ph type'} = 'U.S.';
+	
+	
+	
+##########
+#T&I Expansion
+#########
+
+
+#PTax
+	if($rec->{'Property Tax Frequency'} eq 'Annual'){
+		$rec->{'PT Payee'} = 'Property Taxes';
+		$rec->{'PT Account#'} = $rec->{'Parcel Number'};
+		$rec->{'PT Payee type'} = 'Tax Collector';
+		$rec->{'PT TI Frequency'} = 'Annually';
+		$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
+		$rec->{'PT Date 1'} = $rec->{'Property Tax Due Date'};
+		$rec->{'PT Paid 1'} = $rec->{'PT Total Disbursments'};
+		
+		
+	}elsif ($rec->{'Property Tax Frequency'} eq 'Monthly'){
+		$rec->{'PT Payee'} = 'Property Taxes';	
+		$rec->{'PT Payee type'} = 'Tax Collector';
+		$rec->{'PT TI Frequency'} = 'Monthly';
+		$rec->{'PT Account#'} = $rec->{'Parcel Number'};
+		$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
+		if($rec->{'Property Tax Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+			my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+		
+		for my $count (1..12){
+			$rec->{"PT Paid $count"} = $rec->{'Property Taxes (Escrow)'};
+			$rec->{"PT Date $count"} = $date->ymd('-');
+			$date->add( months => 1, end_of_month => 'preserve');
+		}
+		}
+		
+	}elsif ($rec->{'Property Tax Frequency'} eq 'SemiAnnual'){
+		$rec->{'PT TI Frequency'} = "Semi Annually";
+		$rec->{'PT Payee'} = 'Property Taxes';
+		$rec->{'PT Account#'} = $rec->{'Parcel Number'};
+		$rec->{'PT Payee type'} = 'Tax Collector';
+		$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
+		if($rec->{'Property Tax Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+					my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+				
+				for my $count (1..2){
+					$rec->{"PT Paid $count"} = $rec->{'Property Taxes (Escrow)'} * 6;
+					$rec->{"PT Date $count"} = $date->ymd('-');
+					$date->add( months => 6, end_of_month => 'preserve');
+				}
+		}
+	}
+#MI	
+	if($rec->{'MI Frequency'} eq 'Annual'){
+			$rec->{'MI Payee'} = $rec->{'MI Company'};
+			$rec->{'MI Payee type'} = 'Tax Collector';
+			$rec->{'MI TI Frequency'} = 'Annually';
+			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
+			$rec->{'MI Date 1'} = $rec->{'Mortgage Insurance Due Date'};
+			$rec->{'MI Paid 1'} = $rec->{'MI Total Disbursments'};
+			$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
+		
+		
+		}elsif ($rec->{'MI Frequency'} eq 'Monthly'){
+			$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
+			$rec->{'MI Payee'} = $rec->{'MI Company'};
+			$rec->{'MI Payee type'} = 'Mortgage Insurance';
+			$rec->{'MI TI Frequency'} = 'Monthly';
+			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
+			if($rec->{'Mortgage Insurance Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+				my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+			
+			for my $count (1..12){
+				$rec->{"MI Paid $count"} = $rec->{'Mortgage Insurance'};
+				$rec->{"MI Date $count"} = $date->ymd('-');
+				$date->add( months => 1, end_of_month => 'preserve');
+			}
+			}
+	}
+#HOI
+	if($rec->{'HoI Frequency'} eq 'Annual'){
+		$rec->{'HOI Payee'} = 'Hazard';
+		$rec->{'HOI Payee type'} = 'Insurance Company';
+		$rec->{'HOI TI Frequency'} = 'Annually';
+		$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
+		$rec->{'HOI Date 1'} = $rec->{'Homeowners Insurance Due Date'};
+		$rec->{'HOI Paid 1'} = $rec->{'HOI Total Disbursments'};
+	}elsif ($rec->{'Property Tax Frequency'} eq 'Monthly'){
+		$rec->{'HOI Payee'} = 'Hazard';	
+		$rec->{'HOI Payee type'} = 'Insurance Company';
+		$rec->{'HOI TI Frequency'} = 'Monthly';
+		$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
+		if($rec->{'Homeowners Insurance Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+			my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+		
+		for my $count (1..12){
+			$rec->{"HOI Paid $count"} = $rec->{'Homeowners Insurance'};
+			$rec->{"HOI Date $count"} = $date->ymd('-');
+			$date->add( months => 1, end_of_month => 'preserve');
+		}
+		}
+	}
+#School
+if($rec->{'SCHOOL Frequency'} eq 'Annual'){
+		$rec->{'SCHOOL Payee'} = 'School Tax';
+		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+		$rec->{'SCHOOL Payee type'} = 'Tax Collector';
+		$rec->{'SCHOOL TI Frequency'} = 'Annually';
+		$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+		$rec->{'SCHOOL Date 1'} = $rec->{'SCHOOL Due Date'};
+		$rec->{'SCHOOL Paid 1'} = $rec->{'SCHOOL Total Disbursments'};
+		
+		
+	}elsif ($rec->{'SCHOOL Frequency'} eq 'Monthly'){
+		$rec->{'SCHOOL Payee'} = 'School Tax';	
+		$rec->{'SCHOOL Payee type'} = 'Tax Collector';
+		$rec->{'SCHOOL TI Frequency'} = 'Monthly';
+		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+		$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+		if($rec->{'SCHOOL Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+			my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+		
+		for my $count (1..12){
+			$rec->{"SCHOOL Paid $count"} = $rec->{'School Tax'};
+			$rec->{"SCHOOL Date $count"} = $date->ymd('-');
+			$date->add( months => 1, end_of_month => 'preserve');
+		}
+		}
+		
+	}elsif ($rec->{'SCHOOL Frequency'} eq 'SemiAnnual'){
+		$rec->{'SCHOOL TI Frequency'} = "Semi Annually";
+		$rec->{'SCHOOL Payee'} = 'School Tax';
+		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+		$rec->{'SCHOOL Payee type'} = 'Tax Collector';
+		$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+		if($rec->{'SCHOOL Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+					my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+				
+				for my $count (1..2){
+					$rec->{"SCHOOL Paid $count"} = $rec->{'School Tax'} * 6;
+					$rec->{"SCHOOL Date $count"} = $date->ymd('-');
+					$date->add( months => 6, end_of_month => 'preserve');
+				}
+		}
+	}
+	
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
+	print $ph2tsv join ("\t", map {$rec->{$_}} @ph2fields);
+	print $ph2tsv "\n";
 	$flag++;
 }
 
 close $tsv;
+close $ph2tsv;
 
 if($flag){
 	open my $key, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."keyfile$targetdate\.txt";
 	print $key join("\n", @fields);
+	open my $ph2key, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."ph2keyfile$targetdate\.txt";
+	print $ph2key  join("\t", @ph2fields);
 	close $key;
+	close $ph2key;
 }
