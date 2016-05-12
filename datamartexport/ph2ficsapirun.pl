@@ -98,6 +98,6 @@ print "Open: \\\\d-spokane\\servicing\$\\Misc\\Import$confid\.log\n";
 open my $impfile, '<' , "\\\\d-spokane\\servicing\$\\Misc\\Import$confid\.log" or die $!;
 my @lines = <$impfile>;
 close $impfile;
-open my $impout, ">", "\\\\d-spokane\\servicing\$\\Misc\\Import$targetdate\.log";
+open my $impout, ">", "\\\\d-spokane\\servicing\$\\Misc\\Ph2Import$targetdate\.log";
 print $impout @lines;
 close $impout;
