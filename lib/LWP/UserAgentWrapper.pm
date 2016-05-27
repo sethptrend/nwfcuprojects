@@ -50,6 +50,9 @@ sub getPointerPostJSON{
 	my $resp = $self->{ua}->request($req);
 	if ($resp->is_success) {
 	    my $message = $resp->decoded_content;
+	    #try stripping BOM because some apis erroneously return it
+	    $message =~ s/^\x{ef}\x{bb}\x{bf}//;
+	    #print "$message\n";
 	    my $pointer = JSON::decode_json($message);
 	    return $pointer;
 	}

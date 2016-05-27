@@ -167,6 +167,7 @@ my @fields = ('Loan ID',
 
 my @ph2fields = (
 'Loan ID'
+,'Due Date of First Payment'
 ,'Monthly T&I pmt'
 ,'Borrower 1 Work Phone'
 ,'Borrower 2 Work Phone'
@@ -576,7 +577,7 @@ SELECT  g.loanGeneral_Id as "LID"
 	  , p._State as 'Property State'
 	  , p._PostalCode as 'Property Zip'
 	  , AppraisalDate as 'Orig & Current Appraised Date'
-	  , PropertyAppraisedValueAmount as 'Orig & Current Appraised Amount'
+	  ,CASE WHEN td.PropertyAppraisedValueAmount is NULL THEN td.PropertyEstimatedValueAmount WHEN td.PropertyEstimatedValueAmount is NULL THEN td.PropertyAppraisedValueAmount END AS 'Orig & Current Appraised Amount'
 	  , lp.PropertyUsageType as 'Purpose Code'
 	  , legaldesc._textdescription as 'Legal Description'
 	  , PurchasePriceAmount as 'Sales Price'
@@ -809,7 +810,7 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWPT on ESCROWPT.loanGeneral_
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWSCHOOL on ESCROWSCHOOL.loanGeneral_Id=g.loanGeneral_Id and ESCROWSCHOOL._ItemType='DistrictPropertyTax'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWHOI on ESCROWHOI.loanGeneral_Id=g.loanGeneral_Id and ESCROWHOI._ItemType='HazardInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWMI on ESCROWMI.loanGeneral_Id=g.loanGeneral_Id and ESCROWMI._ItemType='MortgageInsurance'
-
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[TRANSMITTAL_DATA] td on td.loanGeneral_Id=g.loanGeneral_Id
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
        AND gld.LoanProgram not like 'HELOC\%'
