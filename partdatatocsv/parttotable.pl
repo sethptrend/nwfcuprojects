@@ -24,14 +24,14 @@ my @infile = <$infile>;
 close $infile;
 
 
-if(0){
+if(1){
 	#this file is 753363 in reports in symitar
 	my @recs = $parser->ParseDetailFile(@infile);
 	$db->DoSQL('truncate table [ARCU_TEST].dbo.PartDetailReport');
 	for my $rec (@recs){
 
 		#print STDERR join("\n", %$rec) if $rec->{Acct} eq '0020342603';
-		print $db->InsertValues('[ARCU_TEST].[dbo].[PartDetailReport]', %$rec, 'ProcessDate', '20160430', 'ReportDate', '05/01/16') . "\n";
+		print $db->InsertValues('[ARCU_TEST].[dbo].[PartDetailReport]', %$rec, 'ProcessDate', '20160531', 'ReportDate', '06/01/16') . "\n";
 
 	}
 
@@ -39,7 +39,7 @@ if(0){
 
 	die "stuffs";
 }
-if(0){
+if(1){
 	#this file is 753366 in reports in symitar
 	my %parts = $parser->ParseInterestFile(@infile);
 	$db->DoSQL('truncate table [ARCU_TEST].dbo.PartInterestReport');
@@ -67,7 +67,7 @@ $db->DoSQL('truncate table [ARCU_TEST].dbo.PartTransReport');
 
 for my $part (keys %parts){
 	for my $partrec (@{$parts{$part}}){
-		print $db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[PartTransReport]', @$partrec, '20160430', '05/01/16') . "\n";
+		print $db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[PartTransReport]', @$partrec, '20160531', '06/01/16') . "\n";
 	
 	}
 
