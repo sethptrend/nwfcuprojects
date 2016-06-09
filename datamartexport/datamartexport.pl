@@ -1010,17 +1010,12 @@ for my $rec (@$recs){
 
 
 #PTax
-	if($rec->{'PT ID'} and $rec->{'Property Tax Frequency'} eq ''){
-		$rec->{'PT Include Cushion'} = 'No';
-		$rec->{'PT Non-escrow'} = 'Yes';
-		$rec->{'PT Payee'} = 'Property Taxes';
-		$rec->{'PT Payee type'} = 'Tax Collector';
-		$rec->{'PT Account#'} = $rec->{'Parcel Number'};
-	}elsif($rec->{'PT ID'}){
-		$rec->{'PT Include Cushion'} = 'Yes';
-		$rec->{'PT Non-escrow'} = 'No';
-	}
-
+my $fakedatestring = '';
+if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+	my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+	$date->add(months=> 12, end_of_month => 'preserve');
+	$fakedatestring = $date->ymd('-');
+}
 
 	if($rec->{'Property Tax Frequency'} eq 'Annual'){
 		$rec->{'PT Payee'} = 'Property Taxes';
@@ -1079,6 +1074,19 @@ for my $rec (@$recs){
 		}
 	
 	}
+	if($rec->{'PT ID'} and $rec->{'Property Tax Frequency'} eq ''){
+			$rec->{'PT Include Cushion'} = 'No';
+			$rec->{'Property Tax Frequency'} = 'Annual';
+			$rec->{'PT Non-escrow'} = 'Yes';
+			$rec->{'PT Payee'} = 'Property Taxes';
+			$rec->{'PT Payee type'} = 'Tax Collector';
+			$rec->{'PT Account#'} = $rec->{'Parcel Number'};
+			$rec->{'PT Date 1'} = $fakedatestring;
+		}elsif($rec->{'PT ID'}){
+			$rec->{'PT Include Cushion'} = 'Yes';
+			$rec->{'PT Non-escrow'} = 'No';
+		}
+
 #MI	
 
 	if($rec->{'MI ID'} and $rec->{'MI Frequency'} eq ''){
@@ -1117,16 +1125,20 @@ for my $rec (@$recs){
 			}
 			}
 	}
-#HOI
-	if($rec->{'HOI ID'} and $rec->{'HoI Frequency'} eq ''){
-			$rec->{'HOI Include Cushion'} = 'No';
-			$rec->{'HOI Non-escrow'} = 'Yes';
-			$rec->{'HOI Payee'} = 'Hazard';
-			$rec->{'HOI Payee type'} = 'Insurance Company';
-		}elsif($rec->{'HOI ID'}){
-			$rec->{'HOI Include Cushion'} = 'Yes';
-			$rec->{'HOI Non-escrow'} = 'No';
+	if($rec->{'MI ID'} and $rec->{'MI Frequency'} eq ''){
+				$rec->{'MI Include Cushion'} = 'No';
+				$rec->{'MI Frequency'} = 'Annual';
+				$rec->{'MI Non-escrow'} = 'Yes';
+				$rec->{'MI Payee'} = $rec->{'MI Company'};
+				$rec->{'MI Payee type'} = 'Tax Collector';
+				$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
+				$rec->{'MI Date 1'} = $fakedatestring;
+			}elsif($rec->{'MI ID'}){
+				$rec->{'MI Include Cushion'} = 'Yes';
+				$rec->{'MI Non-escrow'} = 'No';
 	}
+#HOI
+	
 	if($rec->{'HoI Frequency'} eq 'Annual'){
 		$rec->{'HOI Payee'} = 'Hazard';
 		$rec->{'HOI Payee type'} = 'Insurance Company';
@@ -1149,16 +1161,19 @@ for my $rec (@$recs){
 		}
 		}
 	}
-#School
-	if($rec->{'SCHOOL ID'} and $rec->{'SCHOOL Frequency'} eq ''){
-			$rec->{'SCHOOL Include Cushion'} = 'No';
-			$rec->{'SCHOOL Non-escrow'} = 'Yes';
-			$rec->{'SCHOOL Payee'} = 'School Tax';
-			$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
-		}elsif($rec->{'SCHOOL ID'}){
-			$rec->{'SCHOOL Include Cushion'} = 'Yes';
-			$rec->{'SCHOOL Non-escrow'} = 'No';
+	if($rec->{'HOI ID'} and $rec->{'HoI Frequency'} eq ''){
+				$rec->{'HOI Include Cushion'} = 'No';
+				$rec->{'HoI Frequency'} = 'Annual';
+				$rec->{'HOI Non-escrow'} = 'Yes';
+				$rec->{'HOI Payee'} = 'Hazard';
+				$rec->{'HOI Payee type'} = 'Insurance Company';
+				$rec->{'HOI Date 1'} = $fakedatestring;
+			}elsif($rec->{'HOI ID'}){
+				$rec->{'HOI Include Cushion'} = 'Yes';
+				$rec->{'HOI Non-escrow'} = 'No';
 	}
+#School
+	
 if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 		$rec->{'SCHOOL Payee'} = 'School Tax';
 		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
@@ -1215,6 +1230,17 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 					$date->add( months => 3, end_of_month => 'preserve');
 				}
 		}
+	}
+	if($rec->{'SCHOOL ID'} and $rec->{'SCHOOL Frequency'} eq ''){
+				$rec->{'SCHOOL Include Cushion'} = 'No';
+				$rec->{'SCHOOL Frequency'} = 'Annual';
+				$rec->{'SCHOOL Non-escrow'} = 'Yes';
+				$rec->{'SCHOOL Payee'} = 'School Tax';
+				$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+				$rec->{'SCHOOL Date 1'} = $fakedatestring;
+			}elsif($rec->{'SCHOOL ID'}){
+				$rec->{'SCHOOL Include Cushion'} = 'Yes';
+				$rec->{'SCHOOL Non-escrow'} = 'No';
 	}
 	
 	print $tsv join("\t", map {$rec->{$_}} @fields);
