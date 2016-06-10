@@ -663,6 +663,7 @@ SELECT  g.loanGeneral_Id as "LID"
 		,ESCROWSCHOOL._SecondDueDate as 'SCHOOL Date 2'
 		,ESCROWSCHOOL._ThirdDueDate as 'SCHOOL Date 3'
 		,ESCROWSCHOOL._FourthDueDate as 'SCHOOL Date 4'
+		,ci.HazardInsurancePolicyIdentifier as 'cihipi'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
@@ -833,6 +834,7 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWSCHOOL on ESCROWSCHOOL.loan
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWHOI on ESCROWHOI.loanGeneral_Id=g.loanGeneral_Id and ESCROWHOI._ItemType='HazardInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWMI on ESCROWMI.loanGeneral_Id=g.loanGeneral_Id and ESCROWMI._ItemType='MortgageInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[TRANSMITTAL_DATA] td on td.loanGeneral_Id=g.loanGeneral_Id
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].CLOSING_INSTRUCTIONS ci on td.loanGeneral_Id=ci.loanGeneral_Id
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
        AND gld.LoanProgram not like 'HELOC\%'
@@ -1003,6 +1005,10 @@ for my $rec (@$recs){
 	$rec->{'Borrower wk ph type'} = 'U.S.';
 	
 	
+	#flood zone NO if blank
+	$rec->{'Flood Zone'} = 'NO' unless $rec->{'Flood Zone'};
+	
+	
 	
 ##########
 #T&I Expansion
@@ -1076,7 +1082,7 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 	}
 	if($rec->{'PT ID'} and $rec->{'Property Tax Frequency'} eq ''){
 			$rec->{'PT Include Cushion'} = 'No';
-			$rec->{'Property Tax Frequency'} = 'Annual';
+			$rec->{'PT TI Frequency'} = 'Annually';
 			$rec->{'PT Non-escrow'} = 'Yes';
 			$rec->{'PT Payee'} = 'Property Taxes';
 			$rec->{'PT Payee type'} = 'Tax Collector';
@@ -1127,7 +1133,7 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 	}
 	if($rec->{'MI ID'} and $rec->{'MI Frequency'} eq ''){
 				$rec->{'MI Include Cushion'} = 'No';
-				$rec->{'MI Frequency'} = 'Annual';
+				$rec->{'MI TI Frequency'} = 'Annually';
 				$rec->{'MI Non-escrow'} = 'Yes';
 				$rec->{'MI Payee'} = $rec->{'MI Company'};
 				$rec->{'MI Payee type'} = 'Tax Collector';
@@ -1163,14 +1169,16 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 	}
 	if($rec->{'HOI ID'} and $rec->{'HoI Frequency'} eq ''){
 				$rec->{'HOI Include Cushion'} = 'No';
-				$rec->{'HoI Frequency'} = 'Annual';
+				$rec->{'HOI TI Frequency'} = 'Annually';
 				$rec->{'HOI Non-escrow'} = 'Yes';
 				$rec->{'HOI Payee'} = 'Hazard';
+				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
 				$rec->{'HOI Payee type'} = 'Insurance Company';
 				$rec->{'HOI Date 1'} = $fakedatestring;
 			}elsif($rec->{'HOI ID'}){
 				$rec->{'HOI Include Cushion'} = 'Yes';
 				$rec->{'HOI Non-escrow'} = 'No';
+				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
 	}
 #School
 	
@@ -1233,7 +1241,7 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 	}
 	if($rec->{'SCHOOL ID'} and $rec->{'SCHOOL Frequency'} eq ''){
 				$rec->{'SCHOOL Include Cushion'} = 'No';
-				$rec->{'SCHOOL Frequency'} = 'Annual';
+				$rec->{'SCHOOL TI Frequency'} = 'Annually';
 				$rec->{'SCHOOL Non-escrow'} = 'Yes';
 				$rec->{'SCHOOL Payee'} = 'School Tax';
 				$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
