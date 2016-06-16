@@ -75,7 +75,7 @@ $pointer = $ua->getPointerPostJSON($import_service, $import_post, 900);
 
 die 'Import list server call failed' unless $pointer;
 
-die 'Import list server call failed' unless $pointer->{DocumentCollection};
+die 'Import list server call failed due to no DocumentCollection - return message was:' . "\n" . encode_json($pointer) unless $pointer->{DocumentCollection};
 
 open my $pdf, '>',"\\\\d-spokane\\servicing\$\\Misc\\"."SymitarPaymentDoc-$targetdate\.pdf";
 binmode $pdf;
