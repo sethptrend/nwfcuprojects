@@ -432,8 +432,8 @@ my %lpntable = (
 		'HB30 R' => '30 HI BAL',
 		'C30 97	CFT' => '30 Yr Conv 97',
 		'DU30 125' => '30 Yr Conv HARP',
-		'C30' => '30 yr fixed',	
-		'C30 R' => '30 yr fixed',
+		'C30' => '30 Yr Fixed',	
+		'C30 R' => '30 Yr Fixed',
 		'J30' => '30 Yr Jumbo Fixed',
 		'J30 R' => '30 Yr Jumbo Fixed',
 		'SJ30' => '30 Yr Jumbo Fixed',
@@ -463,6 +463,13 @@ my %autotype = (
 			,'Genworth' => 'Genworth - Level Monthly'
 			,'Radian' => 'Radian - Monthly Premiums'
 
+		);
+		
+#MI Company valid choices
+# full spelling Mortgage Guaranty Insurance Corp; Arch Mortgage Insur Co, Genworth Financial, Radian Mortgage Insur Co and United Guaranty
+my %micompanytable = (
+			'MGIC' => 'Mortgage Guaranty Insurance Corp',
+			'United Guaranty' => 'United Guaranty',
 		);
 	
 #giant sql query
@@ -998,15 +1005,17 @@ for my $rec (@$recs){
 		$rec->{'PMI Cancellation Type'} = 'Standard';
 		#$rec->{'ProgramPremiums'} = 'Monthly Premiums' if $rec->{'MIProgramID'} eq '2';
 		#$rec->{'PMI Automation Type'} = $rec->{'UWMICompanyName'} . ' - ' . $rec->{'ProgramPremiums'};
-		
+	
+		#apply the table
+		$rec->{'MI Company'} = $micompanytable{$rec->{'MI Company'}} if $micompanytable{$rec->{'MI Company'}};
 	
 	}
 	#maybe US default for now
 	$rec->{'Borrower wk ph type'} = 'U.S.';
 	
 	
-	#flood zone NO if blank
-	$rec->{'Flood Zone'} = 'NO' unless $rec->{'Flood Zone'};
+	#flood zone NO if B, C, X & D
+	$rec->{'Flood Zone'} = 'NO' if $rec->{'Flood Zone'} =~ /^[BCXD]$/;
 	
 	
 	
