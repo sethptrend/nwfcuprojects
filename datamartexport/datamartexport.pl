@@ -485,7 +485,13 @@ my %lpntable = (
 		'CA7 R' => '7 1 30 Yr',
 		);
 		
-		
+
+#calculate the minimum acceptable MI date
+$targetdate =~ /(\d\d\d\d)-(\d\d)-(\d\d)/;
+my $miDateMin = DateTime->new( year => $1, month => $2, day => 1, locale => 'en_US');
+$miDateMin->add( months => 1, end_of_month => 'preserve');
+
+
 #pmi automation type table:
 ##ARCH, Genworth - Level Monthly, MGIC - Monthly Premiums, Radian - Monthly Premiums & UGRIC
 my %autotype = (
@@ -1142,6 +1148,7 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 		}
 
 #MI	
+$rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd('-') lt $rec->{'Mortgage Insurance Due Date'};
 
 	if($rec->{'MI ID'} and $rec->{'MI Frequency'} eq ''){
 			$rec->{'MI Include Cushion'} = 'No';
@@ -1190,6 +1197,7 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 			}elsif($rec->{'MI ID'}){
 				$rec->{'MI Include Cushion'} = 'Yes';
 				$rec->{'MI Non-escrow'} = 'No';
+				
 	}
 #HOI
 	
