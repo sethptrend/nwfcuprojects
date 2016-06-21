@@ -314,6 +314,37 @@ my @ph2fields = (
 ,'SCHOOL Paid 10'
 ,'SCHOOL Paid 11'
 ,'SCHOOL Paid 12'
+,'WI Payee'
+,'WI Payee type'
+,'WI TI Frequency'
+,'WI Account#'
+,'WI Include Cushion'
+,'WI Non-escrow'
+,'WI Total Disbursments'
+,'WI Date 1'
+,'WI Date 2'
+,'WI Date 3'
+,'WI Date 4'
+,'WI Date 5'
+,'WI Date 6'
+,'WI Date 7'
+,'WI Date 8'
+,'WI Date 9'
+,'WI Date 10'
+,'WI Date 11'
+,'WI Date 12'
+,'WI Paid 1'
+,'WI Paid 2'
+,'WI Paid 3'
+,'WI Paid 4'
+,'WI Paid 5'
+,'WI Paid 6'
+,'WI Paid 7'
+,'WI Paid 8'
+,'WI Paid 9'
+,'WI Paid 10'
+,'WI Paid 11'
+,'WI Paid 12'
 );
 
 
@@ -670,6 +701,13 @@ SELECT  g.loanGeneral_Id as "LID"
 		,ESCROWSCHOOL._SecondDueDate as 'SCHOOL Date 2'
 		,ESCROWSCHOOL._ThirdDueDate as 'SCHOOL Date 3'
 		,ESCROWSCHOOL._FourthDueDate as 'SCHOOL Date 4'
+		,ESCROWWI._ItemType as 'WI ID'
+		,ESCROWWI._PaymentFrequencyType as 'WI Frequency'
+		,ESCROWWI._DueDate as 'WI Due Date'
+		,ESCROWWI._DueDate as 'WI Date 1'
+		,ESCROWWI._SecondDueDate as 'WI Date 2'
+		,ESCROWWI._ThirdDueDate as 'WI Date 3'
+		,ESCROWWI._FourthDueDate as 'WI Date 4'
 		,ci.HazardInsurancePolicyIdentifier as 'cihipi'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
@@ -838,6 +876,7 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B3WRK on B3WRK.loanGeneral_Id=g.l
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B4WRK on B4WRK.loanGeneral_Id=g.loanGeneral_Id and B4WRK.BorrowerID='BRW4' and B4WRK.CurrentEmploymentMonthsOnJob is not NULL
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWPT on ESCROWPT.loanGeneral_Id=g.loanGeneral_Id and ESCROWPT._ItemType like '%PropertyTax' and not (ESCROWPT._ItemType = 'DistrictPropertyTax')
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWSCHOOL on ESCROWSCHOOL.loanGeneral_Id=g.loanGeneral_Id and ESCROWSCHOOL._ItemType='DistrictPropertyTax'
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWWI on ESCROWWI.loanGeneral_Id=g.loanGeneral_Id and ESCROWWI._ItemType='WindstormInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWHOI on ESCROWHOI.loanGeneral_Id=g.loanGeneral_Id and ESCROWHOI._ItemType='HazardInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWMI on ESCROWMI.loanGeneral_Id=g.loanGeneral_Id and ESCROWMI._ItemType='MortgageInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[TRANSMITTAL_DATA] td on td.loanGeneral_Id=g.loanGeneral_Id
@@ -1258,6 +1297,39 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 			}elsif($rec->{'SCHOOL ID'}){
 				$rec->{'SCHOOL Include Cushion'} = 'Yes';
 				$rec->{'SCHOOL Non-escrow'} = 'No';
+	}
+	
+	
+	
+	
+#Windstorm Insurance
+#frequency based
+if($rec->{'WI Frequency'} eq 'Annual'){
+		
+		$rec->{'WI TI Frequency'} = 'Annually';
+		$rec->{'WI Total Disbursments'} = 12*$rec->{'Hail/Windstorm Insurance'};
+		$rec->{'WI Date 1'} = $rec->{'WI Due Date'};
+		$rec->{'WI Paid 1'} = $rec->{'WI Total Disbursments'};
+		
+		
+	}
+
+#Escrow, cushion , defaults
+if($rec->{'WI ID'} and $rec->{'WI Frequency'} eq ''){
+				$rec->{'WI Include Cushion'} = 'No';
+				$rec->{'WI TI Frequency'} = 'Annually';
+				$rec->{'WI Non-escrow'} = 'Yes';
+				$rec->{'WI Payee'} = 'Hail/Windstorm';
+				$rec->{'WI Payee type'} = 'Insurance Company';
+				$rec->{'WI Account#'} = 'blank';
+				$rec->{'WI Date 1'} = $fakedatestring;
+			}elsif($rec->{'WI ID'}){
+				$rec->{'WI Include Cushion'} = 'Yes';
+				$rec->{'WI Non-escrow'} = 'No';
+				$rec->{'WI Payee'} = 'Hail/Windstorm';
+				$rec->{'WI Payee type'} = 'Insurance Company';
+				$rec->{'WI Account#'} = 'blank';
+				$rec->{'WI Payee type'} = 'Tax Collector';
 	}
 	
 	print $tsv join("\t", map {$rec->{$_}} @fields);
