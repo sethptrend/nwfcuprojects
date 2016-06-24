@@ -345,6 +345,98 @@ my @ph2fields = (
 ,'WI Paid 10'
 ,'WI Paid 11'
 ,'WI Paid 12'
+,'FLOOD Payee'
+,'FLOOD Payee type'
+,'FLOOD TI Frequency'
+,'FLOOD Account#'
+,'FLOOD Include Cushion'
+,'FLOOD Non-escrow'
+,'FLOOD Total Disbursments'
+,'FLOOD Date 1'
+,'FLOOD Date 2'
+,'FLOOD Date 3'
+,'FLOOD Date 4'
+,'FLOOD Date 5'
+,'FLOOD Date 6'
+,'FLOOD Date 7'
+,'FLOOD Date 8'
+,'FLOOD Date 9'
+,'FLOOD Date 10'
+,'FLOOD Date 11'
+,'FLOOD Date 12'
+,'FLOOD Paid 1'
+,'FLOOD Paid 2'
+,'FLOOD Paid 3'
+,'FLOOD Paid 4'
+,'FLOOD Paid 5'
+,'FLOOD Paid 6'
+,'FLOOD Paid 7'
+,'FLOOD Paid 8'
+,'FLOOD Paid 9'
+,'FLOOD Paid 10'
+,'FLOOD Paid 11'
+,'FLOOD Paid 12'
+
+);
+
+#table for Hazard Company Names
+my %hcntable = (
+'AAA' => 'AAA'
+,'AAA INSURANCE' => 'AAA'
+,'AAA MID-ATLANTIC INSURANCE' => 'AAA'
+,'AAA TEXAS' => 'AAA'
+,'ALLSTATE' => 'ALLSTATE'
+,'ALLSTATE - DESIGNER\'S INSURANCE AGENCY' => 'ALLSTATE'
+,'ALLSTATE INSURANCE' => 'ALLSTATE'
+,'ALLSTATE INSURANCE COMPANY' => 'ALLSTATE'
+,'ALLSTATE PROPERTY AND CASUALTY INSURANCE' => 'ALLSTATE'
+,'AMERICAN STRATEGIC INSURANCE CO.' => 'ASI'
+,'AMERIPRISE' => 'AMERIPRISE'
+,'AMICA' => 'AMICA'
+,'AMICA - REGIONAL OFFICE' => 'AMICA'
+,'AMICA MUTUAL INSURANCE CO.' => 'AMICA'
+,'ARMED FORCES INSURANCE EXCHANGE' => 'AMICA'
+,'ASI' => 'ASI'
+,'ASI LLOYDS' => 'ASI'
+,'ENCOMPASS' => 'ENCOMPASS'
+,'ERIE' => 'ERIE'
+,'ERIE INSURANCE' => 'ERIE'
+,'ERIE INSURANCE COMPANY' => 'ERIE'
+,'FARMER\'S INSURANCE' => 'FARMERS'
+,'FARMERS' => 'FARMERS'
+,'GEICO' => 'GEICO'
+,'GEICO INSURANCE' => 'GEICO'
+,'HANOVER' => 'HANOVER'
+,'HANOVER INSURANCE' => 'HANOVER'
+,'HARTFORD' => 'HARTFORD'
+,'HARTFORD INSURANCE' => 'HARTFORD'
+,'HOMESITE' => 'HOMESITE'
+,'HOMESITE INSURANCE' => 'HOMESITE'
+,'HOMESITE INSURANCE CO.' => 'HOMESITE'
+,'HOMESITE INSURANCE COMPANY' => 'HOMESITE'
+,'LIBERTY' => 'LIBERTY'
+,'LIBERTY MUTUAL' => 'LIBERTY'
+,'LIBERTY MUTUAL INSURANCE' => 'LIBERTY'
+,'METLIFE' => 'METLIFE'
+,'MMG' => 'MMG'
+,'NATIONWIDE' => 'NATIONWIDE'
+,'NATIONWIDE INSURANCE' => 'NATIONWIDE'
+,'NATIONWIDE MUTUAL FIRE INSURANCE' => 'NATIONWIDE'
+,'NORTHERN NECK' => 'NORTHERN NECK'
+,'QBE' => 'QBE'
+,'SAFECO' => 'SAFECO'
+,'SAFECO INSURANCE' => 'SAFECO'
+,'ST. JOHNS' => 'ST. JOHNS'
+,'STATE FARM' => 'STATE FARM'
+,'STATE FARM INSURANCE' => 'STATE FARM'
+,'STILLWATER' => 'STILLWATER'
+,'TRAVELERS' => 'TRAVELERS'
+,'TRAVELERS - GEICO' => 'TRAVELERS'
+,'UNITED' => 'UNITED'
+,'UNITED PROPERTY & CASUALTY' => 'UNITED'
+,'USAA' => 'USAA'
+,'VA FARM BUREAU INSURANCE' => 'VIRGINIA FARM BUREAU'
+,'VIRGINIA FARM BUREAU' => 'VIRGINIA FARM BUREAU'
 );
 
 
@@ -487,7 +579,7 @@ my %lpntable = (
 		
 
 #calculate the minimum acceptable MI date
-$targetdate =~ /(\d\d\d\d)-(\d\d)-(\d\d)/;
+die "Expect date in YYYY-MM-DD format.  Try again\n" unless $targetdate =~ /(\d\d\d\d)-(\d\d)-(\d\d)/;
 my $miDateMin = DateTime->new( year => $1, month => $2, day => 1, locale => 'en_US');
 $miDateMin->add( months => 1, end_of_month => 'preserve');
 
@@ -714,7 +806,16 @@ SELECT  g.loanGeneral_Id as "LID"
 		,ESCROWWI._SecondDueDate as 'WI Date 2'
 		,ESCROWWI._ThirdDueDate as 'WI Date 3'
 		,ESCROWWI._FourthDueDate as 'WI Date 4'
+		,ESCROWFLOOD._ItemType as 'FLOOD ID'
+		,ESCROWFLOOD._PaymentFrequencyType as 'FLOOD Frequency'
+		,ESCROWFLOOD._DueDate as 'FLOOD Due Date'
+		,ESCROWFLOOD._DueDate as 'FLOOD Date 1'
+		,ESCROWFLOOD._SecondDueDate as 'FLOOD Date 2'
+		,ESCROWFLOOD._ThirdDueDate as 'FLOOD Date 3'
+		,ESCROWFLOOD._FourthDueDate as 'FLOOD Date 4'
 		,ci.HazardInsurancePolicyIdentifier as 'cihipi'
+		,ci.FloodInsurancePolicyIdentifier as 'cihifi'
+		,VAHI._UnparsedName as 'vahihi'
 
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
@@ -883,10 +984,12 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B4WRK on B4WRK.loanGeneral_Id=g.l
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWPT on ESCROWPT.loanGeneral_Id=g.loanGeneral_Id and ESCROWPT._ItemType like '%PropertyTax' and not (ESCROWPT._ItemType = 'DistrictPropertyTax')
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWSCHOOL on ESCROWSCHOOL.loanGeneral_Id=g.loanGeneral_Id and ESCROWSCHOOL._ItemType='DistrictPropertyTax'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWWI on ESCROWWI.loanGeneral_Id=g.loanGeneral_Id and ESCROWWI._ItemType='WindstormInsurance'
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWFLOOD on ESCROWFLOOD.loanGeneral_Id=g.loanGeneral_Id and ESCROWFLOOD._ItemType='FloodInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWHOI on ESCROWHOI.loanGeneral_Id=g.loanGeneral_Id and ESCROWHOI._ItemType='HazardInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWMI on ESCROWMI.loanGeneral_Id=g.loanGeneral_Id and ESCROWMI._ItemType='MortgageInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[TRANSMITTAL_DATA] td on td.loanGeneral_Id=g.loanGeneral_Id
-LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].CLOSING_INSTRUCTIONS ci on td.loanGeneral_Id=ci.loanGeneral_Id
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].CLOSING_INSTRUCTIONS ci on g.loanGeneral_Id=ci.loanGeneral_Id
+LEFT JOIN [LENDER_LOAN_SERVICE].dbo.VENDOR_AGENT VAHI on VAHI.loanGeneral_Id=g.loanGeneral_Id and VAHI._Type='HazardInsurer'
 WHERE g.loanStatus = 20
       AND cast(fd._fundeddate AS DATE)='$targetdate'
        AND gld.LoanProgram not like 'HELOC\%'
@@ -1200,17 +1303,16 @@ $rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd(
 				
 	}
 #HOI
-	
+#fix vahihi
+$rec->{'vahihi'} = defined($hcntable{uc($rec->{'vahihi'})})?$hcntable{uc($rec->{'vahihi'})}:'Hazard';
+
+#payment expansion
 	if($rec->{'HoI Frequency'} eq 'Annual'){
-		$rec->{'HOI Payee'} = 'Hazard';
-		$rec->{'HOI Payee type'} = 'Insurance Company';
 		$rec->{'HOI TI Frequency'} = 'Annually';
 		$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
 		$rec->{'HOI Date 1'} = $rec->{'Homeowners Insurance Due Date'};
 		$rec->{'HOI Paid 1'} = $rec->{'HOI Total Disbursments'};
 	}elsif ($rec->{'Property Tax Frequency'} eq 'Monthly'){
-		$rec->{'HOI Payee'} = 'Hazard';	
-		$rec->{'HOI Payee type'} = 'Insurance Company';
 		$rec->{'HOI TI Frequency'} = 'Monthly';
 		$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
 		if($rec->{'Homeowners Insurance Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
@@ -1223,15 +1325,20 @@ $rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd(
 		}
 		}
 	}
+	
+	
+#disbursement and fixed
 	if($rec->{'HOI ID'} and $rec->{'HoI Frequency'} eq ''){
 				$rec->{'HOI Include Cushion'} = 'No';
 				$rec->{'HOI TI Frequency'} = 'Annually';
 				$rec->{'HOI Non-escrow'} = 'Yes';
-				$rec->{'HOI Payee'} = 'Hazard';
+				$rec->{'HOI Payee'} = $rec->{'vahihi'}?$rec->{'vahihi'}:'Hazard';
 				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
 				$rec->{'HOI Payee type'} = 'Insurance Company';
 				$rec->{'HOI Date 1'} = $fakedatestring;
 			}elsif($rec->{'HOI ID'}){
+			        $rec->{'HOI Payee'} = $rec->{'vahihi'}?$rec->{'vahihi'}:'Hazard';
+			        $rec->{'HOI Payee type'} = 'Insurance Company';
 				$rec->{'HOI Include Cushion'} = 'Yes';
 				$rec->{'HOI Non-escrow'} = 'No';
 				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
@@ -1337,9 +1444,39 @@ if($rec->{'WI ID'} and $rec->{'WI Frequency'} eq ''){
 				$rec->{'WI Payee'} = 'Hail/Windstorm';
 				$rec->{'WI Payee type'} = 'Insurance Company';
 				$rec->{'WI Account#'} = 'blank';
-				$rec->{'WI Payee type'} = 'Tax Collector';
+				$rec->{'WI Payee type'} = 'Insurance Company';
 	}
-	
+
+#Flood Insurance
+#frequency based
+if($rec->{'FLOOD Frequency'} eq 'Annual'){
+		
+		$rec->{'FLOOD TI Frequency'} = 'Annually';
+		$rec->{'FLOOD Total Disbursments'} = 12*$rec->{'Flood Insurance'};
+		$rec->{'FLOOD Date 1'} = $rec->{'FLOOD Due Date'};
+		$rec->{'FLOOD Paid 1'} = $rec->{'FLOOD Total Disbursments'};
+		
+		
+	}
+
+#Escrow, cushion , defaults
+if($rec->{'FLOOD ID'} and $rec->{'FLOOD Frequency'} eq ''){
+				$rec->{'FLOOD Include Cushion'} = 'No';
+				$rec->{'FLOOD TI Frequency'} = 'Annually';
+				$rec->{'FLOOD Non-escrow'} = 'Yes';
+				$rec->{'FLOOD Payee'} = 'Flood';
+				$rec->{'FLOOD Payee type'} = 'Insurance Company';
+				$rec->{'FLOOD Account#'} = $rec->{'cihifi'}?$rec->{'cihifi'}:'blank';
+				$rec->{'FLOOD Date 1'} = $fakedatestring;
+			}elsif($rec->{'FLOOD ID'}){
+				$rec->{'FLOOD Include Cushion'} = 'Yes';
+				$rec->{'FLOOD Non-escrow'} = 'No';
+				$rec->{'FLOOD Payee'} = 'Flood';
+				$rec->{'FLOOD Payee type'} = 'Insurance Company';
+				$rec->{'FLOOD Account#'} = $rec->{'cihifi'}?$rec->{'cihifi'}:'blank';
+				$rec->{'FLOOD Payee type'} = 'Insurance Company';
+	}
+
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
 	print $ph2tsv join ("\t", map {$rec->{$_}} @ph2fields);

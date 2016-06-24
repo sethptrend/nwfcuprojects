@@ -12,7 +12,7 @@ my $ua = LWP::UserAgentWrapper->new;
 my $targetdate = shift;
 my $systemdate = "$targetdate" ."T23:11:11";
 #template name to find
-my $template =  "Phase 2 all test";
+my $template =  "Ph 2 New Loan Import";
 
 
 #test ms.fics = 172.30.28.25
