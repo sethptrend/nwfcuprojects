@@ -376,6 +376,37 @@ my @ph2fields = (
 ,'FLOOD Paid 10'
 ,'FLOOD Paid 11'
 ,'FLOOD Paid 12'
+,'CT Payee'
+,'CT Payee type'
+,'CT TI Frequency'
+,'CT Account#'
+,'CT Include Cushion'
+,'CT Non-escrow'
+,'CT Total Disbursments'
+,'CT Date 1'
+,'CT Date 2'
+,'CT Date 3'
+,'CT Date 4'
+,'CT Date 5'
+,'CT Date 6'
+,'CT Date 7'
+,'CT Date 8'
+,'CT Date 9'
+,'CT Date 10'
+,'CT Date 11'
+,'CT Date 12'
+,'CT Paid 1'
+,'CT Paid 2'
+,'CT Paid 3'
+,'CT Paid 4'
+,'CT Paid 5'
+,'CT Paid 6'
+,'CT Paid 7'
+,'CT Paid 8'
+,'CT Paid 9'
+,'CT Paid 10'
+,'CT Paid 11'
+,'CT Paid 12'
 
 );
 
@@ -578,10 +609,10 @@ my %lpntable = (
 		);
 		
 
-#calculate the minimum acceptable MI date
+#calculate the minimum acceptable MI date - not doing this anymore but leaving the die in
 die "Expect date in YYYY-MM-DD format.  Try again\n" unless $targetdate =~ /(\d\d\d\d)-(\d\d)-(\d\d)/;
-my $miDateMin = DateTime->new( year => $1, month => $2, day => 1, locale => 'en_US');
-$miDateMin->add( months => 1, end_of_month => 'preserve');
+#my $miDateMin = DateTime->new( year => $1, month => $2, day => 1, locale => 'en_US');
+#$miDateMin->add( months => 1, end_of_month => 'preserve');
 
 
 #pmi automation type table:
@@ -799,6 +830,13 @@ SELECT  g.loanGeneral_Id as "LID"
 		,ESCROWSCHOOL._SecondDueDate as 'SCHOOL Date 2'
 		,ESCROWSCHOOL._ThirdDueDate as 'SCHOOL Date 3'
 		,ESCROWSCHOOL._FourthDueDate as 'SCHOOL Date 4'
+		,ESCROWCT._ItemType as 'CT ID'
+		,ESCROWCT._PaymentFrequencyType as 'CT Frequency'
+		,ESCROWCT._DueDate as 'CT Due Date'
+		,ESCROWCT._DueDate as 'CT Date 1'
+		,ESCROWCT._SecondDueDate as 'CT Date 2'
+		,ESCROWCT._ThirdDueDate as 'CT Date 3'
+		,ESCROWCT._FourthDueDate as 'CT Date 4'
 		,ESCROWWI._ItemType as 'WI ID'
 		,ESCROWWI._PaymentFrequencyType as 'WI Frequency'
 		,ESCROWWI._DueDate as 'WI Due Date'
@@ -981,7 +1019,8 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B1WRK on B1WRK.loanGeneral_Id=g.l
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B2WRK on B2WRK.loanGeneral_Id=g.loanGeneral_Id and B2WRK.BorrowerID='BRW2' and B2WRK.CurrentEmploymentMonthsOnJob is not NULL
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B3WRK on B3WRK.loanGeneral_Id=g.loanGeneral_Id and B3WRK.BorrowerID='BRW3' and B3WRK.CurrentEmploymentMonthsOnJob is not NULL
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].EMPLOYER B4WRK on B4WRK.loanGeneral_Id=g.loanGeneral_Id and B4WRK.BorrowerID='BRW4' and B4WRK.CurrentEmploymentMonthsOnJob is not NULL
-LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWPT on ESCROWPT.loanGeneral_Id=g.loanGeneral_Id and ESCROWPT._ItemType like '%PropertyTax' and not (ESCROWPT._ItemType = 'DistrictPropertyTax')
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWPT on ESCROWPT.loanGeneral_Id=g.loanGeneral_Id and ESCROWPT._ItemType='CountyPropertyTax'
+LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWCT on ESCROWCT.loanGeneral_Id=g.loanGeneral_Id and ESCROWCT._ItemType='CityPropertyTax'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWSCHOOL on ESCROWSCHOOL.loanGeneral_Id=g.loanGeneral_Id and ESCROWSCHOOL._ItemType='DistrictPropertyTax'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWWI on ESCROWWI.loanGeneral_Id=g.loanGeneral_Id and ESCROWWI._ItemType='WindstormInsurance'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[ESCROW] ESCROWFLOOD on ESCROWFLOOD.loanGeneral_Id=g.loanGeneral_Id and ESCROWFLOOD._ItemType='FloodInsurance'
@@ -1164,6 +1203,8 @@ for my $rec (@$recs){
 	
 	#flood zone NO if B, C, X & D
 	$rec->{'Flood Zone'} = 'NO' if $rec->{'Flood Zone'} =~ /^[BCXD]$/;
+	#make sure parcel number IS NOT BLANK
+	$rec->{'Parcel Number'} = $rec->{'Parcel Number'}?$rec->{'Parcel Number'}:'blank';
 	
 	
 	
@@ -1181,9 +1222,6 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 }
 
 	if($rec->{'Property Tax Frequency'} eq 'Annual'){
-		$rec->{'PT Payee'} = 'Property Taxes';
-		$rec->{'PT Account#'} = $rec->{'Parcel Number'};
-		$rec->{'PT Payee type'} = 'Tax Collector';
 		$rec->{'PT TI Frequency'} = 'Annually';
 		$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
 		$rec->{'PT Date 1'} = $rec->{'Property Tax Due Date'};
@@ -1191,10 +1229,8 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 		
 		
 	}elsif ($rec->{'Property Tax Frequency'} eq 'Monthly'){
-		$rec->{'PT Payee'} = 'Property Taxes';	
-		$rec->{'PT Payee type'} = 'Tax Collector';
+		
 		$rec->{'PT TI Frequency'} = 'Monthly';
-		$rec->{'PT Account#'} = $rec->{'Parcel Number'};
 		$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
 		if($rec->{'Property Tax Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 			my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
@@ -1208,9 +1244,7 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 		
 	}elsif ($rec->{'Property Tax Frequency'} eq 'SemiAnnual'){
 		$rec->{'PT TI Frequency'} = "Semi Annually";
-		$rec->{'PT Payee'} = 'Property Taxes';
-		$rec->{'PT Account#'} = $rec->{'Parcel Number'};
-		$rec->{'PT Payee type'} = 'Tax Collector';
+		
 		$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
 		if($rec->{'Property Tax Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 					my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');	
@@ -1222,11 +1256,8 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 		}
 	}elsif ($rec->{'Property Tax Frequency'} eq 'Quarterly'){
 		$rec->{'PT TI Frequency'} = "Quarterly";
-				$rec->{'PT Payee'} = 'Property Taxes';
-				$rec->{'PT Account#'} = $rec->{'Parcel Number'};
-				$rec->{'PT Payee type'} = 'Tax Collector';
-				$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
-				if($rec->{'Property Tax Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+		$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
+			if($rec->{'Property Tax Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 							my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
 						
 						for my $count (1..4){
@@ -1243,15 +1274,86 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 			$rec->{'PT Non-escrow'} = 'Yes';
 			$rec->{'PT Payee'} = 'Property Taxes';
 			$rec->{'PT Payee type'} = 'Tax Collector';
-			$rec->{'PT Account#'} = $rec->{'Parcel Number'};
+			$rec->{'PT Account#'} = $rec->{'Parcel Number'}?$rec->{'Parcel Number'}:'blank';
+			$rec->{'PT Total Disbursments'} = 12*$rec->{'Property Taxes (Escrow)'};
 			$rec->{'PT Date 1'} = $fakedatestring;
 		}elsif($rec->{'PT ID'}){
+			$rec->{'PT Payee'} = 'Property Taxes';
+			$rec->{'PT Payee type'} = 'Tax Collector';
 			$rec->{'PT Include Cushion'} = 'Yes';
+			$rec->{'PT Account#'} = $rec->{'Parcel Number'}?$rec->{'Parcel Number'}:'blank';
 			$rec->{'PT Non-escrow'} = 'No';
+		}
+		
+		
+		
+#CTTax
+
+
+	if($rec->{'CT Frequency'} eq 'Annual'){
+		$rec->{'CT TI Frequency'} = 'Annually';
+		
+		$rec->{'CT Date 1'} = $rec->{'CT Due Date'};
+		$rec->{'CT Paid 1'} = $rec->{'City/Town Tax'}*12;
+		
+		
+	}elsif ($rec->{'CT Frequency'} eq 'Monthly'){
+		
+		$rec->{'CT TI Frequency'} = 'Monthly';
+		
+		if($rec->{'CT Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+			my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+		
+		for my $count (1..12){
+			$rec->{"CT Paid $count"} = $rec->{'City/Town Tax'};
+			$rec->{"CT Date $count"} = $date->ymd('-');
+			$date->add( months => 1, end_of_month => 'preserve');
+		}
+		}
+		
+	}elsif ($rec->{'CT Frequency'} eq 'SemiAnnual'){
+		$rec->{'CT TI Frequency'} = "Semi Annually";
+		if($rec->{'CT Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+					my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');	
+				for my $count (1..2){
+					$rec->{"CT Paid $count"} = $rec->{'City/Town Tax'} * 6;
+					#$rec->{"CT Date $count"} = $date->ymd('-');
+					$date->add( months => 6, end_of_month => 'preserve');
+				}
+		}
+	}elsif ($rec->{'CT Frequency'} eq 'Quarterly'){
+		$rec->{'CT TI Frequency'} = "Quarterly";
+		
+			if($rec->{'CT Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
+							my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
+						
+						for my $count (1..4){
+							$rec->{"CT Paid $count"} = $rec->{'City/Town Tax'} * 3;
+							#$rec->{"CT Date $count"} = $date->ymd('-');
+							$date->add( months => 3, end_of_month => 'preserve');
+						}
+		}
+	
+	}
+	if($rec->{'CT ID'} and $rec->{'CT Frequency'} eq ''){
+			$rec->{'CT Include Cushion'} = 'No';
+			$rec->{'CT TI Frequency'} = 'Annually';
+			$rec->{'CT Non-escrow'} = 'Yes';
+			$rec->{'CT Payee'} = 'City/Town Tax';
+			$rec->{'CT Payee type'} = 'Tax Collector';
+			$rec->{'CT Account#'} = $rec->{'Parcel Number'};
+			$rec->{'CT Total Disbursments'} = 12*$rec->{'City/Town Tax'};
+		}elsif($rec->{'CT ID'}){
+			$rec->{'CT Total Disbursments'} = 12*$rec->{'City/Town Tax'};
+			$rec->{'CT Payee'} = 'City/Town Tax';
+			$rec->{'CT Payee type'} = 'Tax Collector';
+			$rec->{'CT Include Cushion'} = 'Yes';
+			$rec->{'CT Account#'} = $rec->{'Parcel Number'};
+			$rec->{'CT Non-escrow'} = 'No';
 		}
 
 #MI	
-$rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd('-') lt $rec->{'Mortgage Insurance Due Date'};
+#$rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd('-') lt $rec->{'Mortgage Insurance Due Date'};
 
 	if($rec->{'MI ID'} and $rec->{'MI Frequency'} eq ''){
 			$rec->{'MI Include Cushion'} = 'No';
@@ -1259,15 +1361,17 @@ $rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd(
 			$rec->{'MI Payee'} = $rec->{'MI Company'};
 			$rec->{'MI Payee type'} = 'Tax Collector';
 			$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
+			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
 		}elsif($rec->{'MI ID'}){
+			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
+			$rec->{'MI Payee'} = $rec->{'MI Company'};
+			$rec->{'MI Payee type'} = 'Tax Collector';
 			$rec->{'MI Include Cushion'} = 'Yes';
 			$rec->{'MI Non-escrow'} = 'No';
 	}
 	if($rec->{'MI Frequency'} eq 'Annual'){
-			$rec->{'MI Payee'} = $rec->{'MI Company'};
-			$rec->{'MI Payee type'} = 'Tax Collector';
+			
 			$rec->{'MI TI Frequency'} = 'Annually';
-			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
 			$rec->{'MI Date 1'} = $rec->{'Mortgage Insurance Due Date'};
 			$rec->{'MI Paid 1'} = $rec->{'MI Total Disbursments'};
 			$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
@@ -1275,10 +1379,8 @@ $rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd(
 		
 		}elsif ($rec->{'MI Frequency'} eq 'Monthly'){
 			$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
-			$rec->{'MI Payee'} = $rec->{'MI Company'};
-			$rec->{'MI Payee type'} = 'Mortgage Insurance';
 			$rec->{'MI TI Frequency'} = 'Monthly';
-			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
+			
 			if($rec->{'Mortgage Insurance Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 				my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
 			
@@ -1289,19 +1391,7 @@ $rec->{'Mortgage Insurance Due Date'} = $miDateMin->ymd('-') if $miDateMin->ymd(
 			}
 			}
 	}
-	if($rec->{'MI ID'} and $rec->{'MI Frequency'} eq ''){
-				$rec->{'MI Include Cushion'} = 'No';
-				$rec->{'MI TI Frequency'} = 'Annually';
-				$rec->{'MI Non-escrow'} = 'Yes';
-				$rec->{'MI Payee'} = $rec->{'MI Company'};
-				$rec->{'MI Payee type'} = 'Tax Collector';
-				$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
-				$rec->{'MI Date 1'} = $fakedatestring;
-			}elsif($rec->{'MI ID'}){
-				$rec->{'MI Include Cushion'} = 'Yes';
-				$rec->{'MI Non-escrow'} = 'No';
-				
-	}
+
 #HOI
 #fix vahihi
 $rec->{'vahihi'} = defined($hcntable{uc($rec->{'vahihi'})})?$hcntable{uc($rec->{'vahihi'})}:'Hazard';
@@ -1309,7 +1399,7 @@ $rec->{'vahihi'} = defined($hcntable{uc($rec->{'vahihi'})})?$hcntable{uc($rec->{
 #payment expansion
 	if($rec->{'HoI Frequency'} eq 'Annual'){
 		$rec->{'HOI TI Frequency'} = 'Annually';
-		$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
+		
 		$rec->{'HOI Date 1'} = $rec->{'Homeowners Insurance Due Date'};
 		$rec->{'HOI Paid 1'} = $rec->{'HOI Total Disbursments'};
 	}elsif ($rec->{'Property Tax Frequency'} eq 'Monthly'){
@@ -1332,35 +1422,32 @@ $rec->{'vahihi'} = defined($hcntable{uc($rec->{'vahihi'})})?$hcntable{uc($rec->{
 				$rec->{'HOI Include Cushion'} = 'No';
 				$rec->{'HOI TI Frequency'} = 'Annually';
 				$rec->{'HOI Non-escrow'} = 'Yes';
-				$rec->{'HOI Payee'} = $rec->{'vahihi'}?$rec->{'vahihi'}:'Hazard';
+				$rec->{'HOI Payee'} = 'Hazard';
 				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
 				$rec->{'HOI Payee type'} = 'Insurance Company';
 				$rec->{'HOI Date 1'} = $fakedatestring;
+				$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
 			}elsif($rec->{'HOI ID'}){
-			        $rec->{'HOI Payee'} = $rec->{'vahihi'}?$rec->{'vahihi'}:'Hazard';
+			        $rec->{'HOI Payee'} = 'Hazard';
 			        $rec->{'HOI Payee type'} = 'Insurance Company';
 				$rec->{'HOI Include Cushion'} = 'Yes';
 				$rec->{'HOI Non-escrow'} = 'No';
 				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
+				$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
 	}
 #School
 	
 if($rec->{'SCHOOL Frequency'} eq 'Annual'){
-		$rec->{'SCHOOL Payee'} = 'School Tax';
-		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
-		$rec->{'SCHOOL Payee type'} = 'Tax Collector';
 		$rec->{'SCHOOL TI Frequency'} = 'Annually';
-		$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+		
 		$rec->{'SCHOOL Date 1'} = $rec->{'SCHOOL Due Date'};
 		$rec->{'SCHOOL Paid 1'} = $rec->{'SCHOOL Total Disbursments'};
 		
 		
 	}elsif ($rec->{'SCHOOL Frequency'} eq 'Monthly'){
-		$rec->{'SCHOOL Payee'} = 'School Tax';	
-		$rec->{'SCHOOL Payee type'} = 'Tax Collector';
 		$rec->{'SCHOOL TI Frequency'} = 'Monthly';
-		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
-		$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+		
+		
 		if($rec->{'SCHOOL Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 			my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
 		
@@ -1373,10 +1460,8 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 		
 	}elsif ($rec->{'SCHOOL Frequency'} eq 'SemiAnnual'){
 		$rec->{'SCHOOL TI Frequency'} = "Semi Annually";
-		$rec->{'SCHOOL Payee'} = 'School Tax';
-		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
-		$rec->{'SCHOOL Payee type'} = 'Tax Collector';
-		$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+		
+		
 		if($rec->{'SCHOOL Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 					my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
 				
@@ -1387,11 +1472,7 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 				}
 		}
 	}elsif ($rec->{'SCHOOL Frequency'} eq 'Quarterly'){
-		$rec->{'SCHOOL TI Frequency'} = "Quarterly";
-		$rec->{'SCHOOL Payee'} = 'School Tax';
-		$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
-		$rec->{'SCHOOL Payee type'} = 'Tax Collector';
-		$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+		$rec->{'SCHOOL TI Frequency'} = "Quarterly";		
 		if($rec->{'SCHOOL Due Date'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 					my $date = DateTime->new( year => $1, month => $2, day => $3, locale => 'en_US');
 				
@@ -1407,11 +1488,17 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 				$rec->{'SCHOOL TI Frequency'} = 'Annually';
 				$rec->{'SCHOOL Non-escrow'} = 'Yes';
 				$rec->{'SCHOOL Payee'} = 'School Tax';
+				$rec->{'SCHOOL Payee type'} = 'Tax Collector';
 				$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+				$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
 				$rec->{'SCHOOL Date 1'} = $fakedatestring;
 			}elsif($rec->{'SCHOOL ID'}){
+				$rec->{'SCHOOL Payee'} = 'School Tax';
+				$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+				$rec->{'SCHOOL Payee type'} = 'Tax Collector';
 				$rec->{'SCHOOL Include Cushion'} = 'Yes';
 				$rec->{'SCHOOL Non-escrow'} = 'No';
+				$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
 	}
 	
 	
@@ -1422,7 +1509,7 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 if($rec->{'WI Frequency'} eq 'Annual'){
 		
 		$rec->{'WI TI Frequency'} = 'Annually';
-		$rec->{'WI Total Disbursments'} = 12*$rec->{'Hail/Windstorm Insurance'};
+		
 		$rec->{'WI Date 1'} = $rec->{'WI Due Date'};
 		$rec->{'WI Paid 1'} = $rec->{'WI Total Disbursments'};
 		
@@ -1438,13 +1525,14 @@ if($rec->{'WI ID'} and $rec->{'WI Frequency'} eq ''){
 				$rec->{'WI Payee type'} = 'Insurance Company';
 				$rec->{'WI Account#'} = 'blank';
 				$rec->{'WI Date 1'} = $fakedatestring;
+				$rec->{'WI Total Disbursments'} = 12*$rec->{'Hail/Windstorm Insurance'};
 			}elsif($rec->{'WI ID'}){
 				$rec->{'WI Include Cushion'} = 'Yes';
 				$rec->{'WI Non-escrow'} = 'No';
 				$rec->{'WI Payee'} = 'Hail/Windstorm';
 				$rec->{'WI Payee type'} = 'Insurance Company';
 				$rec->{'WI Account#'} = 'blank';
-				$rec->{'WI Payee type'} = 'Insurance Company';
+				$rec->{'WI Total Disbursments'} = 12*$rec->{'Hail/Windstorm Insurance'};
 	}
 
 #Flood Insurance
@@ -1452,7 +1540,7 @@ if($rec->{'WI ID'} and $rec->{'WI Frequency'} eq ''){
 if($rec->{'FLOOD Frequency'} eq 'Annual'){
 		
 		$rec->{'FLOOD TI Frequency'} = 'Annually';
-		$rec->{'FLOOD Total Disbursments'} = 12*$rec->{'Flood Insurance'};
+		
 		$rec->{'FLOOD Date 1'} = $rec->{'FLOOD Due Date'};
 		$rec->{'FLOOD Paid 1'} = $rec->{'FLOOD Total Disbursments'};
 		
@@ -1467,6 +1555,7 @@ if($rec->{'FLOOD ID'} and $rec->{'FLOOD Frequency'} eq ''){
 				$rec->{'FLOOD Payee'} = 'Flood';
 				$rec->{'FLOOD Payee type'} = 'Insurance Company';
 				$rec->{'FLOOD Account#'} = $rec->{'cihifi'}?$rec->{'cihifi'}:'blank';
+				$rec->{'FLOOD Total Disbursments'} = 12*$rec->{'Flood Insurance'};
 				$rec->{'FLOOD Date 1'} = $fakedatestring;
 			}elsif($rec->{'FLOOD ID'}){
 				$rec->{'FLOOD Include Cushion'} = 'Yes';
@@ -1474,7 +1563,7 @@ if($rec->{'FLOOD ID'} and $rec->{'FLOOD Frequency'} eq ''){
 				$rec->{'FLOOD Payee'} = 'Flood';
 				$rec->{'FLOOD Payee type'} = 'Insurance Company';
 				$rec->{'FLOOD Account#'} = $rec->{'cihifi'}?$rec->{'cihifi'}:'blank';
-				$rec->{'FLOOD Payee type'} = 'Insurance Company';
+				$rec->{'FLOOD Total Disbursments'} = 12*$rec->{'Flood Insurance'};
 	}
 
 	print $tsv join("\t", map {$rec->{$_}} @fields);
