@@ -1202,7 +1202,7 @@ for my $rec (@$recs){
 	
 	
 	#flood zone NO if B, C, X & D
-	$rec->{'Flood Zone'} = 'NO' if $rec->{'Flood Zone'} =~ /^[BCXD]$/;
+	$rec->{'Flood Zone'} = 'NO' unless $rec->{'Flood Zone'} =~ /^[AV]/;
 	#make sure parcel number IS NOT BLANK
 	$rec->{'Parcel Number'} = $rec->{'Parcel Number'}?$rec->{'Parcel Number'}:'blank';
 	
@@ -1272,6 +1272,9 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 			$rec->{'PT Include Cushion'} = 'No';
 			$rec->{'PT TI Frequency'} = 'Annually';
 			$rec->{'PT Non-escrow'} = 'Yes';
+			#if it's non-escrow, subtract from 'Monthly T&I pmt'
+			$rec->{'Monthly T&I pmt'} -= $rec->{'Property Taxes (Escrow)'};
+			$rec->{'Monthly T&I pmt'} = sprintf("%.2f", $rec->{'Monthly T&I pmt'});
 			$rec->{'PT Payee'} = 'Property Taxes';
 			$rec->{'PT Payee type'} = 'Tax Collector';
 			$rec->{'PT Account#'} = $rec->{'Parcel Number'}?$rec->{'Parcel Number'}:'blank';
@@ -1339,6 +1342,8 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 			$rec->{'CT Include Cushion'} = 'No';
 			$rec->{'CT TI Frequency'} = 'Annually';
 			$rec->{'CT Non-escrow'} = 'Yes';
+			$rec->{'Monthly T&I pmt'} -= $rec->{'City/Town Tax'};
+			$rec->{'Monthly T&I pmt'} = sprintf("%.2f", $rec->{'Monthly T&I pmt'});
 			$rec->{'CT Payee'} = 'City/Town Tax';
 			$rec->{'CT Payee type'} = 'Tax Collector';
 			$rec->{'CT Account#'} = $rec->{'Parcel Number'};
@@ -1358,14 +1363,16 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 	if($rec->{'MI ID'} and $rec->{'MI Frequency'} eq ''){
 			$rec->{'MI Include Cushion'} = 'No';
 			$rec->{'MI Non-escrow'} = 'Yes';
+			$rec->{'Monthly T&I pmt'} -= $rec->{'Mortgage Insurance'};
+			$rec->{'Monthly T&I pmt'} = sprintf("%.2f", $rec->{'Monthly T&I pmt'});
 			$rec->{'MI Payee'} = $rec->{'MI Company'};
-			$rec->{'MI Payee type'} = 'Tax Collector';
+			$rec->{'MI Payee type'} = 'Mortgage Insurance';
 			$rec->{'MI Account#'} = $rec->{'PMI Certification Number'};
 			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
 		}elsif($rec->{'MI ID'}){
 			$rec->{'MI Total Disbursments'} = 12*$rec->{'Mortgage Insurance'};
 			$rec->{'MI Payee'} = $rec->{'MI Company'};
-			$rec->{'MI Payee type'} = 'Tax Collector';
+			$rec->{'MI Payee type'} = 'Mortgage Insurance';
 			$rec->{'MI Include Cushion'} = 'Yes';
 			$rec->{'MI Non-escrow'} = 'No';
 	}
@@ -1395,7 +1402,26 @@ if($rec->{'Date of Note'} =~ /(\d\d\d\d)-(\d\d)-(\d\d)/){
 #HOI
 #fix vahihi
 $rec->{'vahihi'} = defined($hcntable{uc($rec->{'vahihi'})})?$hcntable{uc($rec->{'vahihi'})}:'Hazard';
-
+#disbursement and fixed
+	if($rec->{'HOI ID'} and $rec->{'HoI Frequency'} eq ''){
+				$rec->{'HOI Include Cushion'} = 'No';
+				$rec->{'HOI TI Frequency'} = 'Annually';
+				$rec->{'HOI Non-escrow'} = 'Yes';
+				$rec->{'Monthly T&I pmt'} -= $rec->{'Homeowners Insurance'};
+				$rec->{'Monthly T&I pmt'} = sprintf("%.2f", $rec->{'Monthly T&I pmt'});
+				$rec->{'HOI Payee'} = 'Hazard';
+				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
+				$rec->{'HOI Payee type'} = 'Insurance Company';
+				$rec->{'HOI Date 1'} = $fakedatestring;
+				$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
+			}elsif($rec->{'HOI ID'}){
+			        $rec->{'HOI Payee'} = 'Hazard';
+			        $rec->{'HOI Payee type'} = 'Insurance Company';
+				$rec->{'HOI Include Cushion'} = 'Yes';
+				$rec->{'HOI Non-escrow'} = 'No';
+				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
+				$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
+	}
 #payment expansion
 	if($rec->{'HoI Frequency'} eq 'Annual'){
 		$rec->{'HOI TI Frequency'} = 'Annually';
@@ -1417,26 +1443,27 @@ $rec->{'vahihi'} = defined($hcntable{uc($rec->{'vahihi'})})?$hcntable{uc($rec->{
 	}
 	
 	
-#disbursement and fixed
-	if($rec->{'HOI ID'} and $rec->{'HoI Frequency'} eq ''){
-				$rec->{'HOI Include Cushion'} = 'No';
-				$rec->{'HOI TI Frequency'} = 'Annually';
-				$rec->{'HOI Non-escrow'} = 'Yes';
-				$rec->{'HOI Payee'} = 'Hazard';
-				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
-				$rec->{'HOI Payee type'} = 'Insurance Company';
-				$rec->{'HOI Date 1'} = $fakedatestring;
-				$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
-			}elsif($rec->{'HOI ID'}){
-			        $rec->{'HOI Payee'} = 'Hazard';
-			        $rec->{'HOI Payee type'} = 'Insurance Company';
-				$rec->{'HOI Include Cushion'} = 'Yes';
-				$rec->{'HOI Non-escrow'} = 'No';
-				$rec->{'HOI Account#'} = $rec->{'cihipi'}?$rec->{'cihipi'}:'blank';
-				$rec->{'HOI Total Disbursments'} = 12*$rec->{'Homeowners Insurance'};
-	}
+
 #School
-	
+	if($rec->{'SCHOOL ID'} and $rec->{'SCHOOL Frequency'} eq ''){
+					$rec->{'SCHOOL Include Cushion'} = 'No';
+					$rec->{'SCHOOL TI Frequency'} = 'Annually';
+					$rec->{'SCHOOL Non-escrow'} = 'Yes';
+					$rec->{'Monthly T&I pmt'} -= $rec->{'School Tax'};
+					$rec->{'Monthly T&I pmt'} = sprintf("%.2f", $rec->{'Monthly T&I pmt'});
+					$rec->{'SCHOOL Payee'} = 'School Tax';
+					$rec->{'SCHOOL Payee type'} = 'Tax Collector';
+					$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+					$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+					$rec->{'SCHOOL Date 1'} = $fakedatestring;
+				}elsif($rec->{'SCHOOL ID'}){
+					$rec->{'SCHOOL Payee'} = 'School Tax';
+					$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
+					$rec->{'SCHOOL Payee type'} = 'Tax Collector';
+					$rec->{'SCHOOL Include Cushion'} = 'Yes';
+					$rec->{'SCHOOL Non-escrow'} = 'No';
+					$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
+	}
 if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 		$rec->{'SCHOOL TI Frequency'} = 'Annually';
 		
@@ -1483,44 +1510,20 @@ if($rec->{'SCHOOL Frequency'} eq 'Annual'){
 				}
 		}
 	}
-	if($rec->{'SCHOOL ID'} and $rec->{'SCHOOL Frequency'} eq ''){
-				$rec->{'SCHOOL Include Cushion'} = 'No';
-				$rec->{'SCHOOL TI Frequency'} = 'Annually';
-				$rec->{'SCHOOL Non-escrow'} = 'Yes';
-				$rec->{'SCHOOL Payee'} = 'School Tax';
-				$rec->{'SCHOOL Payee type'} = 'Tax Collector';
-				$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
-				$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
-				$rec->{'SCHOOL Date 1'} = $fakedatestring;
-			}elsif($rec->{'SCHOOL ID'}){
-				$rec->{'SCHOOL Payee'} = 'School Tax';
-				$rec->{'SCHOOL Account#'} = $rec->{'Parcel Number'};
-				$rec->{'SCHOOL Payee type'} = 'Tax Collector';
-				$rec->{'SCHOOL Include Cushion'} = 'Yes';
-				$rec->{'SCHOOL Non-escrow'} = 'No';
-				$rec->{'SCHOOL Total Disbursments'} = 12*$rec->{'School Tax'};
-	}
+	
 	
 	
 	
 	
 #Windstorm Insurance
 #frequency based
-if($rec->{'WI Frequency'} eq 'Annual'){
-		
-		$rec->{'WI TI Frequency'} = 'Annually';
-		
-		$rec->{'WI Date 1'} = $rec->{'WI Due Date'};
-		$rec->{'WI Paid 1'} = $rec->{'WI Total Disbursments'};
-		
-		
-	}
-
 #Escrow, cushion , defaults
 if($rec->{'WI ID'} and $rec->{'WI Frequency'} eq ''){
 				$rec->{'WI Include Cushion'} = 'No';
 				$rec->{'WI TI Frequency'} = 'Annually';
 				$rec->{'WI Non-escrow'} = 'Yes';
+				$rec->{'Monthly T&I pmt'} -= $rec->{'Hail/Windstorm Insurance'};
+				$rec->{'Monthly T&I pmt'} = sprintf("%.2f", $rec->{'Monthly T&I pmt'});
 				$rec->{'WI Payee'} = 'Hail/Windstorm';
 				$rec->{'WI Payee type'} = 'Insurance Company';
 				$rec->{'WI Account#'} = 'blank';
@@ -1535,23 +1538,25 @@ if($rec->{'WI ID'} and $rec->{'WI Frequency'} eq ''){
 				$rec->{'WI Total Disbursments'} = 12*$rec->{'Hail/Windstorm Insurance'};
 	}
 
-#Flood Insurance
-#frequency based
-if($rec->{'FLOOD Frequency'} eq 'Annual'){
+if($rec->{'WI Frequency'} eq 'Annual'){
 		
-		$rec->{'FLOOD TI Frequency'} = 'Annually';
+		$rec->{'WI TI Frequency'} = 'Annually';
 		
-		$rec->{'FLOOD Date 1'} = $rec->{'FLOOD Due Date'};
-		$rec->{'FLOOD Paid 1'} = $rec->{'FLOOD Total Disbursments'};
+		$rec->{'WI Date 1'} = $rec->{'WI Due Date'};
+		$rec->{'WI Paid 1'} = $rec->{'WI Total Disbursments'};
 		
 		
 	}
 
+
+#Flood Insurance
 #Escrow, cushion , defaults
 if($rec->{'FLOOD ID'} and $rec->{'FLOOD Frequency'} eq ''){
 				$rec->{'FLOOD Include Cushion'} = 'No';
 				$rec->{'FLOOD TI Frequency'} = 'Annually';
 				$rec->{'FLOOD Non-escrow'} = 'Yes';
+				$rec->{'Monthly T&I pmt'} -= $rec->{'Flood Insurance'};
+				$rec->{'Monthly T&I pmt'} = sprintf("%.2f", $rec->{'Monthly T&I pmt'});
 				$rec->{'FLOOD Payee'} = 'Flood';
 				$rec->{'FLOOD Payee type'} = 'Insurance Company';
 				$rec->{'FLOOD Account#'} = $rec->{'cihifi'}?$rec->{'cihifi'}:'blank';
@@ -1565,6 +1570,18 @@ if($rec->{'FLOOD ID'} and $rec->{'FLOOD Frequency'} eq ''){
 				$rec->{'FLOOD Account#'} = $rec->{'cihifi'}?$rec->{'cihifi'}:'blank';
 				$rec->{'FLOOD Total Disbursments'} = 12*$rec->{'Flood Insurance'};
 	}
+#frequency based
+if($rec->{'FLOOD Frequency'} eq 'Annual'){
+		
+		$rec->{'FLOOD TI Frequency'} = 'Annually';
+		
+		$rec->{'FLOOD Date 1'} = $rec->{'FLOOD Due Date'};
+		$rec->{'FLOOD Paid 1'} = $rec->{'FLOOD Total Disbursments'};
+		
+		
+	}
+
+
 
 	print $tsv join("\t", map {$rec->{$_}} @fields);
 	print $tsv "\n";
