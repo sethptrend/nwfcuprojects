@@ -162,7 +162,10 @@ my @fields = ('Loan ID',
 'E-Statements',
 'Service Fee Type',
 'Service Fee Rate',
-'Loan Plan Name');
+'Loan Plan Name',
+'TitleCoBorrowerList',
+'Referral Branch'
+,'Misc10006');
 
 
 my @ph2fields = (
@@ -608,6 +611,59 @@ my %lpntable = (
 		'CA7 R' => '7 1 30 Yr',
 		);
 		
+#This table defines 'Misc Field #10006'
+my %MF10006tbl = (
+	'CA10' => 'Balloon Hybrid > 5 years'
+	,'CA10 R'=>'Balloon Hybrid > 5 years'
+	,'C10' => 'Fixed Rate 15 years or less'
+	,'C10 R'=>'Fixed Rate 15 years or less'
+	,'HB15'=>'Fixed Rate 15 years or less'
+	,'HB15 R'=>'Fixed Rate 15 years or less'
+	,'V15 HB'=>'Fixed Rate 15 years or less'
+	,'V15 HB R'=>'Fixed Rate 15 years or less'
+	,'DU15 125'=>'Fixed Rate 15 years or less'
+	,'C15'=>'Fixed Rate 15 years or less'
+	,'C15 R'=>'Fixed Rate 15 years or less'
+	,'EL15 80'=>'Fixed Rate 15 years or less'
+	,'EL15 80 1'=>'Fixed Rate 15 years or less'
+	,'EL15 90'=>'Fixed Rate 15 years or less'
+	,'EL15 90 1'=>'Fixed Rate 15 years or less'
+	,'J15'=>'Fixed Rate 15 years or less'
+	,'J15 R'=>'Fixed Rate 15 years or less'
+	,'SJ15'=>'Fixed Rate 15 years or less'
+	,'SJ15 R'=>'Fixed Rate 15 years or less'
+	,'V15'=>'Fixed Rate 15 years or less'
+	,'V15 R'=>'Fixed Rate 15 years or less'
+	,'C20'=>'Fixed Rate > 15 years'
+	,'C20 R'=>'Fixed Rate > 15 years'
+	,'CA3'=>'Balloon Hybrid 5 years or less'
+	,'CA3 R'=>'Balloon Hybrid 5 years or less'
+	,'HB30'=>'Fixed Rate > 15 years'
+	,'HB30 R'=>'Fixed Rate > 15 years'
+	,'C30 97'=>'Fixed Rate > 15 years'
+	,'CFT'=>'Fixed Rate > 15 years'
+	,'DU30 125'=>'Fixed Rate > 15 years'
+	,'C30'=>'Fixed Rate > 15 years'
+	,'C30 R'=>'Fixed Rate > 15 years'
+	,'J30'=>'Fixed Rate > 15 years'
+	,'J30 R'=>'Fixed Rate > 15 years'
+	,'SJ30'=>'Fixed Rate > 15 years'
+	,'SJ30 R'=>'Fixed Rate > 15 years'
+	,'V30'=>'Fixed Rate > 15 years'
+	,'V30 R'=>'Fixed Rate > 15 years'
+	,'V30 HB R'=>'Fixed Rate > 15 years'
+	,'V30 HB'=>'Fixed Rate > 15 years'
+	,'C30 100'=>'Fixed Rate > 15 years'
+	,'CA5'=>'Balloon Hybrid 5 years or less'
+	,'CA5 R'=>'Balloon Hybrid 5 years or less'
+	,'JA51'=>'Balloon Hybrid 5 years or less'
+	,'CA55'=>'Adjustable > 1 year'
+	,'CA55 R'=>'Adjustable > 1 year'
+	,'JA55'=>'Adjustable > 1 year'
+	,'JA55 R'=>'Adjustable > 1 year'
+	,'CA7'=>'Balloon Hybrid > 5 years'
+	,'CA7 R'=>'Balloon Hybrid > 5 years'
+);
 
 #calculate the minimum acceptable MI date - not doing this anymore but leaving the die in
 die "Expect date in YYYY-MM-DD format.  Try again\n" unless $targetdate =~ /(\d\d\d\d)-(\d\d)-(\d\d)/;
@@ -755,6 +811,8 @@ SELECT  g.loanGeneral_Id as "LID"
 	  , mail._State as 'Mailing State'
 	  , mail._PostalCode as 'Mailing Zip'
 	  , cfns.AttributeValue as 'Non-saleable to FNMA'
+	  , cfrf.AttributeValue as 'Referral From'
+	  , cfrb.AttributeValue as 'Referral Branch'
 	  ,titot.tot as 'Beginning T&I Amount'
 	  ,DATEADD(year, 1, fd._FundedDate) as 'Next T&I Analysis Date'
 	  , 'Yes' as 'Pay Interest on Loss Draft?'
@@ -854,7 +912,9 @@ SELECT  g.loanGeneral_Id as "LID"
 		,ci.HazardInsurancePolicyIdentifier as 'cihipi'
 		,ci.FloodInsurancePolicyIdentifier as 'cihifi'
 		,VAHI._UnparsedName as 'vahihi'
-
+		,tcb.FirstName + ' ' + tcb.LastName as 'Title Only Co-Borrower Name'
+		,tcb2.FirstName + ' ' + tcb2.LastName as 'Title Only Co-Borrower Name 2'
+		,tcb3.FirstName + ' ' + tcb3.LastName as 'Title Only Co-Borrower Name 3'
 FROM LENDER_LOAN_SERVICE.dbo.LOAN_GENERAL G
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ACCOUNT_INFO AI
       ON G.LOANGENERAL_ID = AI.LOANGENERAL_ID
@@ -903,6 +963,15 @@ LEFT JOIN LENDER_LOAN_SERVICE.dbo.BORROWER b3
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.BORROWER b4
       ON g.loanGeneral_Id = b4.loanGeneral_Id
             AND b4.BorrowerID = 'BRW4'
+LEFT JOIN LENDER_LOAN_SERVICE.dbo.TITLE_CO_BORROWER tcb
+      ON g.loanGeneral_Id = tcb.loanGeneral_Id
+            AND tcb.BorrowerID = 'BRW21'
+			LEFT JOIN LENDER_LOAN_SERVICE.dbo.TITLE_CO_BORROWER tcb2
+      ON g.loanGeneral_Id = tcb2.loanGeneral_Id
+            AND tcb2.BorrowerID = 'BRW22'
+			LEFT JOIN LENDER_LOAN_SERVICE.dbo.TITLE_CO_BORROWER tcb3
+      ON g.loanGeneral_Id = tcb3.loanGeneral_Id
+            AND tcb3.BorrowerID = 'BRW23'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.ADDITIONAL_LOAN_DATA ald
       ON g.loanGeneral_Id = ald.loanGeneral_Id
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.UNDERWRITING_DATA ud
@@ -1008,6 +1077,8 @@ LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] nineohone on nineohone.loanGene
 LEFT JOIN LENDER_LOAN_SERVICE.dbo._LEGAL_DESCRIPTION legaldesc on legaldesc.loanGeneral_Id=g.loanGeneral_Id and legaldesc._Type='LongLegal'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfmember on cfmember.loanGeneral_Id=g.loanGeneral_Id and cfmember.AttributeUniqueName='Member Number'
 LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfns on cfns.loanGeneral_Id=g.loanGeneral_Id and cfns.AttributeUniqueName='Non-Saleable?'
+LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfrf on cfrf.loanGeneral_Id=g.loanGeneral_Id and cfrf.AttributeUniqueName='Referral From?'
+LEFT JOIN LENDER_LOAN_SERVICE.dbo.CUSTOM_FIELD cfrb on cfrb.loanGeneral_Id=g.loanGeneral_Id and cfrb.AttributeUniqueName='Branch Code - Referrals'
 LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] cttax on cttax.loanGeneral_Id=g.loangeneral_id and cttax.hudType='HUD' and cttax._LineNumber=1001 and cttax._SystemFeeName='City/Town Tax'
  LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] fip on fip.loanGeneral_Id=g.loangeneral_id and fip.hudType='HUD' and fip._LineNumber=1002 and fip._SystemFeeName='Flood Insurance'
  LEFT JOIN [LENDER_LOAN_SERVICE].[dbo].[HUD_LINE] hwi on hwi.loanGeneral_Id=g.loangeneral_id and hwi.hudType='HUD' and hwi._LineNumber=1003 and hwi._SystemFeeName='Hail/Windstorm Insurance'
@@ -1047,6 +1118,12 @@ open my $tsv, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."MortgageBotUpdate-$targ
 open my $ph2tsv, ">", "\\\\d-spokane\\servicing\$\\Misc\\"."Ph2MortgageBotUpdate-$targetdate\.txt";
 for my $rec (@$recs){
 #place to hack fields before output
+##
+##
+	#TitleCoBorrowerList
+	$rec->{'TitleCoBorrowerList'} = $rec->{'Title Only Co-Borrower Name'} if $rec->{'Title Only Co-Borrower Name'} =~ /\w/;
+	$rec->{'TitleCoBorrowerList'} .= ', ' . $rec->{'Title Only Co-Borrower Name 2'} if $rec->{'Title Only Co-Borrower Name 2'} =~ /\w/;
+	$rec->{'TitleCoBorrowerList'} .= ', ' . $rec->{'Title Only Co-Borrower Name 3'} if $rec->{'Title Only Co-Borrower Name 3'} =~ /\w/;
 	$rec->{'# of months cushion disclosure'} = '2';
 	$rec->{'Payment Type'} =~ s/Rate//;
 	$rec->{'Interest Type'} =~ s/Rate//;
@@ -1110,19 +1187,19 @@ for my $rec (@$recs){
 	$rec->{'Property County'} =~ s/\W//g;
 	#$rec->{'Property County'} = ucfirst lc $rec->{'Property County'};
 ############
-	
+	if($rec->{'Purpose Code'} =~ /PrimaryResidence/){
+				$rec->{'Mailing Address 1'} = $rec->{'Property Street'};
+				$rec->{'Mailing City'} = $rec->{'Property City'};
+				$rec->{'Mailing State'} = $rec->{'Property State'};
+				$rec->{'Mailing Zip'} = $rec->{'Property Zip'};
+	} 
 	unless($rec->{'Mailing Zip'}){
-		if($rec->{'Purpose Code'} =~ /PrimaryResidence/){
-			$rec->{'Mailing Address 1'} = $rec->{'Property Street'};
-			$rec->{'Mailing City'} = $rec->{'Property City'};
-			$rec->{'Mailing State'} = $rec->{'Property State'};
-			$rec->{'Mailing Zip'} = $rec->{'Property Zip'};
-		} else {
+		
 			$rec->{'Mailing Address 1'} = $rec->{'b1mailing1'};		
 			$rec->{'Mailing City'} = $rec->{'b1mailingcity'};
 			$rec->{'Mailing State'} = $rec->{'b1mailingstate'};
 			$rec->{'Mailing Zip'} = $rec->{'b1mailingzip'};
-		}
+		
 	}
 	
 	$rec->{'Interest Calc Method'} = 'Fannie Mae' if $rec->{'Interest Calc Method'} =~ /Conventional/;
@@ -1131,7 +1208,10 @@ for my $rec (@$recs){
 	$rec->{'Association'} = ($rec->{'Borrower 2 SSN'} or $rec->{'Borrower 3 SSN'} or $rec->{'Borrower 4 SSN'}) ? 'Joint Contractual Liability' : 'Individual Account';
 	
 	$rec->{'Loan Plan Name'} = $lpntable{$rec->{ProductCode}};
+	#Misc10006
+	$rec->{'Misc10006'} = $MF10006tbl{$rec->{ProductCode}};
 	
+	#
 	
 	#arm loan stuff
 	my $armuse = '';

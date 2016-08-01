@@ -10,36 +10,52 @@
 use warnings;
 use strict;
 
+use lib '\\\\deerfield\\Information Technology$\\Programmers\\ParticipationIngest\\Script\\lib\\';
 use Connection::Cedar;
 my $db = Connection::Cedar->new();
-use lib 'U:\\My Documents\\sethpgit\\lib';
 use Parsing::LoanParticipant;
 my $parser = Parsing::LoanParticipant->new();
+my $basepath = '\\\\deerfield\\Information Technology$\\Programmers\\ParticipationIngest\\Files\\';
+my $date = shift;
+my $reportDate = '';
+#yymmdd
+if($date =~ /(\d\d\d\d)(\d\d)(\d\d)/){
+	my ($y, $m, $d) = ($1,$2,$3);
+	$m++;
+	$d++ if $m > 12;
+	$m=1 if $m > 12;
+	$reportDate="$m\/$d\/$y";
+} else { die 'Invalid date passed, needs to be YYYYMMDD';}
 
 
 
-my $filename = shift;
-open my $infile, "<", $filename or die $!;
-my @infile = <$infile>;
-close $infile;
 
 
-if(1){
+
+if('Detail Section'){
+	my $filename = shift;
+	open my $infile, "<", $basepath . 'detail' . $date or die $!;
+	my @infile = <$infile>;
+	close $infile;
 	#this file is 753363 in reports in symitar
 	my @recs = $parser->ParseDetailFile(@infile);
 	$db->DoSQL('truncate table [ARCU_TEST].dbo.PartDetailReport');
 	for my $rec (@recs){
 
 		#print STDERR join("\n", %$rec) if $rec->{Acct} eq '0020342603';
-		print $db->InsertValues('[ARCU_TEST].[dbo].[PartDetailReport]', %$rec, 'ProcessDate', '20160531', 'ReportDate', '06/01/16') . "\n";
+		print $db->InsertValues('[ARCU_TEST].[dbo].[PartDetailReport]', %$rec, 'ProcessDate', $date, 'ReportDate', $reportDate) . "\n";
 
 	}
 
 
 
-	die "stuffs";
+	
 }
-if(1){
+if('Interest Section'){
+	my $filename = shift;
+	open my $infile, "<", $basepath . 'interest' . $date or die $!;
+	my @infile = <$infile>;
+	close $infile;
 	#this file is 753366 in reports in symitar
 	my %parts = $parser->ParseInterestFile(@infile);
 	$db->DoSQL('truncate table [ARCU_TEST].dbo.PartInterestReport');
@@ -54,9 +70,14 @@ if(1){
 	}
 
 
-	die "stuffs";
+	
 }
+if('arcu section'){
 #this file is ARCUEPIODBC.txt produced from Andy's thing
+my $filename = shift;
+open my $infile, "<", $basepath . 'ARCUEPI' . $date or die $!;
+my @infile = <$infile>;
+close $infile;
 my %parts = $parser->ParseArcuFile(@infile);
 
 #this is the row header from the excel maker
@@ -67,10 +88,10 @@ $db->DoSQL('truncate table [ARCU_TEST].dbo.PartTransReport');
 
 for my $part (keys %parts){
 	for my $partrec (@{$parts{$part}}){
-		print $db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[PartTransReport]', @$partrec, '20160531', '06/01/16') . "\n";
+		print $db->InsertValuesNoKeys('[ARCU_TEST].[dbo].[PartTransReport]', @$partrec, $date, $reportDate) . "\n";
 	
 	}
 
 
 }
-
+}
