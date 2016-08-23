@@ -13,9 +13,16 @@ my $ua = LWP::UserAgentWrapper->new;
 #service addresses 
 
 my $token_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/GetAuthToken"; 
-my $import_service = "http://mortgageservicer.fics//SpecialsService.svc/REST/CreateAkcelerantInterfaceFile";
+my $import_service = "http://mortgageservicer.fics/MortgageServicerService.svc/REST/RunVALERI";
 
+my $yesterday = shift;
 
+my $dateformatted;
+my $enddate;
+die "Invalid yyyymmdd argument passed\n" unless ($yesterday =~ /(\d\d\d\d)(\d\d)(\d\d)/);
+
+$dateformatted = "$1-$2-$3" . "T00:00:00";
+$enddate = "$1-$2-$3" . "T23:59:59";
 
 
 
@@ -40,30 +47,24 @@ $token = $pointer->{Content} if $pointer;
 die 'Token did not get a value from server\n' unless $token;
 
 my $import_post = '{
-	"CreateRequest": {
-"IncludePaidInFullLoans": false,
-"ExcludeTiBal": false,
-"FilePath": "D:\\\\Akcelerant\\\\Akcelerant.rpt",
-"ExecutingSpecialId": "sample string",
-"ExecutingSpecialName": "sample string",
-"ErrorMessage": "sample string",
-"SystemVersion": "sample string",
-"AssemblyVersion": "sample string",
-"UseCompression": false,
-"UseHttps": false,
-"Token": "'.$token.'"
+	"Message": {
+"SelectedFileType": "DailyUpdate",
+"BeginningDate": "'. $dateformatted.'",
+"EndingDate": "'.$enddate.'",
+"ServicerId": "687502",
+"Token":  "'.$token.'"
 }	
 }
 ';
 #this call needs the longer timeout, 3 mins is not guaranteed to be enough
 $pointer = $ua->getPointerPostJSON($import_service, $import_post, 900);
 die "Missing response from server\n" unless $pointer;
-die "No file in response from server, got " . encode_json($pointer) unless $pointer->{File};
+die "No file in response from server, got " . encode_json($pointer) unless $pointer->{VALERISectionDocument};
 #print encode_json($pointer);
 
 
-open my $rpt, '>',"\\\\d-spokane\\servicing\$\\Akcelerant\\"."Akcelerant.rpt" or die "Failed to open output file: $!";
+open my $rpt, '>',"\\\\d-spokane\\servicing\$\\Misc\\"."VALERI$yesterday\.pdf" or die "Failed to open output file: $!";
 binmode $rpt;
-print $rpt decode_base64($pointer->{File}); #decode_base64($pointer->{DocumentCollection}->[0]->{DocumentBase64});
+print $rpt decode_base64($pointer->{VALERISectionDocument}->{Document}->{DocumentBase64}); #decode_base64($pointer->{DocumentCollection}->[0]->{DocumentBase64});
 close $rpt;
 

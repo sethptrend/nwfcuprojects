@@ -22,9 +22,9 @@ my $reportDate = '';
 if($date =~ /(\d\d\d\d)(\d\d)(\d\d)/){
 	my ($y, $m, $d) = ($1,$2,$3);
 	$m++;
-	$d++ if $m > 12;
+	$y++ if $m > 12;
 	$m=1 if $m > 12;
-	$reportDate="$m\/$d\/$y";
+	$reportDate="$m\/1\/$y";
 } else { die 'Invalid date passed, needs to be YYYYMMDD';}
 
 
